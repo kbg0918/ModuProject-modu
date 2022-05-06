@@ -5,21 +5,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Member {
+public class Review {
     private int seq;
+    private int total;
+    private int star;
+    private String content;
+    private String writer;
     private String St_id;
-    private String St_pw;
-    private String St_name;
-    private String St_email;
     private String St_role;
     private String add_date;
     private String up_date;
-}
 
+}

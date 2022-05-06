@@ -15,7 +15,7 @@ class ModuProjectApplicationTests {
     SignUpRepository sr;
     @Test
     void contextLoads() {
-
+        sr.save(new Member(1,"ss22","1234","길동","ss@naver.cm","ㅇ","1111-11-11","1111-11-11"));
 
     }
 
