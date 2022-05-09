@@ -1,14 +1,13 @@
 package kbg.modu.moduproject.cnt;
 
 import kbg.modu.moduproject.Service.ReviewService;
-import kbg.modu.moduproject.domain.Member;
 import kbg.modu.moduproject.domain.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class reivewController {
+public class reviewController {
 
     @Autowired
     ReviewService rs;
@@ -17,11 +16,33 @@ public class reivewController {
      */
     @RequestMapping("/Ct")
     public  String ContentForm(){
-        return "ContentTest";
+        return "Review";
     }
-    @RequestMapping("/CTest")
-    public String Content(Review r, Member m) {
-        rs.registration(r,m);
-        return "login";
+    @RequestMapping("/ITest")
+    public String InsertForm(){
+        return "InsertTest";
+    }
+    @RequestMapping("/DTest")
+    public String DeleteForm(){
+        return "DeleteTest";
+    }
+    @RequestMapping("UTest")
+    public String UpdateForm(){
+        return "UpdateTest";
+    }
+    @RequestMapping("/InTest")
+    public String InsertContent(Review r) {
+        rs.insertContent(r);
+        return "Review";
+    }
+    @RequestMapping("/DeTest")
+    public String DeleteContent(Review r) {
+        rs.deleteContent(r);
+        return "Review";
+    }
+    @RequestMapping("/UpTest")
+    public String UpdateContent(Review r) {
+        rs.UpdateContent(r);
+        return "Review";
     }
 }

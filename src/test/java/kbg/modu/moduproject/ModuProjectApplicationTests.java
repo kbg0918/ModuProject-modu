@@ -1,6 +1,8 @@
 package kbg.modu.moduproject;
 
 import kbg.modu.moduproject.domain.Member;
+import kbg.modu.moduproject.domain.Review;
+import kbg.modu.moduproject.repo.ReviewRepository;
 import kbg.modu.moduproject.repo.SignUpRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +15,14 @@ import java.util.Date;
 class ModuProjectApplicationTests {
     @Autowired
     SignUpRepository sr;
+
+    @Autowired
+    ReviewRepository rr;
     @Test
     void contextLoads() {
-        sr.save(new Member(1,"ss22","1234","길동","ss@naver.cm","ㅇ","1111-11-11","1111-11-11"));
+        rr.insert(new Review(1,5,3,"내용","길동","길동","Student","11/11/11","11/11/11"));
 
     }
+
 
 }

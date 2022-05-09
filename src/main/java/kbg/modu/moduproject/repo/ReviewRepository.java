@@ -4,6 +4,7 @@ import kbg.modu.moduproject.domain.Review;
 
 public interface ReviewRepository {
     Review findById(String St_id);
-    void save(Review r);
-    void contentDelete(Review r);
+    void insert(Review r);
+    void delete(Review r);
+    void Update(Review r);
 }

@@ -37,18 +37,7 @@ public class signUpController {
         return "login";
     }
 
-    /**
-     * 리뷰
-     */
-    @RequestMapping("/Ct")
-    public  String ContentForm(){
-        return "ContentTest";
-    }
-    @RequestMapping("/CTest")
-    public String Content(Review r, Member m) {
-        rs.registration(r,m);
-        return "login";
-    }
+
 
 
 }

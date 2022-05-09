@@ -26,16 +26,22 @@ public class ReviewImp implements ReviewRepository {
     }
 
     @Override
-    public void save(Review r) {
+    public void insert(Review r) {
         tp.update("insert into review(total, star, content, writer, St_id, St_role, add_date, up_date) values(?,?,?,?,?,?,?,?)",
                 r.getTotal(), r.getStar(), r.getContent(), r.getWriter(), r.getSt_id(), r.getSt_role(), r.getAdd_date(), r.getUp_date());
 
     }
 
     @Override
-    public void contentDelete(Review r) {
+    public void delete(Review r) {
         tp.update("delete from review where St_id = ?",
                 r.getSt_id());
+    }
+
+    @Override
+    public void Update(Review r) {
+        tp.update("update review set star = ?, content = ?, up_date = ? where St_id = ?",
+                r.getStar(), r.getContent(), r.getUp_date(), r.getSt_id());
     }
 
 }
