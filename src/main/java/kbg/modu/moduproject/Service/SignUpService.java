@@ -27,9 +27,10 @@ public class SignUpService {
     Date time =new Date();
     String localtime = format.format(time);
 
+    // Id 중복체크
     public boolean checkId(String St_id){
         Member m = sr.findById(St_id);
-        if(m != null){
+        if(m != null || St_id == null){
             System.out.println("중복!!");
             System.out.println(St_id);
             return false;
@@ -40,6 +41,7 @@ public class SignUpService {
 
     }
 
+    //회원가입
     @Transactional
     public void joinSignUp(Member m){
         if(checkId(m.getSt_id())){
@@ -51,7 +53,7 @@ public class SignUpService {
             sr.save(m);
         }
     }
-
+    /*
     public boolean checkPassword (String St_id, String St_pw){
         Member m = sr.findById(St_id);
         //DB에 사용자가 없거나, 비밀번호가 지정이 안되있거나
@@ -60,7 +62,6 @@ public class SignUpService {
         return m.getSt_pw().equals(St_pw);
     }
 
-
-
+    */
 
 }

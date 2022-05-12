@@ -1,6 +1,7 @@
 package kbg.modu.moduproject.cnt;
 
 import kbg.modu.moduproject.Service.ReviewService;
+import kbg.modu.moduproject.domain.Member;
 import kbg.modu.moduproject.domain.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,8 +32,9 @@ public class reviewController {
         return "UpdateTest";
     }
     @RequestMapping("/InTest")
-    public String InsertContent(Review r) {
+    public String InsertContent(Review r, Member m) {
         rs.insertContent(r);
+        rs.Id(m);
         return "Review";
     }
     @RequestMapping("/DeTest")
