@@ -1,14 +1,10 @@
-package kbg.modu.moduproject.cnt;
+package kbg.modu.moduproject.controller;
 
-import kbg.modu.moduproject.Service.ReviewService;
-import kbg.modu.moduproject.Service.SignUpService;
-import kbg.modu.moduproject.domain.Member;
-import kbg.modu.moduproject.domain.Review;
-import kbg.modu.moduproject.repo.SignUpRepository;
-import lombok.RequiredArgsConstructor;
+import kbg.modu.moduproject.service.ReviewService;
+import kbg.modu.moduproject.service.SignUpService;
+import kbg.modu.moduproject.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -34,7 +30,7 @@ public class signUpController {
 
     //실제 회원가입하는 곳
     @RequestMapping("/signUp")
-    public String signUp(Member m) {
+    public String signUp(User m) {
         ss.joinSignUp(m);
         return "login";
     }

@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 /*유저 테이블*/
 create table if not exists user(
-    seq int auto_increment primary key,
+    user_seq int auto_increment primary key,
     user_id varchar(255) unique,
     user_password varchar(255) not null,
     user_name varchar(255) not null,
@@ -86,24 +85,36 @@ create table if not exists board_views(
 
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+/*유저 채팅*/
+create table if not exists chatting_matching(
+    cm_seq int auto_increment primary key comment 'chatting_matching',
+    send varchar(300) not null comment '보내는 채팅',
+    receive varchar(300) not null comment '받는 채팅',
+    user_role varchar(255) not null,
+    add_date datetime DEFAULT null comment '보낸 시간'
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
+/*채팅 기록*/
+create table if not exists chatting_log(
+    cl_seq int auto_increment primary key comment 'chatting_log',
+    send varchar(300) not null comment '보낸 채팅 기록',
+    receive varchar(300) not null comment '받은 채팅 기록',
+    user_role varchar(255) not null,
+    add_date datetime DEFAULT null comment '보낸 시간'
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
+/*로그인 기록*/
+create table if not exists login_log (
+    login_seq int auto_increment primary key,
+    user_id varchar(255) not null,
+    user_ip varchar(255),
+    user_role varchar(255) not null,
+    login_status char(1) not null,
+    add_date datetime DEFAULT null comment '로그인 시간'
 
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-
-
-=======
-create table if not exists member (
-    seq int auto_increment primary key,
-    id varchar(255) unique ,
-    name varchar(255) not null,
-    password varchar(255) not null,
-    role varchar(255) not null,
-    address varchar(255),
-    telno varchar(255) ,
-    email varchar(255) ,
-    logDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
->>>>>>> 8c59a67 (0419)
+delete from user
+where user_id= 'k12';

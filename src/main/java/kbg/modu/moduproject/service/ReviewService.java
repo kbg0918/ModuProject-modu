@@ -1,6 +1,6 @@
-package kbg.modu.moduproject.Service;
+package kbg.modu.moduproject.service;
 
-import kbg.modu.moduproject.domain.Member;
+import kbg.modu.moduproject.domain.User;
 import kbg.modu.moduproject.domain.Review;
 import kbg.modu.moduproject.repo.ReviewRepository;
 import kbg.modu.moduproject.repo.SignUpRepository;
@@ -26,9 +26,7 @@ public class ReviewService {
     Date time =new Date();
     String localtime = format.format(time);
     
-    public void Id(Member m){
-        System.out.println(m.getSt_id()+"아이디 테스트 슈웃~");
-    }
+
     //만들고 싶은 것 : St_id에 김길동이 아닌 Member 테이블에 있는 St_id값과 일치하는 것이 표시되도록
     int cnt =0;
     @Transactional
