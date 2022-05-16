@@ -1,7 +1,7 @@
 package kbg.modu.moduproject.repo.impl;
 
 import kbg.modu.moduproject.domain.User;
-import kbg.modu.moduproject.repo.SignUpRepository;
+import kbg.modu.moduproject.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SignUpImp implements SignUpRepository {
+public class UserImp implements UserRepository {
 
     @Autowired
     JdbcTemplate tp;

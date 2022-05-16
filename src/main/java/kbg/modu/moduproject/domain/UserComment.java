@@ -9,14 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Review {
-    private int seq;
+public class UserComment {
+    private int uc_seq;
     private int total;
-    private int star;
+    private int star_score;
+    private int user_like;
+    private int user_unlike;
+    private int user_seq;
     private String content;
     private String writer;
-    private String St_id;
-    private String St_role;
     private String add_date;
     private String up_date;
 

@@ -1,8 +1,9 @@
 package kbg.modu.moduproject;
 
-import kbg.modu.moduproject.domain.Review;
-import kbg.modu.moduproject.repo.ReviewRepository;
-import kbg.modu.moduproject.repo.SignUpRepository;
+import kbg.modu.moduproject.domain.Board;
+import kbg.modu.moduproject.repo.BoardRepository;
+import kbg.modu.moduproject.repo.UserCommentRepository;
+import kbg.modu.moduproject.repo.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,14 +11,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class ModuProjectApplicationTests {
     @Autowired
-    SignUpRepository sr;
+    UserRepository sr;
 
     @Autowired
-    ReviewRepository rr;
+    BoardRepository br;
+
+    @Autowired
+    UserCommentRepository rr;
     @Test
     void contextLoads() {
-        rr.insert(new Review(1,5,3,"내용","길동","길동","Student","11/11/11","11/11/11"));
-
+        br.insert(new Board(1,"응","a","a","a",1,2,1,"11","11"));
     }
 
 
