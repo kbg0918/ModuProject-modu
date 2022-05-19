@@ -1,22 +1,22 @@
 package kbg.modu.moduproject.controller;
 
-import kbg.modu.moduproject.service.UserCommentService;
-import kbg.modu.moduproject.domain.UserComment;
+import kbg.modu.moduproject.service.MemberCommentService;
+import kbg.modu.moduproject.domain.MemberComment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class UserCommentController {
+public class MemberCommentController {
 
     @Autowired
-    UserCommentService rs;
+    MemberCommentService rs;
     /**
      * 리뷰
      */
-    @RequestMapping("/userComment")
+    @RequestMapping("/memberComment")
     public String review(){
-        return "UserComment";
+        return "MemberComment";
     }
     @RequestMapping("/ITest")
     public String InsertForm(){
@@ -31,18 +31,18 @@ public class UserCommentController {
         return "UpdateTest";
     }
     @RequestMapping("/InTest")
-    public String InsertContent(UserComment r) {
+    public String InsertContent(MemberComment r) {
         rs.insertContent(r);
-        return "UserComment";
+        return "MemberComment";
     }
     @RequestMapping("/DeTest")
-    public String DeleteContent(UserComment r) {
+    public String DeleteContent(MemberComment r) {
         rs.deleteContent(r);
-        return "UserComment";
+        return "MemberComment";
     }
     @RequestMapping("/UpTest")
-    public String UpdateContent(UserComment r) {
+    public String UpdateContent(MemberComment r) {
         rs.UpdateContent(r);
-        return "UserComment";
+        return "MemberComment";
     }
 }

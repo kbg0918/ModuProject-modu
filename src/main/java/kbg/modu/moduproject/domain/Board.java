@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,8 +17,6 @@ public class Board {
     private String writer;
     private String content;
     private String user_role;
-    private int user_like;
-    private int user_unlike;
     private int user_seq;
     private String add_date;
     private String up_date;

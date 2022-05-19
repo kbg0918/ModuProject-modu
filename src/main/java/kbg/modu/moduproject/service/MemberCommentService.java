@@ -1,8 +1,8 @@
 package kbg.modu.moduproject.service;
 
-import kbg.modu.moduproject.domain.UserComment;
-import kbg.modu.moduproject.repo.UserCommentRepository;
-import kbg.modu.moduproject.repo.UserRepository;
+import kbg.modu.moduproject.domain.MemberComment;
+import kbg.modu.moduproject.repo.MemberCommentRepository;
+import kbg.modu.moduproject.repo.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +13,13 @@ import java.util.Date;
 
 @Service
 @RequiredArgsConstructor
-public class UserCommentService {
+public class MemberCommentService {
 
     @Autowired
-    UserCommentRepository rr;
+    MemberCommentRepository rr;
 
     @Autowired
-    UserRepository sr;
+    MemberRepository sr;
 
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:sss");
     Date time =new Date();
@@ -30,7 +30,7 @@ public class UserCommentService {
     int cnt =0;
     int total = 0;
     @Transactional
-    public void insertContent(UserComment r){
+    public void insertContent(MemberComment r){
             total += cnt;
             r.setWriter("홍길동");
             r.setUser_seq(1);
@@ -42,14 +42,14 @@ public class UserCommentService {
     }
 
     @Transactional
-    public void deleteContent(UserComment r){
+    public void deleteContent(MemberComment r){
         r.setUser_seq(1);
         rr.delete(r);
 
     }
 
     @Transactional
-    public void UpdateContent(UserComment r){
+    public void UpdateContent(MemberComment r){
         r.setUp_date(localtime);
         r.setUser_seq(1);
         rr.Update(r);

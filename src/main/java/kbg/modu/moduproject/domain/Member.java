@@ -9,16 +9,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserComment {
-    private int uc_seq;
-    private int total;
-    private int star_score;
-    private int user_like;
-    private int user_unlike;
+public class Member {
     private int user_seq;
-    private String content;
-    private String writer;
+    private String user_id;
+    private String user_password;
+    private String user_name;
+    private String user_address;
+    private String user_telno;
+    private String user_email;
+    private String user_role;
+    private String category;
     private String add_date;
     private String up_date;
-
 }
+

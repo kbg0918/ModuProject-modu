@@ -2,6 +2,7 @@ package kbg.modu.moduproject.controller;
 
 
 import kbg.modu.moduproject.domain.Board;
+import kbg.modu.moduproject.domain.Member;
 import kbg.modu.moduproject.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,8 +36,8 @@ public class BoardController {
     }
 
     @RequestMapping("/insert")
-    public String insertBoard(Board b){
-        bs.insertBoard(b);
+    public String insertBoard(Board b, Member m){
+        bs.insertBoard(b, m);
         return "Board";
     }
 

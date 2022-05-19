@@ -1,8 +1,8 @@
 package kbg.modu.moduproject.controller;
 
-import kbg.modu.moduproject.service.UserCommentService;
+import kbg.modu.moduproject.service.MemberCommentService;
 import kbg.modu.moduproject.service.SignUpService;
-import kbg.modu.moduproject.domain.User;
+import kbg.modu.moduproject.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ public class SignUpController {
     SignUpService ss;
 
     @Autowired
-    UserCommentService rs;
+    MemberCommentService rs;
 
 
     /**
@@ -34,7 +34,7 @@ public class SignUpController {
 
     //실제 회원가입하는 곳
     @RequestMapping("/signUp")
-    public String signUp(User m) {
+    public String signUp(Member m) {
         ss.joinSignUp(m);
         return "Main";
 

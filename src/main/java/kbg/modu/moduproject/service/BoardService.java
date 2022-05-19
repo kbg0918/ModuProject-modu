@@ -1,7 +1,7 @@
 package kbg.modu.moduproject.service;
 
 import kbg.modu.moduproject.domain.Board;
-import kbg.modu.moduproject.domain.User;
+import kbg.modu.moduproject.domain.Member;
 import kbg.modu.moduproject.repo.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BoardService {
-    List<Board> list = new ArrayList<>();
+
     @Autowired
     BoardRepository br;
 
@@ -25,32 +25,27 @@ public class BoardService {
     Date time =new Date();
     String localtime = format.format(time);
 
-
     @Transactional
-    public void insertBoard(Board b){
-        list = br.findByCategory(1);
-        b.setCategory("Education");
-        b.setWriter("작성자");
+    public void insertBoard(Board b, Member m){
+        //Member member = br.findByName(m.getUser_name());
+        b.setWriter("gd");
         b.setContent(b.getContent());
         b.setUser_role("student");
-        b.setUser_like(b.getUser_like());
-        b.setUser_unlike(b.getUser_unlike());
-        b.setUser_seq(1);
         b.setAdd_date(localtime);
         b.setUp_date(localtime);
-
         br.insert(b);
     }
 
     @Transactional
     public void deleteBoard(Board b){
-        b.setUser_seq(1);
+        b.setWriter(b.getWriter());
         br.delete(b);
     }
 
     @Transactional
     public void updateBoard(Board b){
-        b.setUser_seq(1);
+        b.setUp_date(localtime);
+        b.setWriter("gd");
         br.update(b);
     }
 }
