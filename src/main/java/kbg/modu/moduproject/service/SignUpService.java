@@ -18,10 +18,6 @@ public class SignUpService {
     @Autowired
     MemberRepository sr;
 
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:sss");
-    Date time =new Date();
-    String localtime = format.format(time);
-
     // Id 중복체크
     public boolean checkId(String user_id){
         Member m = sr.findById(user_id);
@@ -38,13 +34,10 @@ public class SignUpService {
     //회원가입
     @Transactional
     public void joinSignUp(Member m){
-        if(checkId(m.getUser_id())){
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            m.setUser_password(passwordEncoder.encode(m.getUser_password()));
-            m.setAdd_date(localtime);
-            m.setUp_date(localtime);
-            sr.save(m);
-        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        m.setUser_password(passwordEncoder.encode(m.getUser_password()));
+        sr.save(m);
+
     }
 
 }

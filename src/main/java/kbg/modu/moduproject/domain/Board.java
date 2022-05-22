@@ -18,6 +18,4 @@ public class Board {
     private String content;
     private String user_role;
     private int user_seq;
-    private String add_date;
-    private String up_date;
 }

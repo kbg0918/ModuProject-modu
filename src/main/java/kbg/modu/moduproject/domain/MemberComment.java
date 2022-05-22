@@ -16,7 +16,5 @@ public class MemberComment {
     private int user_seq;
     private String content;
     private String writer;
-    private String add_date;
-    private String up_date;
 
 }

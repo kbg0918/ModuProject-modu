@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:C:\\h2DB\\2022-springproject-2.db;mode=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  sql:
+    init:
+      mode: always
+  thymeleaf:
+    cache: false
+  h2:
+    console:
+      enabled: true
+---
+spring:
+  config:
+    activate:
+      on-profile: "test"
+  datasource:
+    url: jdbc:h2:mem:2022-springproject-2.db;mode=MySQL
+

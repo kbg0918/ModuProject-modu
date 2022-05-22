@@ -10,7 +10,7 @@ create table if not exists member(
     user_role varchar(255) not null,
     category varchar(255) not null,
     add_date datetime not null DEFAULT CURRENT_TIMESTAMP,
-    up_date datetime not null on update CURRENT_TIMESTAMP
+    up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 drop table member;
@@ -23,7 +23,7 @@ create table if not exists member_comment(
     star_score int not null,
     user_seq int null,
     add_date datetime not null DEFAULT CURRENT_TIMESTAMP,
-    up_date datetime not null on update CURRENT_TIMESTAMP
+    up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 drop table member_comment;
@@ -59,7 +59,7 @@ create table if not exists board(
     user_role varchar(255) not null,
     user_seq int null,
     add_date datetime not null DEFAULT CURRENT_TIMESTAMP,
-    up_date datetime not null on update CURRENT_TIMESTAMP
+    up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 drop table board;
@@ -127,6 +127,6 @@ drop table login_log;
 create table if not exists member_like(
     like_seq int auto_increment primary key,
     user_seq int,
-    flag boolean not null default 0
+    flag int(1)
 
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

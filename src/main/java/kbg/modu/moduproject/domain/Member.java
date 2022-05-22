@@ -19,7 +19,5 @@ public class Member {
     private String user_email;
     private String user_role;
     private String category;
-    private String add_date;
-    private String up_date;
 }
 

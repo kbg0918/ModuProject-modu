@@ -16,9 +16,8 @@ public class MemberImp implements MemberRepository {
 
     @Override
     public void save(Member m) {
-        tp.update("insert into member(user_id, user_password, user_name, user_address, user_telno, user_email, user_role, category, add_date, up_date) values(?,?,?,?,?,?,?,?,?,?)",
-                m.getUser_id(), m.getUser_password(), m.getUser_name(), m.getUser_address(), m.getUser_telno(), m.getUser_email(), m.getUser_role(), m.getCategory(),
-                m.getAdd_date(), m.getUp_date());
+        tp.update("insert into member(user_id, user_password, user_name, user_address, user_telno, user_email, user_role, category) values(?,?,?,?,?,?,?,?)",
+                m.getUser_id(), m.getUser_password(), m.getUser_name(), m.getUser_address(), m.getUser_telno(), m.getUser_email(), m.getUser_role(), m.getCategory());
     }
     @Override
     public Member findById(String user_id) {

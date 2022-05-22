@@ -15,10 +15,10 @@ public class MemberCommentImp implements MemberCommentRepository {
     JdbcTemplate tp;
 
     @Override
-    public MemberComment findById(String St_id) {
+    public MemberComment findById(String user_id) {
         try{
-            return tp.queryForObject("select * from member_comment where St_id = ?",
-                    new BeanPropertyRowMapper<>(MemberComment.class),St_id);
+            return tp.queryForObject("select * from member_comment where user_id = ?",
+                    new BeanPropertyRowMapper<>(MemberComment.class),user_id);
         }catch (EmptyResultDataAccessException e){
             return null;
         }
@@ -27,8 +27,8 @@ public class MemberCommentImp implements MemberCommentRepository {
 
     @Override
     public void insert(MemberComment r) {
-        tp.update("insert into member_comment(star_score, content, writer, user_seq, add_date, up_date) values(?,?,?,?,?,?)",
-                r.getStar_score(), r.getContent(), r.getWriter(), r.getUser_seq(), r.getAdd_date(), r.getUp_date());
+        tp.update("insert into member_comment(star_score, content, writer, user_seq) values(?,?,?,?)",
+                r.getStar_score(), r.getContent(), r.getWriter(), r.getUser_seq());
 
     }
 
@@ -40,8 +40,8 @@ public class MemberCommentImp implements MemberCommentRepository {
 
     @Override
     public void Update(MemberComment r) {
-        tp.update("update member_comment set star_score = ?, content = ?, up_date = ? where writer=?",
-                r.getStar_score(), r.getContent(), r.getUp_date(), r.getWriter());
+        tp.update("update member_comment set star_score = ?, content = ? where writer=?",
+                r.getStar_score(), r.getContent(), r.getWriter());
     }
 
 }

@@ -21,18 +21,13 @@ public class BoardService {
     @Autowired
     BoardRepository br;
 
-    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:sss");
-    Date time =new Date();
-    String localtime = format.format(time);
 
     @Transactional
     public void insertBoard(Board b, Member m){
-        //Member member = br.findByName(m.getUser_name());
+        //Member member = br.findByName(m.getUser_id);
         b.setWriter("gd");
         b.setContent(b.getContent());
         b.setUser_role("student");
-        b.setAdd_date(localtime);
-        b.setUp_date(localtime);
         br.insert(b);
     }
 
@@ -44,7 +39,6 @@ public class BoardService {
 
     @Transactional
     public void updateBoard(Board b){
-        b.setUp_date(localtime);
         b.setWriter("gd");
         br.update(b);
     }
