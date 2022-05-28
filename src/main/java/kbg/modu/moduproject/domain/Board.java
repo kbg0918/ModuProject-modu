@@ -12,10 +12,16 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Builder
 public class Board {
-    private int board_seq;
+    //게시글 조회
+    private int boardSeq;
+    //카테고리로 나누기
     private String category;
+    //작성자
     private String writer;
+    //내용
     private String content;
-    private String user_role;
-    private int user_seq;
+    //권한(선배, 교수, 학생)
+    private String memberRole;
+    //member table 참조
+    private int memberSeq;
 }

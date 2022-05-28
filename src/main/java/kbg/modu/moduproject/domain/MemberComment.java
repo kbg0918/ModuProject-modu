@@ -10,11 +10,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class MemberComment {
-    private int mc_seq;
+    //리뷰 조회
+    private int memberCommentSeq;
+    //전체 리뷰 수
     private int total;
-    private int star_score;
-    private int user_seq;
-    private String content;
+    //작성자
     private String writer;
+    //리뷰 내용
+    private String content;
+    //별점
+    private int starScore;
+    //member table 참조
+    private int memberSeq;
+
 
 }

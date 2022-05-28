@@ -15,15 +15,15 @@ public class MemberImp implements MemberRepository {
     JdbcTemplate tp;
 
     @Override
-    public void save(Member m) {
-        tp.update("insert into member(user_id, user_password, user_name, user_address, user_telno, user_email, user_role, category) values(?,?,?,?,?,?,?,?)",
-                m.getUser_id(), m.getUser_password(), m.getUser_name(), m.getUser_address(), m.getUser_telno(), m.getUser_email(), m.getUser_role(), m.getCategory());
+    public void insert(Member m) {
+        tp.update("insert into member(id, pw, memberName, address, telNo, email, memberRole, category) values(?,?,?,?,?,?,?,?)",
+                m.getId(), m.getPw(), m.getMemberName(), m.getAddress(), m.getTelNo(), m.getEmail(), m.getMemberRole(), m.getCategory());
     }
     @Override
-    public Member findById(String user_id) {
+    public Member findById(String id) {
         try{
-            return tp.queryForObject("select * from member where user_id = ?",
-                    new BeanPropertyRowMapper<>(Member.class), user_id);
+            return tp.queryForObject("select * from member where id = ?",
+                    new BeanPropertyRowMapper<>(Member.class), id);
         }catch (EmptyResultDataAccessException e){
             return null;
         }

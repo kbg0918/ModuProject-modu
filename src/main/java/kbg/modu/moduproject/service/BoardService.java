@@ -27,7 +27,7 @@ public class BoardService {
         //Member member = br.findByName(m.getUser_id);
         b.setWriter("gd");
         b.setContent(b.getContent());
-        b.setUser_role("student");
+        b.setMemberRole("student");
         br.insert(b);
     }
 

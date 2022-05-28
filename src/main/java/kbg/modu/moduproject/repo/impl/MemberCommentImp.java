@@ -15,10 +15,10 @@ public class MemberCommentImp implements MemberCommentRepository {
     JdbcTemplate tp;
 
     @Override
-    public MemberComment findById(String user_id) {
+    public MemberComment findById(String id) {
         try{
-            return tp.queryForObject("select * from member_comment where user_id = ?",
-                    new BeanPropertyRowMapper<>(MemberComment.class),user_id);
+            return tp.queryForObject("select * from member_comment where id = ?",
+                    new BeanPropertyRowMapper<>(MemberComment.class),id);
         }catch (EmptyResultDataAccessException e){
             return null;
         }
@@ -27,8 +27,8 @@ public class MemberCommentImp implements MemberCommentRepository {
 
     @Override
     public void insert(MemberComment r) {
-        tp.update("insert into member_comment(star_score, content, writer, user_seq) values(?,?,?,?)",
-                r.getStar_score(), r.getContent(), r.getWriter(), r.getUser_seq());
+        tp.update("insert into member_comment(starScore, content, writer) values(?,?,?)",
+                r.getStarScore(), r.getContent(), r.getWriter());
 
     }
 
@@ -40,8 +40,8 @@ public class MemberCommentImp implements MemberCommentRepository {
 
     @Override
     public void Update(MemberComment r) {
-        tp.update("update member_comment set star_score = ?, content = ? where writer=?",
-                r.getStar_score(), r.getContent(), r.getWriter());
+        tp.update("update member_comment set starScore = ?, content = ? where writer=?",
+                r.getStarScore(), r.getContent(), r.getWriter());
     }
 
 }

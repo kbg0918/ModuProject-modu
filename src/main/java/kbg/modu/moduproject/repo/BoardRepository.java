@@ -6,7 +6,7 @@ import kbg.modu.moduproject.domain.Member;
 import java.util.List;
 
 public interface BoardRepository {
-     Member findByName(String user_name);
+     Member findByName(String name);
      void insert(Board b);
      void delete(Board b);
      void update(Board b);

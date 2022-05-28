@@ -18,16 +18,16 @@ public class BoardImp implements BoardRepository {
 
 
     @Override
-    public Member findByName(String user_id) {
-        return tp.queryForObject("select user_name from member where user_id = ?",
-                new BeanPropertyRowMapper<>(Member.class),user_id);
+    public Member findByName(String id) {
+        return tp.queryForObject("select memberName from member where id = ?",
+                new BeanPropertyRowMapper<>(Member.class),id);
 
     }
 
     @Override
     public void insert(Board b) {
-        tp.update("insert into board(category, writer, content, user_role, user_seq) value(?,?,?,?,?)",
-                b.getCategory(), b.getWriter(), b.getContent(), b.getUser_role(), b.getUser_seq());
+        tp.update("insert into board(category, writer, content, memberRole) value(?,?,?,?)",
+                b.getCategory(), b.getWriter(), b.getContent(), b.getMemberRole());
     }
 
     @Override
