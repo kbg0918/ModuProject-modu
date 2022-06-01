@@ -22,12 +22,9 @@ public class SignUpController {
      * @Return
      */
     //url 회원가입
-    @RequestMapping("/")
-    public String mainForm() {
-        return "Main";
-    };
 
-    @RequestMapping("/signUpForm")
+
+    @RequestMapping("/SignUpForm")
     public String signUpForm() {
         return "signUp";
     };
