@@ -15,7 +15,7 @@ public class Member {
     //회원 아이디
     private String id;
     //회원 패스워드
-    private String pw;
+    private String pwd;
     //회원 이름
     private String memberName;
     //회원 주소

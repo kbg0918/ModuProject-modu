@@ -2,7 +2,7 @@
 create table if not exists member(
     seq int auto_increment primary key,
     id varchar(255) unique,
-    pw varchar(255) not null,
+    pwd varchar(255) not null,
     member_name varchar(255) not null,
     address varchar(255),
     telNo varchar(255) ,

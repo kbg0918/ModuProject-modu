@@ -12,13 +12,6 @@ spring:
   h2:
     console:
       enabled: true
----
-spring:
-  config:
-    activate:
-      on-profile: "test"
-  datasource:
-    url: jdbc:h2:mem:2022-springproject-2.db;mode=MySQL
 
 ---
 spring:

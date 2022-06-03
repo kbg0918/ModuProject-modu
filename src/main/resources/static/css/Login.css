@@ -1,11 +1,10 @@
 @charset "UTF-8";
 @font-face {
-    font-family: 'LeeSeoyun';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202-2@1.0/LeeSeoyun.woff') format('woff');
+    font-family: 'EarlyFontDiary';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_220508@1.0/EarlyFontDiary.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
-
 @charset "UTF-8";
 
 
@@ -81,7 +80,7 @@
 #mainNav .navbar-nav .nav-item .nav-link {
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 1.5rem;
-    font-family: 'LeeSeoyun';
+    font-family: 'EarlyFontDiary';
     color: #333439;
     letter-spacing: 0.0625em;
 }
@@ -130,7 +129,7 @@ html,body{
     background-repeat: no-repeat;
     object-fit:cover;
     height: 100%;
-    font-family: 'LeeSeoyun', sans-serif;
+    font-family: 'EarlyFontDiary', sans-serif;
 }
 
 .container{
