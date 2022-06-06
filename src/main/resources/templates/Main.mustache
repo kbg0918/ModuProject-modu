@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -21,15 +21,22 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
-                <li class="nav-item"><a class="nav-link" href="#portfolio">커뮤니티</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">((들어갈 자리))</a></li>
+                {{^member}}
                 <li class="nav-item"><a class="nav-link" href="LoginForm">로그인</a></li>
                 <li class="nav-item"><a class="nav-link" href="SignUpForm">회원가입</a></li>
+                {{/member}}
+                {{#member}}
+                <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
+                <li class="nav-item"><a class="nav-link" href="#portfolio">커뮤니티</a></li>
+                <li class="nav-item"><a class="nav-link" href="#about">미정</a></li>
+                <li class="nav-item"><a class="nav-link" href="MyPage">{{id}}님</a></li>
+                <li class="nav-item"><a class="nav-link" href="Logout">로그아웃</a></li>
+                {{/member}}
             </ul>
         </div>
     </div>
 </nav>
+
 <!-- Masthead-->
 <header class="masthead">
     <div class="container">

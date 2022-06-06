@@ -24,7 +24,6 @@ public class LoginService {
     @Transactional
     public boolean checkLogin(String id, String pwd){
         Member member = mr.findById(id);
-        System.out.println("id느느느느느느은?"+id);
         //DB에 사용자가 없거나, 비밀번호가 지정이 안되있거나
         if(ObjectUtils.isEmpty(member) || !StringUtils.hasText(member.getPwd()))
             return false;
@@ -36,7 +35,7 @@ public class LoginService {
         return member.getPwd().equals(pwd);
     }
     @Transactional
-    public boolean login(String id, String pwd, String ip){
+    public boolean login(String id, String pwd, String ip, String memberRole){
 
         //로그 저장
         boolean  result = checkLogin(id, pwd);
@@ -44,8 +43,10 @@ public class LoginService {
         LoginLog log = LoginLog.builder()
                 .id(id)
                 .loginStatus(result ? "Y" : "N")
+                .memberRole(memberRole)
                 .ip(ip).build();
         llr.save(log);
+
 
         // useYN 설정
         List<LoginLog> lastLogs = llr.lastNumLogs(id, 5);

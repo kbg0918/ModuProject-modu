@@ -22,7 +22,7 @@ public class LoginLogImp implements LoginLogRepository {
 
     @Override
     public void save(LoginLog log) {
-        template.update("insert into login_log(id, ip, login_status) values ( ?,?,? )",
-                log.getId(), log.getIp(), log.getLoginStatus());
+        template.update("insert into login_log(id, ip, member_role, login_status) values (?,?,?,?)",
+                log.getId(), log.getIp(), log.getMemberRole(), log.getLoginStatus());
     }
 }

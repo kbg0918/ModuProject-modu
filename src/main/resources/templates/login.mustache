@@ -5,7 +5,7 @@
 
 <!DOCTYPE html>
 <meta charset="utf-8">
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>MODU - 5000만 국민의 선택</title>
     <!--Made with love by Mutiullah Samim -->
@@ -30,16 +30,23 @@
                 Menu
                 <i class="fas fa-bars ms-1"></i>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    {{^member}}
+                    <li class="nav-item"><a class="nav-link" href="LoginForm">로그인</a></li>
+                    <li class="nav-item"><a class="nav-link" href="SignUpForm">회원가입</a></li>
+                    {{/member}}
+                    {{#member}}
                     <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
                     <li class="nav-item"><a class="nav-link" href="#portfolio">커뮤니티</a></li>
                     <li class="nav-item"><a class="nav-link" href="#about">((들어갈 자리))</a></li>
-                    <li class="nav-item"><a class="nav-link" href="LoginForm">로그인</a></li>
-                    <li class="nav-item"><a class="nav-link" href="SignUpForm">회원가입</a></li>
+                    {{/member}}
                 </ul>
             </div>
+
         </div>
+
     </nav>
 </header>
 <body id="page-top">
@@ -72,6 +79,11 @@
                     <div class="row align-items-center remember">
                         <input type="checkbox">비밀번호 저장
                     </div>
+                    <div class="row align-items-center remember">
+                        <input type="radio"  name="memberRole" value="Student">학생
+                        <input type="radio"  name="memberRole" value="Senior">선배
+                    </div>
+
                     <div class="form-group">
                         <input type="submit" value="Login" class="btn float-right login_btn">
                     </div>

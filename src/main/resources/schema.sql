@@ -9,6 +9,7 @@ create table if not exists member(
     email varchar(255) ,
     member_role varchar(255) not null,
     category varchar(255) not null,
+    useYn varchar(1) default 'Y' not null,
     privacy char(1) default 'N' comment '개인정보 동의',
     add_date datetime not null DEFAULT CURRENT_TIMESTAMP,
     up_date datetime on update CURRENT_TIMESTAMP
@@ -107,7 +108,7 @@ create table if not exists login_log (
     ip varchar(255),
     member_role varchar(255) not null,
     login_status char(1) not null,
-    add_date datetime DEFAULT CURRENT_TIMESTAMP comment '로그인 시간'
+    login_dttm datetime DEFAULT CURRENT_TIMESTAMP comment '로그인 시간'
 
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

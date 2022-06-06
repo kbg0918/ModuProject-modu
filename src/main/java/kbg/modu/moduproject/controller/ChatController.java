@@ -2,21 +2,32 @@ package kbg.modu.moduproject.controller;
 
 
 import kbg.modu.moduproject.domain.ChatMessage;
+import kbg.modu.moduproject.repo.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ChatController {
 
+    @Autowired
+    MemberRepository mr;
 
-    @GetMapping("/MODUChatting")
+    @RequestMapping("/MODUChatting")
     public String indexFrom(){
         return "/MODUChat";
+    }
+
+    @RequestMapping("/MODUChat")
+    public String geMembers(ModelMap mm){
+        mm.put("members",mr.findAll());
+        return "MODUChat";
     }
 
 
