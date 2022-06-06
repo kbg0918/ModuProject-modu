@@ -21,12 +21,14 @@ public class MemberImp implements MemberRepository {
     }
     @Override
     public Member findById(String id) {
-        try{
-            return tp.queryForObject("select * from member where id = ?",
-                    new BeanPropertyRowMapper<>(Member.class), id);
-        }catch (EmptyResultDataAccessException e){
-            return null;
-        }
+        return tp.queryForObject("select * from member where id = ?",
+                new BeanPropertyRowMapper<>(Member.class), id);
+    }
+    @Override
+    public void update(Member m) {
+        tp.update("update member set pwd = ?, memberName = ?, address = ?, telNo = ?, email = ?, memeberRole = ?, category = ?, useyn = ?" +
+                        "where seq = ?",
+                m.getPwd(), m.getMemberName(), m.getAddress(), m.getTelNo(), m.getEmail() , m.getMemberRole() ,m.getCategory() ,m.getUseYn(), m.getSeq());
 
     }
 }

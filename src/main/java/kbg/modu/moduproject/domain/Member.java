@@ -30,5 +30,7 @@ public class Member {
     private String category;
     //개인정보 동의
     private String privacy;
+    //개정 활성화 여부
+    private String useYn;
 }
 

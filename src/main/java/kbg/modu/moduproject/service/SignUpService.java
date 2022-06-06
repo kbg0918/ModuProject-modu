@@ -15,19 +15,6 @@ public class SignUpService {
     @Autowired
     MemberRepository sr;
 
-    // Id 중복체크
-    public boolean checkId(String id){
-        Member m = sr.findById(id);
-        if(m != null || id == null){
-            System.out.println("중복!!");
-            System.out.println(id);
-            return false;
-        }else {
-            System.out.println("중복안됨");
-            return true;
-        }
-    }
-
     //회원가입
     @Transactional
     public void joinSignUp(Member m){
