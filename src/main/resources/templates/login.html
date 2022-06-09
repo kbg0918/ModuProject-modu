@@ -33,15 +33,18 @@
 
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    {{^member}}
+                    <th:block th:unless="${session.member}">
                     <li class="nav-item"><a class="nav-link" href="LoginForm">로그인</a></li>
                     <li class="nav-item"><a class="nav-link" href="SignUpForm">회원가입</a></li>
-                    {{/member}}
-                    {{#member}}
-                    <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portfolio">커뮤니티</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">((들어갈 자리))</a></li>
-                    {{/member}}
+                    </th:block>
+
+                    <th:block th:if="${session.member}">
+                        <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#portfolio">커뮤니티</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">미정</a></li>
+                        <li class="nav-item"><a class="nav-link" href="MyPage"><td th:text="${session.member.id}"></td>님</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Logout">로그아웃</a></li>
+                    </th:block>
                 </ul>
             </div>
 

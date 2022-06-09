@@ -21,17 +21,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                {{^member}}
-                <li class="nav-item"><a class="nav-link" href="LoginForm">로그인</a></li>
-                <li class="nav-item"><a class="nav-link" href="SignUpForm">회원가입</a></li>
-                {{/member}}
-                {{#member}}
-                <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
-                <li class="nav-item"><a class="nav-link" href="#portfolio">커뮤니티</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">미정</a></li>
-                <li class="nav-item"><a class="nav-link" href="MyPage">{{id}}님</a></li>
-                <li class="nav-item"><a class="nav-link" href="Logout">로그아웃</a></li>
-                {{/member}}
+                <th:block th:unless="${session.member}">
+                    <li class="nav-item"><a class="nav-link" href="LoginForm">로그인</a></li>
+                    <li class="nav-item"><a class="nav-link" href="SignUpForm">회원가입</a></li>
+                </th:block>
+                <th:block th:if="${session.member}">
+                    <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portfolio">커뮤니티</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">미정</a></li>
+                    <li class="nav-item"><a class="nav-link" href="MyPage"><td th:text="${session.member.id}"></td>님</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Logout">로그아웃</a></li>
+                </th:block>
             </ul>
         </div>
     </div>
@@ -39,11 +39,21 @@
 
 <!-- Masthead-->
 <header class="masthead">
-    <div class="container">
-        <div class="masthead-subheading">MODU를 찾아주셔서 감사합니다.</div>
-        <div class="masthead-heading text-uppercase" >모르는 것이 있을 때는???</div>
-        <a class="btn btn-primary btn-xl text-uppercase" href="MODUChatting">매칭하기</a>
-    </div>
+    <th:block th:if="${session.member}">
+        <div class="container">
+            <div class="masthead-subheading">MODU를 찾아주셔서 감사합니다.</div>
+            <div class="masthead-heading text-uppercase" >모르는 것이 있을 때는???</div>
+            <a class="btn btn-primary btn-xl text-uppercase" href="MODUChatting">매칭하기</a>
+        </div>
+    </th:block>
+    <th:block th:unless="${session.member}">
+        <div class="container">
+            <div class="masthead-subheading">MODU를 찾아주셔서 감사합니다.</div>
+            <div class="masthead-heading text-uppercase" >모르는 것이 있을 때는???</div>
+            <a class="btn btn-primary btn-xl text-uppercase" href="MODUChatting">MODU</a>
+        </div>
+    </th:block>
+
 </header>
 <!-- Services-->
 <section class="page-section" id="services">
@@ -56,17 +66,23 @@
 </section>
 <!-- Portfolio Grid-->
 <section class="page-section bg-light" id="portfolio">
-    <div class="container">
-        <div class="text-center">
-            <h2 class="section-heading text-uppercase">Community</h2>
-            <h3 class="section-subheading text-muted">게시판 들어갈 자리</h3>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 col-sm-6 mb-4">
-                상위 몇개의 게시판이 들어갔으면 좋겠습니다.
+    <th:block th:if="${session.member}">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Community</h2>
+                <h3 class="section-subheading text-muted">게시판 들어갈 자리</h3>
             </div>
-    </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    상위 몇개의 게시판이 들어갔으면 좋겠습니다.
+                </div>
+            </div>
+        </div>
+    </th:block>
+    <th:block th:unless="${session.member}">
+    </th:block>
 </section>
+
 <!-- About-->
 <section class="page-section" id="about">
     <div class="container">

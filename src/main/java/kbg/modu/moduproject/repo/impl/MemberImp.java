@@ -37,6 +37,11 @@ public class MemberImp implements MemberRepository {
                         "where seq = ?",
                 m.getPwd(), m.getMemberName(), m.getAddress(), m.getTelNo(), m.getEmail() , m.getMemberRole() ,m.getCategory() ,m.getUseYn(), m.getSeq());
     }
+    @Override
+    public void useYnUpdate(Member m) {
+        tp.update("update member set useyn = ? where id = ?",
+                m.getUseYn(), m.getId());
+    }
 
     @Override
     public List<Member> findAll() {
