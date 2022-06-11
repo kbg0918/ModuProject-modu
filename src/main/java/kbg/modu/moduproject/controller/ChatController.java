@@ -20,13 +20,13 @@ public class ChatController {
     MemberRepository mr;
 
     @RequestMapping("/MODUChatting")
-    public String indexFrom(){
+    public String indexFrom() {
         return "/MODUChat";
     }
 
     @RequestMapping("/MODUChat")
-    public String geMembers(ModelMap mm){
-        mm.put("members",mr.findAll());
+    public String geMembers(ModelMap mm) {
+        mm.put("members", mr.findAll());
         return "MODUChat";
     }
 

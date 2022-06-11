@@ -1,1 +1,0 @@
-insert into member(seq, id, pwd, member_name, address, telNo, email, member_role, category) values(1,'korea1','1234','고길동','강서구','010-1111-1111','modu@aaa.com','Student','educate')
