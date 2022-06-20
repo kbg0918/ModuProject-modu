@@ -121,3 +121,15 @@ create table if not exists member_like(
     flag int(1)
 
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists professor_commission(
+    pc_seq int auto_increment primary key,
+    title varchar(2555) not null,
+    content varchar(10000) not null,
+    category varchar(255) not null,
+    member_seq int,
+    del_yn char(1) DEFAULT 'N' not null,
+    add_date datetime DEFAULT CURRENT_TIMESTAMP,
+    up_date datetime on update CURRENT_TIMESTAMP
+
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
