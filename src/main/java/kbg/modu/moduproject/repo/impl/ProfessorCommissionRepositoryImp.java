@@ -34,7 +34,7 @@ public class ProfessorCommissionRepositoryImp implements ProfessorCommissionRepo
 
     @Override
     public boolean insert(ProfessorCommission pc) {
-        return tp.update("insert into professor_commission(category, title, content) values(?,?,?)",
-                pc.getCategory(), pc.getTitle(), pc.getContent())==1;
+        return tp.update("insert into professor_commission(category, title, writer, content) values(?,?,?,?)",
+                pc.getCategory(), pc.getTitle(),pc.getWriter(), pc.getContent())==1;
     }
 }

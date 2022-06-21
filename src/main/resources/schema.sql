@@ -125,6 +125,7 @@ create table if not exists member_like(
 create table if not exists professor_commission(
     pc_seq int auto_increment primary key,
     title varchar(2555) not null,
+    writer varchar(100) not null,
     content varchar(10000) not null,
     category varchar(255) not null,
     member_seq int,

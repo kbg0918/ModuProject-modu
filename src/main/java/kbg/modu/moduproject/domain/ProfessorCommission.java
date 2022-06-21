@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class ProfessorCommission {
     private Integer pcSeq;
     private String title;
+    private String writer;
     private String content;
     private String category;
     private Integer memberSeq;
