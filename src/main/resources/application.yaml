@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:h2:file:C:\\h2DB\\2022-springproject-2.db;mode=MySQL
+    url: jdbc:h2:mem:testdb;mode=MySQL
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -24,9 +24,3 @@ spring:
     expose-session-attributes: true
 
 ---
-spring:
-  config:
-    activate:
-      on-profile: test
-  datasource:
-    url: jdbc:h2:mem:testdb;mode=MySQL
