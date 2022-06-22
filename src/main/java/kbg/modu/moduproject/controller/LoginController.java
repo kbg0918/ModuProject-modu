@@ -28,7 +28,7 @@ public class LoginController {
     }
 
     @RequestMapping("/LoginAction")
-    public String LoginAction(@RequestParam String id, @RequestParam String pwd, @RequestParam String memberRole, HttpServletRequest request, HttpSession session){
+    public String LoginAction(@RequestParam String id, @RequestParam String pwd, HttpServletRequest request, HttpSession session){
 
         String ip = request.getHeader("X-Forwarded-For");
         if (ip == null) {
@@ -52,7 +52,7 @@ public class LoginController {
 
         // login 시도. if안의 함수에서 로그인 로그를 자동으로 남긴다.
 
-        if(!ls.login(id, pwd, ip, memberRole) ) {
+        if(!ls.login(id, pwd, ip) ) {
             //로그인 실패시
             return "login";
             //로그인 페이지로 돌아감.

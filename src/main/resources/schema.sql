@@ -106,7 +106,6 @@ create table if not exists login_log (
     login_seq int auto_increment primary key,
     id varchar(255) not null,
     ip varchar(255),
-    member_role varchar(255) not null,
     login_status char(1) not null,
     login_dttm datetime DEFAULT CURRENT_TIMESTAMP comment '로그인 시간'
 

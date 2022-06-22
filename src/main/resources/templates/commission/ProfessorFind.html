@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<script src="https://cdn.tiny.cloud/1/jpqz5uexhj5hxm0hj4xorv4yg0thqqaq33uouodzrof7i7xo/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -18,13 +17,13 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <!--Custom styles-->
-    <link rel="stylesheet" type="text/css" href="../static/css/Commission.css">
+    <link rel="stylesheet" type="text/css" href="../../static/css/ProfessorFind.css">
 </head>
 <header class="masthead">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="../MainForm"><img src="../static/assets/MODU.PNG" alt="..." /></a>
+            <a class="navbar-brand" href="../MainForm"><img src="../../static/assets/MODU.PNG" alt="..." /></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars ms-1"></i>
@@ -62,34 +61,20 @@
 
     </nav>
 </header>
-<script>
-    tinymce.init({
-        plugins : 'save',
-        menubar: 'file edit view insert format tools table help',
-        toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
-        selector: '#tinyText'
-    });
-</script>
 <body>
-<form action="submit" method="post">
-    <div class="select_box">
-        <select id="disable_select" name="category" required>
-            <option value="" disabled selected>카테고리</option>
-            <optgroup label="교육">
-                <option value="Math">수학</option>
-                <option value="English">영어</option>
-                <option value="Korea">국어</option>
-                <option value="Science">과학</option>
-            </optgroup>
-        </select>
-    </div>
-    <div class="tiny_box">
 
-            <input id="inputName" type="text" name="writer" readonly th:value="${session.member.id}"/>
-            <input id="inputId" type="text" name="title" placeholder="제목을 입력하세요."/>
-            <textarea id="tinyText" name="content" style="width: 1000px; height: 500px;"></textarea>
-    </div>
-</form>
+<div class="select_box">
+    <select onchange="this.form.submit()" id="disable_select" name="category" required>
+        <option value="" disabled selected>카테고리</option>
+        <optgroup label="교육">
+            <option value="Math">수학</option>
+            <option value="English">영어</option>
+            <option value="Korea">국어</option>
+            <option value="Science">과학</option>
+        </optgroup>
+    </select>
+</div>
 
 </body>
 </html>
+

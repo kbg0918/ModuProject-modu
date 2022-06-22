@@ -11784,3 +11784,14 @@ section#contact form#contactForm :-ms-input-placeholder {
   font-size: 0.9rem;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
+
+.sub{
+  width: 100px;
+  height: 50px;
+  border: 1px solid #F2DFBC;
+  background-color: #F2DFBC;
+  border-radius: 5px;
+  color: black;
+  padding: 5px;
+}

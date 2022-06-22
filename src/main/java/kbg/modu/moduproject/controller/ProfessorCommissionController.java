@@ -25,34 +25,39 @@ public class ProfessorCommissionController {
     private ProfessorCommissionService ps;
 
     @RequestMapping(value="commission/Form", method = RequestMethod.GET)
-    public String commissionForm(ProfessorCommission pc, HttpServletResponse response, HttpSession session){
+    public String commissionForm(){
         return "commission/Form";
     }
 
     @RequestMapping(value = "commission/submit", method = RequestMethod.POST)
     public String save(ProfessorCommission pc){
         ps.save(pc);
-
-        try {
-            String encode = URLEncoder.encode(pc.getCategory(), "UTF-8");
-            return "redirect:/test?category="+ encode;
-        } catch (Exception e) {
-            e.getMessage();
-            log.error("category null");
-        }
-        return "Main";
+        return "redirect:/commission/List?category="+pc.getCategory();
     }
-    @RequestMapping("test")
+    @RequestMapping("commission/List")
     public String testForm(@RequestParam String category, ModelMap mm){
-        mm.put("list", ps.findByCategory(category));
-        return "test";
-    }
-
-    @RequestMapping(value="commission/List", method = RequestMethod.POST)
-    public String commissionList(@RequestParam String category, ModelMap mm){
         mm.put("list", ps.findByCategory(category));
         return "commission/List";
     }
+
+    @RequestMapping("commission/Find")
+    public String findForm(){
+        return "commission/ProfessorFind";
+    }
+
+    @RequestMapping(value = "commission/ProFind", method = RequestMethod.POST)
+    public String find(@RequestParam String category){
+
+        return "redirect:/commission/List?category="+category;
+    }
+
+    @RequestMapping(value = "commission/detail", method = RequestMethod.GET)
+    public String listDetail(@RequestParam int pcSeq, ModelMap mm){
+        mm.put("list", ps.findBySeq(pcSeq));
+        return "commission/detail";
+    }
+
+
 
 
 

@@ -39,7 +39,7 @@ public class LoginService {
     }
 
     @Transactional
-    public boolean login(String id, String pwd, String ip, String memberRole){
+    public boolean login(String id, String pwd, String ip){
 
         //로그 저장
         boolean  result = checkLogin(id, pwd);
@@ -47,7 +47,6 @@ public class LoginService {
         LoginLog log = LoginLog.builder()
                 .id(id)
                 .loginStatus(result ? "Y" : "N")
-                .memberRole(memberRole)
                 .ip(ip).build();
         llr.save(log);
 

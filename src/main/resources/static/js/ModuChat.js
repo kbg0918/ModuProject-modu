@@ -37,10 +37,14 @@ function onConnected() {
     stompClient.subscribe('/topic/public', onMessageReceived);
 
     // Tell your username to the server
-    stompClient.send("/app/chat.addUser",
+    /*stompClient.send("/modu/chat.addUser",
         {},
         JSON.stringify({sender: username, type: 'JOIN'})
-    )
+    )*/
+    stompClient.subscribe('/queue/' + USER_SEQ, function (event) {
+        // 만일 여기로 메세지가 도착하면 팝업생성하고 채팅방을 개설요칭이 온거임
+        console.log(event);
+    });
 
     connectingElement.classList.add('hidden');
 }
@@ -60,7 +64,7 @@ function sendMessage(event) {
             content: messageInput.value,
             type: 'CHAT'
         };
-        stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
+        stompClient.send("/modu/chat.sendMessage", {}, JSON.stringify(chatMessage));
         messageInput.value = '';
     }
     event.preventDefault();

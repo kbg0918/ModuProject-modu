@@ -15,7 +15,6 @@ public class LoginLog {
     private int seq;
     private String id;
     private String ip;
-    private String memberRole;
     private String loginStatus;
     private Date loginDttm;
 }
