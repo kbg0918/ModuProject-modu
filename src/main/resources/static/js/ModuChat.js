@@ -36,15 +36,18 @@ function onConnected() {
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
 
-    // Tell your username to the server
-    /*stompClient.send("/modu/chat.addUser",
-        {},
-        JSON.stringify({sender: username, type: 'JOIN'})
-    )*/
+    //TODO 전문가인경우 채팅방 생성 요청이 이곳으로 도착함
     stompClient.subscribe('/queue/' + USER_SEQ, function (event) {
         // 만일 여기로 메세지가 도착하면 팝업생성하고 채팅방을 개설요칭이 온거임
         console.log(event);
     });
+
+
+    // Tell your username to the server
+    stompClient.send("/modu/chat.addUser",
+        {},
+        JSON.stringify({sender: username, type: 'JOIN'})
+    )
 
     connectingElement.classList.add('hidden');
 }
