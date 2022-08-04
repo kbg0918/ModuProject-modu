@@ -14,9 +14,11 @@ var username = null;
 var colors = [
     '#2196F3', '#32c787', '#00BCD4', '#ff5652',
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
-];
+];//댓글 등록
+
 
 function connect(event) {
+
     username = document.querySelector('#name').value.trim();
 
     if(username) {
@@ -31,16 +33,21 @@ function connect(event) {
     event.preventDefault();
 }
 
-
 function onConnected() {
+
     // Subscribe to the Public Topic
     stompClient.subscribe('/topic/public', onMessageReceived);
 
+    stompClient.send("/modu/topic/ccr/"+USER_SEQ+"/"+EX_SEQ,{},
+        JSON.stringify({sender: username, type:'JOIN'})
+    )
+
     //TODO 전문가인경우 채팅방 생성 요청이 이곳으로 도착함
-    stompClient.subscribe('/queue/' + USER_SEQ, function (event) {
-        // 만일 여기로 메세지가 도착하면 팝업생성하고 채팅방을 개설요칭이 온거임
+    stompClient.subscribe('/queue/' + EX_SEQ, function (event) {
         console.log(event);
     });
+
+
 
 
     // Tell your username to the server
@@ -49,8 +56,26 @@ function onConnected() {
         JSON.stringify({sender: username, type: 'JOIN'})
     )
 
+    /*if(confirm("방을 여시겠습니까?")==true){
+        alert("open")
+        stompClient.send("topic/ccr/",USER_SEQ,
+            JSON.stringify({sender: username, type: 'JOIN'})
+        )
+    }
+    else{
+        alert("close")
+        location.href="main.html"
+    }
+     */
+
+
+
+
+
+
     connectingElement.classList.add('hidden');
 }
+
 
 
 function onError(error) {

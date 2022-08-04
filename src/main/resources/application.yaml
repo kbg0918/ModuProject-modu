@@ -18,9 +18,3 @@ spring:
   mvc:
     static-path-pattern: /static/**
 
----
-spring:
-  mustache:
-    expose-session-attributes: true
-
----

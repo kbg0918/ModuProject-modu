@@ -18,4 +18,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.setApplicationDestinationPrefixes("/modu");
         registry.enableSimpleBroker("/topic", "/queue");
     }
+
 }

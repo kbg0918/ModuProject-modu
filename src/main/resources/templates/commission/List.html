@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <!--Custom styles-->
-    <link rel="stylesheet" type="text/css" href="../static/css/List.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/Main2.css">
 </head>
 <header class="masthead">
     <!-- Navigation-->
@@ -66,7 +66,7 @@
 <div class="category_card">
     <strong id="head_font">MODU</strong>
     <div class="category_list" th:each="l :${list}">
-        <div class="list" th:onclick="|location.href='@{detail(pcSeq=${l.pcSeq})}'|">
+        <div class="list" th:onclick="|location.href='@{detail(pcSeq=${l.pcSeq}, writer=${l.writer})}'|">
             <strong id="strong_font1" th:utext="${l.title}"></strong>
         </div>
         <strong id="strong_font2" th:utext="${l.writer}+님"></strong>

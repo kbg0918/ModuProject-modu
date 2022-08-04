@@ -1,5 +1,6 @@
 package kbg.modu.moduproject.repo.impl;
 
+import kbg.modu.moduproject.domain.Member;
 import kbg.modu.moduproject.domain.ProfessorCommission;
 import kbg.modu.moduproject.repo.ProfessorCommissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,11 @@ public class ProfessorCommissionRepositoryImp implements ProfessorCommissionRepo
     @Autowired
     JdbcTemplate tp;
 
+
+    @Override
+    public Member findByMemberSeq(String writer) {
+        return tp.queryForObject("select * from member where id =?", new BeanPropertyRowMapper<>(Member.class), writer);
+    }
 
     @Override
     public List<ProfessorCommission> findByCategory(String category) {

@@ -5,7 +5,10 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import kbg.modu.moduproject.domain.ChatMessage;
 import kbg.modu.moduproject.domain.Member;
+import kbg.modu.moduproject.domain.ProfessorCommission;
 import kbg.modu.moduproject.repo.MemberRepository;
+import kbg.modu.moduproject.repo.ProfessorCommissionRepository;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -14,10 +17,12 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -26,10 +31,14 @@ import java.time.LocalDateTime;
 public class ChatController {
 
     @Autowired
-    MemberRepository mr;
+    private MemberRepository mr;
+
+    @Autowired
+    private ProfessorCommissionRepository pc;
 
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
+
 
 
     @RequestMapping("/MODUChatting")
@@ -61,11 +70,13 @@ public class ChatController {
     }
     // js에서 stompClient.send("/modu/topic/ccr/1/2",{},{}) 보내면
     // 1번 사용자가 2번 전문가에게 다이렉트로 메세지를 보낸것임
-    @MessageMapping("/topic/ccr/{userSeq}/{expertSeq}")
+    @MessageMapping("/topic/ccr/{userSeq}/{exSeq}")
+    @SendTo("topic/ccr/{userSeq}/{exSeq}")
     public void createChatRoom(SimpMessageHeaderAccessor headerAccessor
-            ,@DestinationVariable String userSeq
-            ,@DestinationVariable String expertSeq)
+            , @DestinationVariable("userSeq") String userSeq
+            , @DestinationVariable("exSeq") String exSeq)
     {
+        System.out.println(userSeq+exSeq+"긋긋긋~");
 
 
 
@@ -75,6 +86,6 @@ public class ChatController {
         Gson gson = new Gson();
         String jsonStr = gson.toJson(ImmutableMap.of("questioner" , userSeq, "rgstDttm" , ""));
 
-        simpMessagingTemplate.convertAndSend("/queue/" + expertSeq , jsonStr);
+        simpMessagingTemplate.convertAndSend("/queue/" + exSeq , jsonStr);
     }
 }

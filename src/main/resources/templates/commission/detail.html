@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <!--Custom styles-->
-    <link rel="stylesheet" type="text/css" href="../static/css/List.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/Main2.css">
 </head>
 <header class="masthead">
     <!-- Navigation-->
@@ -72,13 +72,53 @@
         <strong id="detail_font2" th:utext="${list.content}"></strong>
     </div>
     <div class="list_chat">
-        <button id="btn1" onclick="location.href='../MODUChatting'">매칭하기</button>
+        <input type="button" id="btn1" onclick="notice()" value="매칭하기">
     </div>
-
 </div>
 </tbody>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+
+<script th:inline="javascript">
+    const USER_SEQ = [[${session.member.seq}]];
+    const EX_SEQ = [[${ex_seq}]];
+    const username = [[${list.writer}]];
+
+
+        var socket = new SockJS('/ws');
+        var stompClient = Stomp.over(socket);
+        const flag = 0;
+
+    stompClient.connect({}, notice);
+
+
+    function notice(){
+
+
+        stompClient.send("/modu/topic/ccr/"+USER_SEQ+"/"+EX_SEQ,{},
+            JSON.stringify({sender: username})
+        )
+        //TODO 전문가인경우 채팅방 생성 요청이 이곳으로 도착함
+        stompClient.subscribe('/queue/' + EX_SEQ, function (event) {
+            console.log(event);
+            if(confirm("질문 요청- 채팅시작")){
+                location.href="../MODUChatting";
+            }
+            else{
+                location.href="../MainForm";
+            }
+        });
+
+
+    }
+
+
+</script>
 
 
 </body>
 </html>
+
 

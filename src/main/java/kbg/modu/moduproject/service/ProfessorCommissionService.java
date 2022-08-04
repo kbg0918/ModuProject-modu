@@ -1,6 +1,7 @@
 package kbg.modu.moduproject.service;
 
 
+import kbg.modu.moduproject.domain.Member;
 import kbg.modu.moduproject.domain.ProfessorCommission;
 import kbg.modu.moduproject.repo.ProfessorCommissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ public class ProfessorCommissionService implements ProfessorCommissionServiceInt
 
     @Autowired
     private ProfessorCommissionRepository pr;
+
 
 
     @Override
@@ -39,4 +41,6 @@ public class ProfessorCommissionService implements ProfessorCommissionServiceInt
         pc.setDelYn("Y");
         return pr.update(pc);
     }
+
+
 }

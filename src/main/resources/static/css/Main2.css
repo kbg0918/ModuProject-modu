@@ -6,7 +6,24 @@
     font-style: normal;
 }
 @charset "UTF-8";
-
+.container,
+.container-fluid,
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+    width: 100%;
+    padding-right: var(--bs-gutter-x, 0.75rem);
+    padding-left: var(--bs-gutter-x, 0.75rem);
+    margin-right: auto;
+    margin-left: auto;
+}
+@media (min-width: 1400px) {
+    .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: 1320px;
+    }
+}
 
 .ms-0 {
     margin-left: 0 !important;
@@ -109,7 +126,7 @@ html{
     background-size: cover;
     background-repeat: no-repeat;
     object-fit:cover;
-    height: 120%;
+    height: 100%;
     font-family: 'EarlyFontDiary', sans-serif;
 }
 body{
@@ -119,7 +136,18 @@ body{
     object-fit:cover;
     font-family: 'EarlyFontDiary', sans-serif;
 }
+.container{
+    height: 100%;
+    align-content: center;
+}
 
+.card{
+    height: 370px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0,0,0,0.5) !important;
+}
 
 
 .social_icon span{
@@ -131,6 +159,9 @@ body{
 .social_icon span:hover{
     color: white;
     cursor: pointer;
+}
+.card-header h3{
+    color: white;
 }
 
 
@@ -301,6 +332,43 @@ header.masthead {
     border-radius: 5px;
     color: black;
     padding: 5px;
+}
+
+.select_box{
+    position: absolute;
+    top: 20%;
+    left: 20%;
+}
+.select_box select option[value=""][disabled]{
+    display: none;
+}
+
+#disable_select{
+    width: 240px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: #cecccc;
+    font-weight: bold;
+
+}
+#disable_select optgroup{
+    background-color: #FFFFFF;
+}
+
+
+.tiny_box{
+    position: absolute;
+    top: 30%;
+    left:20%;
+}
+
+#inputName{
+    width: 1000px;
+    border-radius: 5px;
+}
+#inputId{
+    width: 1000px;
+    border-radius: 5px;
 }
 
 
