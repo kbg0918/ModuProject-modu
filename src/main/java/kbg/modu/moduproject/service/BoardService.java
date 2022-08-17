@@ -1,45 +1,51 @@
 package kbg.modu.moduproject.service;
 
 import kbg.modu.moduproject.domain.Board;
-import kbg.modu.moduproject.domain.Member;
 import kbg.modu.moduproject.repo.BoardRepository;
-import lombok.RequiredArgsConstructor;
+import kbg.modu.moduproject.service.inter.BoardServiceInt;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 
 @Service
-@RequiredArgsConstructor
-public class BoardService {
+public class BoardService implements BoardServiceInt {
 
     @Autowired
-    BoardRepository br;
+    private BoardRepository br;
 
 
-    @Transactional
-    public void insertBoard(Board b, Member m){
-        //Member member = br.findByName(m.getUser_id);
-        b.setWriter("gd");
-        b.setContent(b.getContent());
-        b.setMemberRole("student");
-        br.insert(b);
+
+
+    @Override
+    public List<Board> findByCategory(String category) {
+        return br.findByCategory(category);
     }
 
-    @Transactional
-    public void deleteBoard(Board b){
-        b.setWriter(b.getWriter());
-        br.delete(b);
+    @Override
+    public Board findBySeq(Integer boardSeq) {
+        return br.findBySeq(boardSeq);
     }
 
+    @Override
     @Transactional
-    public void updateBoard(Board b){
-        b.setWriter("gd");
-        br.update(b);
+    public boolean save(Board b) {
+        if(b.getBoardSeq() == null){
+            return br.insert(b);
+        }else{
+            b.setDelYn("N");
+            return br.update(b);
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean delete(Board b) {
+        b.setDelYn("Y");
+        return br.delete(b);
     }
 }

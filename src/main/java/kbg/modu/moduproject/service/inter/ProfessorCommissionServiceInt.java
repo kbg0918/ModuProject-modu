@@ -1,4 +1,4 @@
-package kbg.modu.moduproject.service;
+package kbg.modu.moduproject.service.inter;
 
 
 import kbg.modu.moduproject.domain.ProfessorCommission;

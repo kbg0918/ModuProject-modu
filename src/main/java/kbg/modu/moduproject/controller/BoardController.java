@@ -6,7 +6,10 @@ import kbg.modu.moduproject.domain.Member;
 import kbg.modu.moduproject.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BoardController {
@@ -14,43 +17,30 @@ public class BoardController {
     @Autowired
     BoardService bs;
 
-    @RequestMapping("/boardForm")
-    public String boardForm(){
-
-        return "Board";
-    }
-    @RequestMapping("/insertBoard")
-    public String insertBoardForm(){
-
-        return "InsertBoard";
-    }
-    @RequestMapping("/deleteBoard")
-    public String deleteBoardForm(){
-
-        return "DeleteBoard";
-    }
-    @RequestMapping("/updateBoard")
-    public String updateBoardForm(){
-
-        return "UpdateBoard";
+    @RequestMapping(value="board/InsertForm", method = RequestMethod.GET)
+    public String boardInsertForm(){
+        return "board/InsertForm";
     }
 
-    @RequestMapping("/insert")
-    public String insertBoard(Board b, Member m){
-        bs.insertBoard(b, m);
-        return "Board";
+    //카테고리로 분류
+    @RequestMapping(value="board/boardSave")
+    public String save(Board b){
+        bs.save(b);
+        return "redirect:/board/Post?category="+b.getCategory();
     }
 
-    @RequestMapping("/delete")
-    public String deleteBoard(Board b){
-        bs.deleteBoard(b);
-        return "Board";
+    //게시물 목록
+    @RequestMapping("board/Post")
+    public String postForm(@RequestParam(required = false) String category, ModelMap mm){
+        if(category != null){
+            mm.put("post",bs.findByCategory(category));
+        }
+
+        return "board/Post";
     }
-    @RequestMapping("/update")
-    public String updateBoard(Board b){
-        bs.updateBoard(b);
-        return "Board";
-    }
+
+
+
 
 
 

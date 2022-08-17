@@ -19,7 +19,12 @@ public class ProfessorCommissionRepositoryImp implements ProfessorCommissionRepo
 
     @Override
     public Member findByMemberSeq(String writer) {
-        return tp.queryForObject("select * from member where id =?", new BeanPropertyRowMapper<>(Member.class), writer);
+        return tp.queryForObject("select * from member where member_name =?", new BeanPropertyRowMapper<>(Member.class), writer);
+    }
+
+    @Override
+    public Member findByRole(Integer memberSeq) {
+        return tp.queryForObject("select * from member where seq=?", new BeanPropertyRowMapper<>(Member.class), memberSeq);
     }
 
     @Override
@@ -35,7 +40,13 @@ public class ProfessorCommissionRepositoryImp implements ProfessorCommissionRepo
     @Override
     public boolean update(ProfessorCommission pc) {
         return tp.update("update professor_commission set title=?, content=?, del_yn=? where pc_seq = ?",
-                pc.getTitle(), pc.getContent(), pc.getContent(), pc.getDelYn(), pc.getPcSeq())==1;
+                pc.getTitle(), pc.getContent()  , pc.getDelYn(), pc.getPcSeq())==1;
+    }
+
+    @Override
+    public boolean delete(ProfessorCommission pc) {
+        return tp.update("update professor_commission set del_yn=? where pc_seq = ?",
+                pc.getDelYn(), pc.getPcSeq())==1;
     }
 
     @Override

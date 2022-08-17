@@ -18,28 +18,40 @@ public class BoardImp implements BoardRepository {
 
 
     @Override
-    public Member findByName(String id) {
-        return tp.queryForObject("select memberName from member where id = ?",
-                new BeanPropertyRowMapper<>(Member.class),id);
-
+    public Member findByMemberSeq(String writer) {
+        return tp.queryForObject("select * from member where member_name =?", new BeanPropertyRowMapper<>(Member.class), writer);
     }
 
     @Override
-    public void insert(Board b) {
-        tp.update("insert into board(category, writer, content, memberRole) value(?,?,?,?)",
-                b.getCategory(), b.getWriter(), b.getContent(), b.getMemberRole());
+    public Member findByRole(Integer memberSeq) {
+        return tp.queryForObject("select * from member where seq=?", new BeanPropertyRowMapper<>(Member.class), memberSeq);
     }
 
     @Override
-    public void delete(Board b) {
-        tp.update("delete from board where writer = ?",
-                b.getWriter());
+    public List<Board> findByCategory(String category) {
+        return tp.query("select * from board where category =?", new BeanPropertyRowMapper<>(Board.class), category);
     }
 
     @Override
-    public void update(Board b) {
-        tp.update("update board set content=? where writer = ?",
-                b.getContent(), b.getWriter());
+    public Board findBySeq(Integer boardSeq) {
+        return tp.queryForObject("select * from board where board_seq = ?", new BeanPropertyRowMapper<>(Board.class), boardSeq);
+    }
 
+    @Override
+    public boolean update(Board b) {
+        return tp.update("update board set title=?, content=?, del_Yn=? where board_seq =?",
+                b.getTitle(), b.getContent(), b.getDelYn(), b.getBoardSeq())==1;
+    }
+
+    @Override
+    public boolean delete(Board b) {
+        return tp.update("update board set del_yn=? where board_seq = ?",
+                b.getDelYn(), b.getBoardSeq())==1;
+    }
+
+    @Override
+    public boolean insert(Board b) {
+        return tp.update("insert into board(title, category, writer, content) values(?,?,?,?)",
+                b.getTitle(), b.getCategory(), b.getWriter(), b.getContent())==1;
     }
 }

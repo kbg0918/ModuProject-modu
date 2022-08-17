@@ -51,11 +51,12 @@ create table if not exists member_portfolio(
 /*카테고리에 따른 게시판 테이블 */
 create table if not exists board(
     board_seq int auto_increment primary key,
-    category varchar(255) not null,
-    writer varchar(255) not null,
+    title varchar(255) not null,
+    writer varchar(10) not null,
     content varchar(4096) not null,
-    member_role varchar(255) not null,
-    member_seq int null,
+    category varchar(30) not null,
+    member_seq int,
+    del_yn char(1) DEFAULT 'N' not null,
     add_date datetime not null DEFAULT CURRENT_TIMESTAMP,
     up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -82,22 +83,24 @@ create table if not exists board_views(
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
-/*유저 채팅*/
-create table if not exists chatting_matching(
-    cm_seq int auto_increment primary key comment 'chatting_matching',
-    send varchar(300) not null comment '보내는 채팅',
-    receive varchar(300) not null comment '받는 채팅',
-    member_role varchar(255) not null,
+/*채팅 방*/
+create table if not exists chatting_room(
+    cr_seq int auto_increment primary key comment 'chatting_matching',
+    room_name varchar(300) not null comment '채팅방 이름',
+    professor_name varchar(25) not null comment '방을 만든 교수의 이름',
+    pc_seq int not null,
     add_date datetime DEFAULT CURRENT_TIMESTAMP comment '보낸 시간'
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
-/*채팅 기록*/
+/*채팅 로그*/
 create table if not exists chatting_log(
     cl_seq int auto_increment primary key comment 'chatting_log',
-    send varchar(300) not null comment '보낸 채팅 기록',
-    receive varchar(300) not null comment '받은 채팅 기록',
-    member_role varchar(255) not null,
+    sender varchar(100) not null comment '보낸 사람',
+    message varchar(300) not null comment '보낸 채팅 기록',
+    room_id varchar(300) not null comment '방 id',
+    member_seq int not null,
+    pc_seq int not null,
     add_date datetime DEFAULT CURRENT_TIMESTAMP comment '보낸 시간'
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

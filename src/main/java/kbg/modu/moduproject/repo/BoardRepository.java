@@ -6,9 +6,12 @@ import kbg.modu.moduproject.domain.Member;
 import java.util.List;
 
 public interface BoardRepository {
-     Member findByName(String name);
-     void insert(Board b);
-     void delete(Board b);
-     void update(Board b);
+     Member findByMemberSeq(String writer);
+     Member findByRole(Integer memberSeq);
+     List<Board> findByCategory(String category);
+     Board findBySeq(Integer boardSeq);
+     boolean update(Board b);
+     boolean delete(Board b);
+     boolean insert(Board b);
 
 }

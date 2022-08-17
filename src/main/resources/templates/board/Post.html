@@ -1,24 +1,10 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script th:inline="javascript">
-    var socket = null;
-    const USER_SEQ = [[${session.member.seq}]];
-    const USER_NAME = [[${session.member.memberName}]];
-    const EX_SEQ = [[${ex_seq}]];
-    const EX_NAME = [[${list.writer}]];
-    const PC_SEQ = [[${list.pcSeq}]];
-    const USER_ROLE = [[${session.member.memberRole}]];
 
-    localStorage.setItem("USER_SEQ", USER_SEQ);
-    localStorage.setItem("PC_SEQ", PC_SEQ);
-    localStorage.setItem("USER_NAME", USER_NAME);
-
-</script>
 <!------ Include the above in your HEAD tag ---------->
-
+<meta charset="utf-8">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>MODU - 5000만 국민의 선택</title>
@@ -45,7 +31,7 @@
 
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <th:block th:unless="${session.member}">
+                   <th:block th:unless="${session.member}">
                         <script>
                             var result = confirm("로그인이 필요한 서비스입니다.");
 
@@ -62,9 +48,9 @@
                     </th:block>
                     <th:block th:if="${session.member}">
                         <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../board/InsertForm">커뮤니티</a></li>
-                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="commission/Form">제안</a></li>
-                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="commission/Find">교수찾기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./Post">커뮤니티</a></li>
+                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="./commission/Form">제안</a></li>
+                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="./commission/Find">교수찾기</a></li>
                         <li class="nav-item"><a class="nav-link" href="../MyPage"><td th:text="${session.member.id}"></td>님</a></li>
                         <li class="nav-item"><a class="nav-link" href="../Logout">로그아웃</a></li>
                     </th:block>
@@ -76,42 +62,25 @@
     </nav>
 </header>
 <body>
-<tbody>
-<div class="category_card">
-    <div class="list_detail">
-        <div class="detail">
-            <strong id="detail_font1" th:utext="${list.title}"></strong>
-        </div>
-        <div class="detail_btn"><h4><b>상세 살명</b></h4><br>
-        </div>
-        <hr width="100%" color=#b4adad>
 
-        <strong id="detail_font2" th:utext="${list.content}"></strong>
-    </div>
-</div>
-<div id="sideNav">
-    <th:block th:if="${session.member.memberRole.toString().equals('Professor') and session.member.memberName.equals(list.writer)}">
-        <div class="list_chat">
-            <input type="button" th:onclick="|location.href='@{../chat/room}'|" class="btn1" onclick="notice()" value="수락요청 보내기">
-            <input type="button" class="setBtn" onclick="location.href='./delete/'+PC_SEQ" value="삭제">
-            <input type="button" class="setBtn" onclick="location.href='./updateForm/'+PC_SEQ" value="수정">
-        </div>
+<button id="post-write" onclick="location.href='./InsertForm'">글쓰기</button>
+<article class="post-section">
+    <a href="?category=Information">정보</a>
+<ul class="post-list">
+    <li class="post-li" th:each="p :${post}" th:onclick="|location.href='@{detail(boardSeq=${p.boardSeq}, writer=${p.writer})}'|">
+        <th:block th:if="${p.delYn.equals('N')}">
+            <h5 id="post-h" th:utext="${p.title}"></h5>
+            <span id="post-p" th:utext="${p.content}"></span>
+            <span id="add-time" th:utext="${p.addDate}"></span>
+        </th:block>
+        <hr color="#a9a7a7">
+    </li>
+    <br><br>
 
-    </th:block>
-    <th:block th:if="${session.member.memberRole.toString().equals('Student')}">
-        <div class="list_chat">
-            <input type="button" class="btn1" onclick="notice()" value="문의 보내기">
-        </div>
-    </th:block>
-</div>
-</tbody>
+</ul>
+</article>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-
-<script src="../static/js/Main.js"></script>
 
 </body>
 </html>
-
 

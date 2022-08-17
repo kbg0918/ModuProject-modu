@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
@@ -27,7 +30,7 @@
                 </th:block>
                 <th:block th:if="${session.member}">
                     <li class="nav-item"><a class="nav-link" href="#Category">카테고리</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#portfolio">커뮤니티</a></li>
+                    <li class="nav-item"><a class="nav-link" href="board/Post">커뮤니티</a></li>
                     <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="commission/Form">제안</a></li>
                     <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="commission/Find">교수찾기</a></li>
                     <li class="nav-item"><a class="nav-link" href="MyPage"><td th:text="${session.member.id}"></td>님</a></li>
@@ -50,7 +53,7 @@
     <th:block th:unless="${session.member}">
         <div class="container">
             <div class="masthead-subheading">MODU를 찾아주셔서 감사합니다.</div>
-            <div class="masthead-heading text-uppercase" >모르는 것이 있을 때는???</div>
+            <div class="masthead-heading text-uppercase" >모르는 것이 있을 때는?</div>
             <a class="btn btn-primary btn-xl text-uppercase" href="LoginForm">MODU</a>
         </div>
     </th:block>
@@ -345,6 +348,10 @@
 <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+
 </body>
 </html>
 

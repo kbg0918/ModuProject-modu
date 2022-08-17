@@ -1,24 +1,10 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
+<script src="https://cdn.tiny.cloud/1/jpqz5uexhj5hxm0hj4xorv4yg0thqqaq33uouodzrof7i7xo/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script th:inline="javascript">
-    var socket = null;
-    const USER_SEQ = [[${session.member.seq}]];
-    const USER_NAME = [[${session.member.memberName}]];
-    const EX_SEQ = [[${ex_seq}]];
-    const EX_NAME = [[${list.writer}]];
-    const PC_SEQ = [[${list.pcSeq}]];
-    const USER_ROLE = [[${session.member.memberRole}]];
-
-    localStorage.setItem("USER_SEQ", USER_SEQ);
-    localStorage.setItem("PC_SEQ", PC_SEQ);
-    localStorage.setItem("USER_NAME", USER_NAME);
-
-</script>
 <!------ Include the above in your HEAD tag ---------->
-
+<meta charset="utf-8">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>MODU - 5000만 국민의 선택</title>
@@ -62,9 +48,9 @@
                     </th:block>
                     <th:block th:if="${session.member}">
                         <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../board/InsertForm">커뮤니티</a></li>
-                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="commission/Form">제안</a></li>
-                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="commission/Find">교수찾기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./InsertForm">커뮤니티</a></li>
+                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="../commission/Form">제안</a></li>
+                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="../commission/Find">교수찾기</a></li>
                         <li class="nav-item"><a class="nav-link" href="../MyPage"><td th:text="${session.member.id}"></td>님</a></li>
                         <li class="nav-item"><a class="nav-link" href="../Logout">로그아웃</a></li>
                     </th:block>
@@ -75,43 +61,34 @@
 
     </nav>
 </header>
+<script>
+    tinymce.init({
+        plugins : 'save',
+        language: "ko",
+        menubar: 'file edit view insert format tools table help',
+        toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+        selector: '#tinyText'
+    });
+</script>
 <body>
-<tbody>
-<div class="category_card">
-    <div class="list_detail">
-        <div class="detail">
-            <strong id="detail_font1" th:utext="${list.title}"></strong>
-        </div>
-        <div class="detail_btn"><h4><b>상세 살명</b></h4><br>
-        </div>
-        <hr width="100%" color=#b4adad>
-
-        <strong id="detail_font2" th:utext="${list.content}"></strong>
+<form action="boardSave" method="post">
+    <div class="select_box">
+        <select id="disable_select" name="category" required>
+            <option value="" disabled selected>카테고리</option>
+            <optgroup label="오늘은 뭐하지?">
+                <option value="Information" th:if="${session.member.memberRole} == 'Professor'">교수꿀팁</option>
+                <option value="qna">교수질문</option>
+                <option value="together">함께</option>
+                <option value="search">교수서치</option>
+            </optgroup>
+        </select>
     </div>
-</div>
-<div id="sideNav">
-    <th:block th:if="${session.member.memberRole.toString().equals('Professor') and session.member.memberName.equals(list.writer)}">
-        <div class="list_chat">
-            <input type="button" th:onclick="|location.href='@{../chat/room}'|" class="btn1" onclick="notice()" value="수락요청 보내기">
-            <input type="button" class="setBtn" onclick="location.href='./delete/'+PC_SEQ" value="삭제">
-            <input type="button" class="setBtn" onclick="location.href='./updateForm/'+PC_SEQ" value="수정">
-        </div>
-
-    </th:block>
-    <th:block th:if="${session.member.memberRole.toString().equals('Student')}">
-        <div class="list_chat">
-            <input type="button" class="btn1" onclick="notice()" value="문의 보내기">
-        </div>
-    </th:block>
-</div>
-</tbody>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-
-<script src="../static/js/Main.js"></script>
+    <div class="tiny_box">
+        <input id="inputName" type="text" name="writer" readonly th:value="${session.member.memberName}"/>
+        <input id="inputId" type="text" name="title" placeholder="제목을 입력하세요."/>
+        <textarea id="tinyText" name="content" style="width: 1000px; height: 500px;"></textarea>
+    </div>
+</form>
 
 </body>
 </html>
-
-

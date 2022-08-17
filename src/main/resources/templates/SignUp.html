@@ -31,12 +31,17 @@
 
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <th:block th:unless="${session.member}">
+                        <li class="nav-item"><a class="nav-link" href="LoginForm">로그인</a></li>
+                        <li class="nav-item"><a class="nav-link" href="SignUpForm">회원가입</a></li>
+                    </th:block>
                     <th:block th:if="${session.member}">
-                        <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">커뮤니티</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">미정</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../MyPage"><td th:text="${session.member.id}"></td>님</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../Logout">로그아웃</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#Category">카테고리</a></li>
+                        <li class="nav-item"><a class="nav-link" href="board/InsertForm">커뮤니티</a></li>
+                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="commission/Form">제안</a></li>
+                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="commission/Find">교수찾기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="MyPage"><td th:text="${session.member.id}"></td>님</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Logout">로그아웃</a></li>
                     </th:block>
                 </ul>
             </div>
@@ -47,7 +52,7 @@
 </header>
 <body>
 <tbody>
-<div class="category_card">
+<div class="signUp_category_card">
     <strong id="head_font">MODU</strong>
 <div class="container">
     <div class="input-form-backgroud row">
@@ -123,7 +128,7 @@
                     <label class="custom-control-label" style="color: white" for="privacy">개인정보 수집 및 이용에 동의합니다.</label>
                 </div>
                 <div class="mb-4" style="color: white"></div>
-                <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+                <button id="submitBtn" class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
             </form>
         </div>
     </div>

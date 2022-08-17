@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 @Data
 @NoArgsConstructor
@@ -13,15 +13,19 @@ import java.sql.Timestamp;
 @Builder
 public class Board {
     //게시글 조회
-    private int boardSeq;
-    //카테고리로 나누기
-    private String category;
+    private Integer boardSeq;
+    //제목
+    private String title;
     //작성자
     private String writer;
     //내용
     private String content;
-    //권한(선배, 교수, 학생)
-    private String memberRole;
-    //member table 참조
-    private int memberSeq;
+    //카테고리로
+    private String category;
+    //참조
+    private Integer memberSeq;
+    //삭제는 했지만 DB엔 남아있음
+    private String delYn;
+    //등록 시간
+    private String addDate;
 }

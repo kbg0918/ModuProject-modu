@@ -41,6 +41,8 @@ public class ChatController {
 
 
 
+    int cnt;
+
     @RequestMapping("/MODUChatting")
     public String indexFrom() {
         return "/MODUChat";
@@ -68,24 +70,5 @@ public class ChatController {
         headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
         return chatMessage;
     }
-    // js에서 stompClient.send("/modu/topic/ccr/1/2",{},{}) 보내면
-    // 1번 사용자가 2번 전문가에게 다이렉트로 메세지를 보낸것임
-    @MessageMapping("/topic/ccr/{userSeq}/{exSeq}")
-    @SendTo("topic/ccr/{userSeq}/{exSeq}")
-    public void createChatRoom(SimpMessageHeaderAccessor headerAccessor
-            , @DestinationVariable("userSeq") String userSeq
-            , @DestinationVariable("exSeq") String exSeq)
-    {
-        System.out.println(userSeq+exSeq+"긋긋긋~");
 
-
-
-        //TODO DB에서 채팅방이 미리 만들어져 있는지 확인해서 만들어져 있고
-        //닫혀있지 않다면 기존 채팅방을 사용해야함
-        //또한 해당 전문가의 seq가 정말로 존재하는지 검증하는 로직또한 필요함
-        Gson gson = new Gson();
-        String jsonStr = gson.toJson(ImmutableMap.of("questioner" , userSeq, "rgstDttm" , ""));
-
-        simpMessagingTemplate.convertAndSend("/queue/" + exSeq , jsonStr);
-    }
 }
