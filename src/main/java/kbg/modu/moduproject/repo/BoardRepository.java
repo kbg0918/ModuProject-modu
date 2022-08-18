@@ -10,6 +10,7 @@ public interface BoardRepository {
      Member findByRole(Integer memberSeq);
      List<Board> findByCategory(String category);
      Board findBySeq(Integer boardSeq);
+     List<Board> categoryList();
      boolean update(Board b);
      boolean delete(Board b);
      boolean insert(Board b);

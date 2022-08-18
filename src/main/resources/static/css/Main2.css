@@ -308,10 +308,15 @@ header.masthead {
 
 .post-section{
     position: absolute;
-    width: 992px;
+    width: 670px;
     height: 500px;
     top: 30%;
-    left: 23%;
+    left: 40%;
+}
+.post-list{
+    display: flex;
+    flex-direction: column-reverse;
+    -webkit-flex-direction: column-reverse;
 }
 .post-li{
     list-style: none;
@@ -326,6 +331,34 @@ header.masthead {
 #post-p{
     color: #a9a7a7;
 }
+
+#add-date{
+    position: relative;
+    left: 70%;
+    color: #a9a7a7;
+}
+
+.category-section{
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 250px;
+    height: 700px;
+}
+
+.category-li{
+    list-style: none;
+    position: relative;
+    top: 5%;
+    left: 25%;
+    width: 200px;
+    height: 66px;
+}
+.category-li:hover{
+    background-color: #f5c7d1;
+}
+
+
 
 #post-write{
     top: 20%;

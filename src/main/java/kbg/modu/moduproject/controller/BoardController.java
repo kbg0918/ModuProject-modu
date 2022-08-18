@@ -2,7 +2,7 @@ package kbg.modu.moduproject.controller;
 
 
 import kbg.modu.moduproject.domain.Board;
-import kbg.modu.moduproject.domain.Member;
+import kbg.modu.moduproject.repo.BoardRepository;
 import kbg.modu.moduproject.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,11 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 @Controller
 public class BoardController {
 
     @Autowired
     BoardService bs;
+
+    @Autowired
+    BoardRepository br;
+
 
     @RequestMapping(value="board/InsertForm", method = RequestMethod.GET)
     public String boardInsertForm(){
@@ -32,8 +40,11 @@ public class BoardController {
     //게시물 목록
     @RequestMapping("board/Post")
     public String postForm(@RequestParam(required = false) String category, ModelMap mm){
-        if(category != null){
+        if(category == null){
+            mm.put("post",br.categoryList());
+        }else{
             mm.put("post",bs.findByCategory(category));
+
         }
 
         return "board/Post";

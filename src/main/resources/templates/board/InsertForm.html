@@ -76,7 +76,7 @@
         <select id="disable_select" name="category" required>
             <option value="" disabled selected>카테고리</option>
             <optgroup label="오늘은 뭐하지?">
-                <option value="Information" th:if="${session.member.memberRole} == 'Professor'">교수꿀팁</option>
+                <option value="information" th:if="${session.member.memberRole} == 'Professor'">교수꿀팁</option>
                 <option value="qna">교수질문</option>
                 <option value="together">함께</option>
                 <option value="search">교수서치</option>

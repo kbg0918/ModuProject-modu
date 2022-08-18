@@ -38,6 +38,11 @@ public class BoardImp implements BoardRepository {
     }
 
     @Override
+    public List<Board> categoryList() {
+        return tp.query("select * from board", new BeanPropertyRowMapper<>(Board.class));
+    }
+
+    @Override
     public boolean update(Board b) {
         return tp.update("update board set title=?, content=?, del_Yn=? where board_seq =?",
                 b.getTitle(), b.getContent(), b.getDelYn(), b.getBoardSeq())==1;

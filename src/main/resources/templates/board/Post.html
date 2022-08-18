@@ -19,6 +19,7 @@
     <!--Custom styles-->
     <link rel="stylesheet" type="text/css" href="../static/css/Main2.css">
 </head>
+
 <header class="masthead">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -64,21 +65,49 @@
 <body>
 
 <button id="post-write" onclick="location.href='./InsertForm'">글쓰기</button>
+<article class="category-section">
+    <li class="category-li" onclick="location.href='Post'">
+        <a class="category-a">전체 게시글</a>
+    </li>
+    <li class="category-li" onclick="location.href='?category=information'">
+        <a class="category-a"><img src=../static/img/information.PNG width="50" height="50">교수의 꿀팁!</a>
+    </li>
+    <li class="category-li" onclick="location.href='?category=qna'">
+        <a class="category-a"><img src=../static/img/qna.PNG width="50" height="50">교수님 질문있어요</a>
+    </li>
+    <li class="category-li" onclick="location.href='?category=together'">
+        <a class="category-a"><img src=../static/img/together.PNG width="50" height="50">모두 다 함께</a>
+    </li>
+    <li class="category-li" onclick="location.href='?category=search'">
+        <a class="category-a"><img src=../static/img/search.PNG width="50" height="50">교수 찾기</a>
+    </li>
+
+
+    <!--
+    <div id="category-image2" onclick="location.href='?category=qna'"></div>
+    <div id="category-image3" onclick="location.href='?category=together'"></div>
+    <div id="category-image4" onclick="location.href='?category=search'"></div>
+    -->
+
+</article>
 <article class="post-section">
-    <a href="?category=Information">정보</a>
+
 <ul class="post-list">
     <li class="post-li" th:each="p :${post}" th:onclick="|location.href='@{detail(boardSeq=${p.boardSeq}, writer=${p.writer})}'|">
         <th:block th:if="${p.delYn.equals('N')}">
             <h5 id="post-h" th:utext="${p.title}"></h5>
             <span id="post-p" th:utext="${p.content}"></span>
-            <span id="add-time" th:utext="${p.addDate}"></span>
+            <span id="add-date" th:utext="${p.addDate}"></span>
         </th:block>
         <hr color="#a9a7a7">
     </li>
     <br><br>
 
+
 </ul>
+
 </article>
+
 
 
 </body>

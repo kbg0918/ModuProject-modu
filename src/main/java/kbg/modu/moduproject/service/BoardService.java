@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,8 +19,6 @@ public class BoardService implements BoardServiceInt {
 
     @Autowired
     private BoardRepository br;
-
-
 
 
     @Override
