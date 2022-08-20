@@ -6,11 +6,11 @@ import kbg.modu.moduproject.repo.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public class BoardImp implements BoardRepository {
 
     @Autowired
@@ -50,13 +50,13 @@ public class BoardImp implements BoardRepository {
 
     @Override
     public boolean delete(Board b) {
-        return tp.update("update board set del_yn=? where board_seq = ?",
+        return tp.update("update board set del_Yn=? where board_seq = ?",
                 b.getDelYn(), b.getBoardSeq())==1;
     }
 
     @Override
     public boolean insert(Board b) {
-        return tp.update("insert into board(title, category, writer, content) values(?,?,?,?)",
-                b.getTitle(), b.getCategory(), b.getWriter(), b.getContent())==1;
+        return tp.update("insert into board(title, category, writer, content, member_seq) values(?,?,?,?,?)",
+                b.getTitle(), b.getCategory(), b.getWriter(), b.getContent(), b.getMemberSeq())==1;
     }
 }

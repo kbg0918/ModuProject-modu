@@ -65,10 +65,11 @@ create table if not exists board(
 /*게시판 댓글*/
 create table if not exists board_comment(
     bc_seq int auto_increment primary key,
-    writer varchar(255) not null,
+    writer varchar(10) not null,
     content varchar(4096) not null,
-    member_seq int null,
-    member_rank int,
+    category varchar(30) not null,
+    board_seq int,
+    del_yn char(1) DEFAULT 'N' not null,
     add_date datetime DEFAULT CURRENT_TIMESTAMP,
     up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

@@ -140,7 +140,7 @@ public class ProfessorCommissionController {
     }
 
     @MessageMapping("/notice/{pcSeq}/{userSeq}/{exSeq}")
-    public void NoticeStomp(@RequestParam(required = false) String writer, SimpMessageHeaderAccessor sha , @DestinationVariable("pcSeq") String pcSeq, @DestinationVariable("userSeq") String userSeq
+    public void noticeStomp(@RequestParam(required = false) String writer, SimpMessageHeaderAccessor sha , @DestinationVariable("pcSeq") String pcSeq, @DestinationVariable("userSeq") String userSeq
             , @DestinationVariable("exSeq") String exSeq){
         String msg = "";
 

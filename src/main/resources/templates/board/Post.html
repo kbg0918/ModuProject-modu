@@ -64,24 +64,39 @@
 </header>
 <body>
 
-<button id="post-write" onclick="location.href='./InsertForm'">글쓰기</button>
+<article class="post-header">
+    <h1>모두의 커뮤니티</h1>
+    <button id="post-write" onclick="location.href='./InsertForm'">글쓰기</button>
+</article>
+<article class="post-body">
+    <p id="p-tag">커뮤니티</p>
+    <hr color="#c4c0c0" width="100%">
+</article>
+
 <article class="category-section">
-    <li class="category-li" onclick="location.href='Post'">
+    <li  onclick="location.href='Post'">
         <a class="category-a">전체 게시글</a>
     </li>
-    <li class="category-li" onclick="location.href='?category=information'">
-        <a class="category-a"><img src=../static/img/information.PNG width="50" height="50">교수의 꿀팁!</a>
+    <li  onclick="location.href='?category=information'">
+        <a class="category-a"><!--<img src=../static/img/information.PNG width="50" height="50">-->교수의 꿀팁!</a>
     </li>
-    <li class="category-li" onclick="location.href='?category=qna'">
-        <a class="category-a"><img src=../static/img/qna.PNG width="50" height="50">교수님 질문있어요</a>
+    <li  onclick="location.href='?category=qna'">
+        <a class="category-a"><!--<img src=../static/img/qna.PNG width="50" height="50">-->교수님 질문있어요</a>
     </li>
-    <li class="category-li" onclick="location.href='?category=together'">
-        <a class="category-a"><img src=../static/img/together.PNG width="50" height="50">모두 다 함께</a>
+    <li  onclick="location.href='?category=together'">
+        <a class="category-a"><!--<img src=../static/img/together.PNG width="50" height="50">-->모두 다 함께</a>
     </li>
-    <li class="category-li" onclick="location.href='?category=search'">
-        <a class="category-a"><img src=../static/img/search.PNG width="50" height="50">교수 찾기</a>
+    <li  onclick="location.href='?category=search'">
+        <a class="category-a"><!--<img src=../static/img/search.PNG width="50" height="50">-->교수 찾기</a>
     </li>
 
+    <script type="text/javascript">
+        const liClick = document.querySelector('.category-section');
+
+        function click(liEl){
+            Array.from()
+        }
+    </script>
 
     <!--
     <div id="category-image2" onclick="location.href='?category=qna'"></div>
@@ -93,21 +108,18 @@
 <article class="post-section">
 
 <ul class="post-list">
-    <li class="post-li" th:each="p :${post}" th:onclick="|location.href='@{detail(boardSeq=${p.boardSeq}, writer=${p.writer})}'|">
+    <li class="post-li" th:each="p :${post}" th:onclick="|location.href='@{PostDetail(boardSeq=${p.boardSeq})}'|">
         <th:block th:if="${p.delYn.equals('N')}">
             <h5 id="post-h" th:utext="${p.title}"></h5>
             <span id="post-p" th:utext="${p.content}"></span>
             <span id="add-date" th:utext="${p.addDate}"></span>
+            <br>
         </th:block>
         <hr color="#a9a7a7">
     </li>
     <br><br>
-
-
 </ul>
-
 </article>
-
 
 
 </body>

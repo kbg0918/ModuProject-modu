@@ -311,7 +311,22 @@ header.masthead {
     width: 670px;
     height: 500px;
     top: 30%;
-    left: 40%;
+    left: 37%;
+}
+#p-tag{
+    position: relative;
+    top: 33%;
+    width: 60px;
+    height: 40px;
+    border-bottom: solid 2px black;
+    font-weight: bold;
+}
+.post-body{
+    position: absolute;
+    top: 24%;
+    left:24.5%;
+    width: 965px;
+    height: 50px;
 }
 .post-list{
     display: flex;
@@ -333,39 +348,60 @@ header.masthead {
 }
 
 #add-date{
-    position: relative;
-    left: 70%;
+    position: absolute;
+    left: 71.5%;
     color: #a9a7a7;
 }
 
 .category-section{
     position: absolute;
-    top: 25%;
-    left: 25%;
+    top: 28%;
+    left: 20%;
     width: 250px;
     height: 700px;
 }
 
-.category-li{
+.category-section li{
     list-style: none;
     position: relative;
     top: 5%;
     left: 25%;
+    margin-bottom: 5px;
     width: 200px;
     height: 66px;
+    border: solid 1px white;
+    border-radius: 8px;
 }
-.category-li:hover{
+.category-section li:hover{
     background-color: #f5c7d1;
+    box-shadow: 1px 1px 5px 1px #f5c7d1;
+}
+.category-section li.on{
+    color: blue;
 }
 
-
+.category-a{
+    position: relative;
+    top: 25%;
+    left: 20%;
+    font-weight: bold;
+    font-size: 16px;
+}
+.post-header{
+    position: absolute;
+    top:15%;
+    left: 24.5%;
+    width: 900px;
+    height: 50px;
+}
 
 #post-write{
-    top: 20%;
-    left: 68%;
+    position: absolute;
+    top: 15%;
+    left: 92%;
     width: 140px;
     height: 50px;
-    position: absolute;
+
     background-color: #eacdae;
     border: solid 1px #d0b99d;
     border-radius: 5px;
@@ -376,6 +412,86 @@ header.masthead {
     box-shadow: 1px 1px 3px 1px #dadce0 inset;
 }
 
+.postDetail-section{
+    position: absolute;
+    top: 20%;
+    left: 35%;
+    width: 600px;
+    height: 1000px;
+}
+
+#postDetail-header{
+    position: relative;
+    width: 600px;
+    height: 180px;
+}
+#postDetail-h1{
+    position: relative;
+    top: 6%;
+}
+#postDetail-profile{
+    position: relative;
+    top: 10%;
+    width: 600px;
+    height: 30px;
+}
+#postDetail-body{
+    position: relative;
+    width: 600px;
+    height: 500px;
+}
+
+#postDetail-footer{
+    position: relative;
+    width: 600px;
+    height: auto;
+}
+#textarea-box{
+    position: relative;
+    top: 10%;
+    width: 600px;
+    min-height: 60px;
+    height: auto;
+    border: solid 1px #ececec;
+    border-radius: 8px;
+}
+.postDetail-textarea{
+    position: relative;
+    margin-top: 15px;
+    left: 2%;
+    width: 540px;
+    height: 25px;
+    border: none;
+    resize: none;
+    outline: none;
+}
+.postDetail-textarea::placeholder{
+    position: relative;
+    font-size: 15px;
+    color: #bdbaba;
+}
+#textarea-save{
+    position: absolute;
+    bottom: 30%;
+    left: 93%;
+    width: 30px;
+    height: 30px;
+}
+#comment-save-btn{
+    position: absolute;
+    right: 1%;
+    top: 20%;
+    border: solid 1px white;
+    background-color: white;
+}
+
+#postDetail-comment{
+    position: relative;
+    margin-top: 15px;
+    left: 5%;
+    width: 550px;
+    height: 300px;
+}
 .list_detail{
     width: 700px;
     height: 600px;
@@ -386,8 +502,6 @@ header.masthead {
     border-radius: 5px;
     background-color: #FFFFFF;
     text-align: left;
-
-
 }
 
 .detail{

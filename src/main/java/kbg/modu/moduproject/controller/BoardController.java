@@ -33,6 +33,7 @@ public class BoardController {
     //카테고리로 분류
     @RequestMapping(value="board/boardSave")
     public String save(Board b){
+        b.setMemberSeq(br.findByMemberSeq(b.getWriter()).getSeq());
         bs.save(b);
         return "redirect:/board/Post?category="+b.getCategory();
     }
@@ -48,6 +49,13 @@ public class BoardController {
         }
 
         return "board/Post";
+    }
+
+    //게시물 상세
+    @RequestMapping("board/PostDetail")
+    public String detailForm(@RequestParam int boardSeq, ModelMap mm){
+        mm.put("post", br.findBySeq(boardSeq));
+        return "board/PostDetail";
     }
 
 
