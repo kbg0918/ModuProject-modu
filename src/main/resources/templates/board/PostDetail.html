@@ -100,7 +100,7 @@
                 <input type="button" id="comment-save-btn" value="등록" style="color: #8e8bd5">
             </div>
         </div>
-        <div id="postDetail-comment">
+        <div class="postDetail-comment">
 
         </div>
     </div>
@@ -111,17 +111,20 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+
+<!-- ajax 작동 -->
 <script>
     function resize(event) {
         event.style.height = "1px";
         event.style.height = (12+event.scrollHeight)+"px";
     }
+    const role = '[[${session.member.memberRole}]]';
+    const writer = '[[${session.member.memberName}]]';
+    const category = '[[${session.member.category}]]';
+    const boardSeq = '[[${post.boardSeq}]]';
     $('#textarea-save').click(function (){
         console.log('댓글 등록 버튼 클릭');
-        const writer = '[[${session.member.memberName}]]';
         const content = $('#comment-textarea').val();
-        const category = '[[${post.category}]]';
-        const boardSeq = '[[${post.boardSeq}]]';
         $.ajax({
             type:'post',
             url:'commentSave',
@@ -132,17 +135,51 @@
                 "boardSeq":boardSeq
             }),
             contentType: 'application/json',
-            success:function (data,value){
+            success:function (data){
                 var htmlComment = '';
                 console.log('통신성공' + data);
                 alert("댓글이 등록 되었습니다.");
+                commentList();
                 document.getElementById('comment-textarea').value=" ";
             },
             error:function (){
                 alert("통신실패"+data);
             }
+        });
+    });
+    //댓글 목록
+    function commentList(){
+        $.ajax({
+            type: 'get',
+            url : 'commentList',
+            data: {'boardSeq':boardSeq},
+            contentType: 'application/json',
+            success:function (data){
+                var htmlComment = '';
+                $.each(data, function (key, value){
+                    htmlComment += '<div class="comment-list">';
+                    htmlComment += '<div class="comment-writer">'+'<span id="span-writer">'+value.writer+'</div>'
+                    if(role == 'Professor'){
+                        htmlComment += '<div class="comment-category">'+'<span id="span-category" style="color: #bdbaba">'+value.category+"고수님"+'</div>'
+                    }
+                    htmlComment += '<div class="comment-content">'+'<span id="span-content">'+value.content+'</div><hr color="#cccaca" width="100%"></div>'
+                })
+                $(".postDetail-comment").html(htmlComment);
+            },
+            error:function (){
+                alert("댓글 목록 실패..");
+            }
         })
-    })
+    }
+
+    $(document).ready(function(){
+        commentList();
+    });
+
+    function getTime(date){
+        var year = date.getFullYear();
+    }
+
 </script>
 
 

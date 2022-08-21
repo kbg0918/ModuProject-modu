@@ -6,6 +6,8 @@ import kbg.modu.moduproject.service.BoardCommentService;
 import kbg.modu.moduproject.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -13,8 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class BoardCommentController {
 
     @Autowired
@@ -29,12 +34,18 @@ public class BoardCommentController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
-    @ResponseBody
+    HashMap<String, String> categoryMap = new HashMap<>();
+
+
     @PostMapping("board/commentSave")
     public String commentSave(@RequestBody BoardComment bc, ModelMap mm){
         bcs.save(bc);
-        System.out.println(bc);
         return "redirect:/board/PostDetail?boardSeq="+bc.getBoardSeq();
+    }
+
+    @GetMapping("board/commentList")
+    public ResponseEntity<List<BoardComment>> commentList(@RequestParam String boardSeq, ModelMap mm){
+        return new ResponseEntity<>(bcs.findByList(Integer.parseInt(boardSeq)), HttpStatus.OK);
     }
 
 

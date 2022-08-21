@@ -3,6 +3,7 @@ package kbg.modu.moduproject.controller;
 
 import kbg.modu.moduproject.domain.Board;
 import kbg.modu.moduproject.repo.BoardRepository;
+import kbg.modu.moduproject.service.BoardCommentService;
 import kbg.modu.moduproject.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,8 @@ public class BoardController {
     @Autowired
     BoardRepository br;
 
+    @Autowired
+    private BoardCommentService bcs;
 
     @RequestMapping(value="board/InsertForm", method = RequestMethod.GET)
     public String boardInsertForm(){

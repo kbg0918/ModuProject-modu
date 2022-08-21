@@ -26,8 +26,8 @@ public class BoardCommentImp implements BoardCommentRepository {
     }
 
     @Override
-    public List<BoardComment> findByList(Integer bcSeq) {
-        return tp.query("select * from board_comment where bc_seq = ?", new BeanPropertyRowMapper<>(BoardComment.class),bcSeq);
+    public List<BoardComment> findByList(Integer boardSeq) {
+        return tp.query("select * from board_comment where board_seq = ?", new BeanPropertyRowMapper<>(BoardComment.class),boardSeq);
     }
 
     @Override

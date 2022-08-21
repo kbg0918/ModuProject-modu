@@ -26,6 +26,11 @@ public class BoardCommentService implements BoardCommentServiceInt {
     }
 
     @Override
+    public List<BoardComment> findByList(Integer boardSeq) {
+        return bcr.findByList(boardSeq);
+    }
+
+    @Override
     @Transactional
     public boolean save(BoardComment bc) {
         if(bc.getBcSeq() == null){

@@ -17,4 +17,5 @@ public class BoardComment {
     private String category;
     private Integer boardSeq;
     private String delYn;
+    private String addDate;
 }

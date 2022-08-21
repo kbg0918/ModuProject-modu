@@ -353,6 +353,8 @@ header.masthead {
     color: #a9a7a7;
 }
 
+
+
 .category-section{
     position: absolute;
     top: 28%;
@@ -485,12 +487,39 @@ header.masthead {
     background-color: white;
 }
 
-#postDetail-comment{
+.postDetail-comment{
     position: relative;
-    margin-top: 15px;
+    margin-top: 30px;
     left: 5%;
     width: 550px;
-    height: 300px;
+    height: 1200px;
+}
+.comment-List{
+    position: relative;
+    margin-top:15px;
+    width: 550px;
+    height: 150px;
+}
+.comment-writer{
+    position: relative;
+    top: 3%;
+    width: 100px;
+    height: 20px;
+    font-size: 16px;
+}
+
+.comment-category{
+    position: relative;
+    top: 15%;
+    width: 100px;
+    height: 30px;
+    font-size: 14px;
+}
+.comment-content{
+    position: relative;
+    top: 20%;
+    width: auto;
+    height: auto;
 }
 .list_detail{
     width: 700px;
