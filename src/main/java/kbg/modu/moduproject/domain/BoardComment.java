@@ -18,4 +18,5 @@ public class BoardComment {
     private Integer boardSeq;
     private String delYn;
     private String addDate;
+    private String upDate;
 }

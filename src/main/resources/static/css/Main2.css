@@ -346,15 +346,11 @@ header.masthead {
 #post-p{
     color: #a9a7a7;
 }
-
 #add-date{
     position: absolute;
     left: 71.5%;
     color: #a9a7a7;
 }
-
-
-
 .category-section{
     position: absolute;
     top: 28%;
@@ -457,6 +453,25 @@ header.masthead {
     border: solid 1px #ececec;
     border-radius: 8px;
 }
+#textarea-box:hover{
+    border: solid 1px #c8c5fa;
+    box-shadow: 1px 1px 8px 1px #c8c5fa;
+}
+#textarea-box-update{
+    position: relative;
+    top: 25%;
+    width: 600px;
+    min-height: 60px;
+    margin-top: 10px;
+    height: auto;
+    border: solid 1px #ececec;
+    display: none;
+    border-radius: 8px;
+}
+#textarea-box-update:hover{
+    border: solid 1px #c8c5fa;
+    box-shadow: 1px 1px 8px 1px #c8c5fa;
+}
 .postDetail-textarea{
     position: relative;
     margin-top: 15px;
@@ -479,7 +494,22 @@ header.masthead {
     width: 30px;
     height: 30px;
 }
+#textarea-update{
+    position: absolute;
+    bottom: 30%;
+    left: 93%;
+    width: 30px;
+    height: 30px;
+}
+
 #comment-save-btn{
+    position: absolute;
+    right: 1%;
+    top: 20%;
+    border: solid 1px white;
+    background-color: white;
+}
+#comment-update-btn{
     position: absolute;
     right: 1%;
     top: 20%;
@@ -494,11 +524,45 @@ header.masthead {
     width: 550px;
     height: 1200px;
 }
+
 .comment-List{
     position: relative;
     margin-top:15px;
     width: 550px;
     height: 150px;
+}
+.comment-update-delete{
+    position: absolute;
+    left: 85%;
+    width: 200px;
+    height: 200px;
+    font-size: 14px;
+}
+#btn-update{
+    width: 40px;
+    height: 30px;
+    border: solid 1px white;
+    border-radius: 7px;
+    background-color: white;
+    margin-right: 3px;
+
+}
+#btn-update:hover{
+    border: solid 1px #c8c5fa;
+    box-shadow: 1px 1px 5px 1px #c8c5fa;
+}
+#btn-delete{
+    width: 40px;
+    height: 30px;
+    border: solid 1px white;
+    border-radius: 7px;
+    background-color: white;
+}
+
+
+#btn-delete:hover{
+    border: solid 1px #c8c5fa;
+    box-shadow: 1px 1px 5px 1px #c8c5fa;
 }
 .comment-writer{
     position: relative;
@@ -521,6 +585,21 @@ header.masthead {
     width: auto;
     height: auto;
 }
+.comment-addDate{
+    position: relative;
+    top: 30%;
+    width: 100px;
+    height: 25px;
+    font-size:14px;
+}
+#span-addDate{
+    position: absolute;
+    left: 440%;
+    width: 150px;
+    height: 30px;
+    color: #757272;
+}
+
 .list_detail{
     width: 700px;
     height: 600px;

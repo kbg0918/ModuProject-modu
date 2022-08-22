@@ -36,16 +36,24 @@ public class BoardCommentController {
 
     HashMap<String, String> categoryMap = new HashMap<>();
 
-
+    //댓글 저장 form
     @PostMapping("board/commentSave")
-    public String commentSave(@RequestBody BoardComment bc, ModelMap mm){
-        bcs.save(bc);
-        return "redirect:/board/PostDetail?boardSeq="+bc.getBoardSeq();
+    public ResponseEntity commentSave(@RequestBody BoardComment bc){
+
+        return new ResponseEntity(bcs.save(bc),HttpStatus.OK);
     }
 
+    //댓글 목록 form
     @GetMapping("board/commentList")
-    public ResponseEntity<List<BoardComment>> commentList(@RequestParam String boardSeq, ModelMap mm){
+    public ResponseEntity<List<BoardComment>> commentList(@RequestParam String boardSeq){
         return new ResponseEntity<>(bcs.findByList(Integer.parseInt(boardSeq)), HttpStatus.OK);
+    }
+
+    //댓글 수정 form
+    @PostMapping("board/commentUpdate")
+    public ResponseEntity commentUpdate(@RequestBody BoardComment bc){
+
+        return new ResponseEntity(bcs.save(bc),HttpStatus.OK);
     }
 
 
