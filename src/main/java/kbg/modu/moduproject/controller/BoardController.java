@@ -50,7 +50,6 @@ public class BoardController {
             mm.put("post",bs.findByCategory(category));
 
         }
-
         return "board/Post";
     }
 

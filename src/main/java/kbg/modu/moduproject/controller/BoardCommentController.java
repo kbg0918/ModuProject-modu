@@ -51,11 +51,16 @@ public class BoardCommentController {
 
     //댓글 수정 form
     @PostMapping("board/commentUpdate")
-    public ResponseEntity commentUpdate(@RequestBody BoardComment bc){
-
-        return new ResponseEntity(bcs.save(bc),HttpStatus.OK);
+    public ResponseEntity commentUpdate(@RequestBody BoardComment bc) {
+        return new ResponseEntity(bcs.save(bc), HttpStatus.OK);
     }
 
+    //댓글 삭제 form
+    @GetMapping("board/commentDelete/{bcSeq}")
+    public ResponseEntity commentDelete(BoardComment bc, @PathVariable String bcSeq){
+        bc.setBcSeq(Integer.parseInt(bcSeq));
+        return new ResponseEntity(bcs.delete(bc),HttpStatus.OK);
+    }
 
 
 

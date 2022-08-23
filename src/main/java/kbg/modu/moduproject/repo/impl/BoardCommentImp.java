@@ -39,7 +39,7 @@ public class BoardCommentImp implements BoardCommentRepository {
     @Override
     public boolean delete(BoardComment bc) {
         return tp.update("update board_comment set del_Yn=? where bc_seq = ?",
-                bc.getDelYn())==1;
+                bc.getDelYn(), bc.getBcSeq())==1;
     }
 
     @Override

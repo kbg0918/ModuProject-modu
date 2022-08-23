@@ -308,7 +308,7 @@ header.masthead {
 
 .post-section{
     position: absolute;
-    width: 670px;
+    width: 685px;
     height: 500px;
     top: 30%;
     left: 37%;
@@ -333,7 +333,7 @@ header.masthead {
     flex-direction: column-reverse;
     -webkit-flex-direction: column-reverse;
 }
-.post-li{
+.post-li {
     list-style: none;
     text-align: left;
 }
@@ -342,7 +342,34 @@ header.masthead {
     font-weight: bold;
     color: black;
 }
-
+#post-update-delete{
+    position: relative;
+    left: 85%;
+}
+#post-update-btn{
+    width: 50px;
+    height: 30px;
+    border: solid 1px white;
+    border-radius: 7px;
+    background-color: white;
+    margin-right: 3px;
+}
+#post-update-btn:hover{
+    border: solid 1px #c8c5fa;
+    box-shadow: 1px 1px 8px 1px #c8c5fa;
+}
+#post-delete-btn{
+    width: 50px;
+    height: 30px;
+    border: solid 1px white;
+    border-radius: 7px;
+    background-color: white;
+    margin-right: 3px;
+}
+#post-delete-btn:hover{
+    border: solid 1px #c8c5fa;
+    box-shadow: 1px 1px 8px 1px #c8c5fa;
+}
 #post-p{
     color: #a9a7a7;
 }
@@ -538,6 +565,9 @@ header.masthead {
     height: 200px;
     font-size: 14px;
 }
+#bc-seq{
+
+}
 #btn-update{
     width: 40px;
     height: 30px;
@@ -546,6 +576,10 @@ header.masthead {
     background-color: white;
     margin-right: 3px;
 
+}
+#tmp{
+    width: 1px;
+    height: 1px;
 }
 #btn-update:hover{
     border: solid 1px #c8c5fa;

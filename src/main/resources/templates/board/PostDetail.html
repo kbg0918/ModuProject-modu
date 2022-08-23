@@ -102,8 +102,10 @@
 
         <div id="textarea-box-update">
             <textarea class="postDetail-textarea"  id="comment-update" onkeyup="resize(this)" placeholder="수정할 문장을 입력해주세요" style="overflow: hidden" name="content"></textarea>
+
             <div id="textarea-update">
-                <input type="button" id="comment-update-btn" onclick="hide()" value="수정" style="color: #8e8bd5">
+                <div id="tmp"></div>
+                <input type="button" id="comment-update-btn" onClick="hide()" value="수정" style="color: #8e8bd5">
             </div>
         </div>
         <div class="postDetail-comment">
@@ -155,21 +157,21 @@
         });
     });
 
+
     //댓글 수정
     $('#comment-update-btn').click(function (){
-        var bcSeq = document.getElementById("bc-seq").value;
-        alert(bcSeq)
+        var tmp = document.getElementById("bc-seq").value;
         console.log('댓글 수정 버튼 클릭')
         const content = $('#comment-update').val();
         $.ajax({
             type:'post',
             url:'commentUpdate',
             data: JSON.stringify({
-                "bcSeq": bcSeq,
+                "bcSeq": tmp,
                 "writer" : writer,
                 "content" : content,
                 "category":category,
-                "boardSeq":boardSeq,
+                "boardSeq":boardSeq
             }),
             contentType: 'application/json',
             success:function (data){
@@ -181,8 +183,32 @@
             error:function (){
                 alert("통신실패"+data);
             }
+        });
+    });
+
+    function commentDelete(){
+        //댓글 삭제
+
+        var bcSeq = document.getElementById("bc-seq").value;
+        console.log('댓글 삭제버튼');
+        $.ajax({
+            type:'get',
+            url:'commentDelete/'+bcSeq,
+            contentType: 'application/json',
+            success:function (data){
+                console.log('통신성공');
+                alert("댓글이 삭제되었습니다.");
+                commentList();
+            },
+            error:function (){
+                alert("통신실패"+data);
+            }
+
         })
-    })
+
+
+    }
+
 
 
     //댓글 목록
@@ -194,11 +220,14 @@
             contentType: 'application/json',
             success:function (data){
                 var htmlComment = '';
+                var test1 = '';
                 $.each(data, function (key, value){
                     if(value.delYn == 'N'){
                         htmlComment += '<div class="comment-list">';
-                        htmlComment += '<input type="text" id="bc-seq" value="'+value.bcSeq+'"/>'
-                        htmlComment += '<div class="comment-update-delete">'+'<button id="btn-update" style="color:#8e8bd5" onclick="show()">수정</button><button id="btn-delete" style="color:#8e8bd5">삭제</button></div>';
+                        test1 = '<input type="hidden" id="bc-seq" value="'+value.bcSeq+'">'
+                        if(USER_NAME == value.writer){
+                            htmlComment += '<div class="comment-update-delete">'+'<button id="btn-update" style="color:#8e8bd5" onclick="show()">수정</button><button id="btn-delete" onclick="commentDelete()" style="color:#8e8bd5">삭제</button></div>';
+                        }
                         htmlComment += '<div class="comment-writer">'+'<span id="span-writer">'+value.writer+'</div>';
                         if(role == 'Professor'){
                             htmlComment += '<div class="comment-category">'+'<span id="span-category" style="color: #bdbaba">'+value.category+"고수님"+'</div>';
@@ -209,12 +238,11 @@
                         }else{
                             htmlComment += '<div class="comment-addDate">'+'<span id="span-addDate">'+addTime(value.upDate)+'</div><hr color="#cccaca" width="100%"></div>';
                         }
-
-
                     }
 
                 })
                 $(".postDetail-comment").html(htmlComment);
+                $("#tmp").html(test1);
             },
             error:function (){
                 alert("댓글 목록 실패..");
