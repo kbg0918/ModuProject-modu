@@ -32,8 +32,8 @@ public class BoardCommentImp implements BoardCommentRepository {
 
     @Override
     public boolean update(BoardComment bc) {
-        return tp.update("update board_comment set content=?, del_Yn =? where bc_seq=?",
-                bc.getContent(), bc.getDelYn(), bc.getBcSeq())==1;
+        return tp.update("update board_comment set update_seq=?, update_Yn=?, del_Yn =? where bc_seq=?",
+                bc.getBoardSeq(), bc.getUpdateYn(), bc.getDelYn(), bc.getBcSeq())==1;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class BoardCommentImp implements BoardCommentRepository {
 
     @Override
     public boolean insert(BoardComment bc) {
-        return tp.update("insert into board_comment(writer, content, category, board_seq) values(?,?,?,?)",
-                bc.getWriter(), bc.getContent(), bc.getCategory(), bc.getBoardSeq())==1;
+        return tp.update("insert into board_comment(writer, content, category, update_seq, board_seq) values(?,?,?,?,?)",
+                bc.getWriter(), bc.getContent(), bc.getCategory(), bc.getUpdateSeq(), bc.getBoardSeq())==1;
     }
 }

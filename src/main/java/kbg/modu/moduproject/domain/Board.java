@@ -14,6 +14,10 @@ import java.sql.Date;
 public class Board {
     //게시글 조회
     private Integer boardSeq;
+    //게시글 번호 참조
+    private Integer updateSeq;
+    //수정은 했지만 DB에는 남아있음
+    private String updateYn;
     //제목
     private String title;
     //작성자

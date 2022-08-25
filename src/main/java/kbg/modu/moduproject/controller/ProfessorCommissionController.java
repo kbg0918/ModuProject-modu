@@ -59,6 +59,7 @@ public class ProfessorCommissionController {
     //제출하면 카테고리에 따라서 저장 form
     @RequestMapping(value = "commission/save", method = RequestMethod.POST)
     public String save(ProfessorCommission pc){
+        pc.setMemberSeq(professorCommissionRepository.findByMemberSeq(pc.getWriter()).getSeq());
         ps.save(pc);
         return "redirect:/commission/List?category="+pc.getCategory();
     }
@@ -73,15 +74,16 @@ public class ProfessorCommissionController {
     
     //수정
     @RequestMapping(value="commission/updateForm/{pcSeq}")
-    public String update(ProfessorCommission pc, ModelMap mm, @PathVariable String pcSeq){
-        mm.put("list", ps.findBySeq(Integer.parseInt(pcSeq)));
+    public String update(ProfessorCommission pc, ModelMap mm, @PathVariable int pcSeq){
+        mm.put("list", ps.findBySeq(pcSeq));
         return "commission/Update";
     }
     
     //수정
     @RequestMapping(value="commission/update", method = RequestMethod.POST)
     public String commissionUpdate(ProfessorCommission pc){
-        pc.setPcSeq(pc.getPcSeq());
+        pc.setMemberSeq(professorCommissionRepository.findByMemberSeq(pc.getWriter()).getSeq());
+        pc.setUpdateSeq(pc.getPcSeq());
         ps.save(pc);
         return "redirect:/commission/List?category="+pc.getCategory();
     }

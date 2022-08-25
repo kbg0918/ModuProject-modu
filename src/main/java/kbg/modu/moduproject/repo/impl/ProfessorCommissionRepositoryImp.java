@@ -39,8 +39,8 @@ public class ProfessorCommissionRepositoryImp implements ProfessorCommissionRepo
 
     @Override
     public boolean update(ProfessorCommission pc) {
-        return tp.update("update professor_commission set title=?, content=?, del_yn=? where pc_seq = ?",
-                pc.getTitle(), pc.getContent()  , pc.getDelYn(), pc.getPcSeq())==1;
+        return tp.update("update professor_commission set  update_seq=?, update_Yn=?, del_yn=? where pc_seq = ?",
+                pc.getUpdateSeq(), pc.getUpdateYn(), pc.getDelYn(), pc.getPcSeq())==1;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ProfessorCommissionRepositoryImp implements ProfessorCommissionRepo
 
     @Override
     public boolean insert(ProfessorCommission pc) {
-        return tp.update("insert into professor_commission(category, title, writer, content) values(?,?,?,?)",
-                pc.getCategory(), pc.getTitle(),pc.getWriter(), pc.getContent())==1;
+        return tp.update("insert into professor_commission(category, title, writer, content, update_seq, member_seq) values(?,?,?,?,?,?)",
+                pc.getCategory(), pc.getTitle(),pc.getWriter(), pc.getContent(), pc.getUpdateSeq(), pc.getMemberSeq())==1;
     }
 }

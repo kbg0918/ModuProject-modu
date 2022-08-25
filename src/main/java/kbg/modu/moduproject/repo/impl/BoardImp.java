@@ -44,8 +44,8 @@ public class BoardImp implements BoardRepository {
 
     @Override
     public boolean update(Board b) {
-        return tp.update("update board set title=?, content=?, del_Yn=? where board_seq =?",
-                b.getTitle(), b.getContent(), b.getDelYn(), b.getBoardSeq())==1;
+        return tp.update("update board set update_Yn=?, update_seq=?, del_Yn=? where board_seq =?",
+                b.getUpdateYn(), b.getUpdateSeq(), b.getDelYn(), b.getBoardSeq())==1;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class BoardImp implements BoardRepository {
 
     @Override
     public boolean insert(Board b) {
-        return tp.update("insert into board(title, category, writer, content, member_seq) values(?,?,?,?,?)",
-                b.getTitle(), b.getCategory(), b.getWriter(), b.getContent(), b.getMemberSeq())==1;
+        return tp.update("insert into board(title, category, writer, content, update_seq, member_seq) values(?,?,?,?,?,?)",
+                b.getTitle(), b.getCategory(), b.getWriter(), b.getContent(), b.getUpdateSeq() ,b.getMemberSeq())==1;
     }
 }

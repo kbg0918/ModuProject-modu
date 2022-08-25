@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 public class ProfessorCommission {
     //명세 번호
     private Integer pcSeq;
+    //명세 번호 참조
+    private Integer updateSeq;
+    //수정 여부
+    private String updateYn;
     //제목
     private String title;
     //작성자 = member id

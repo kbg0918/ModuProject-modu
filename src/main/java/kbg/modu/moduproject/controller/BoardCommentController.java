@@ -39,7 +39,6 @@ public class BoardCommentController {
     //댓글 저장 form
     @PostMapping("board/commentSave")
     public ResponseEntity commentSave(@RequestBody BoardComment bc){
-
         return new ResponseEntity(bcs.save(bc),HttpStatus.OK);
     }
 
@@ -52,6 +51,7 @@ public class BoardCommentController {
     //댓글 수정 form
     @PostMapping("board/commentUpdate")
     public ResponseEntity commentUpdate(@RequestBody BoardComment bc) {
+        bc.setUpdateSeq(bc.getBcSeq());
         return new ResponseEntity(bcs.save(bc), HttpStatus.OK);
     }
 

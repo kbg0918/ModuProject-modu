@@ -1,8 +1,8 @@
 <!DOCTYPE html>
+<script src="https://cdn.tiny.cloud/1/jpqz5uexhj5hxm0hj4xorv4yg0thqqaq33uouodzrof7i7xo/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-
 <!------ Include the above in your HEAD tag ---------->
 <meta charset="utf-8">
 <html xmlns:th="http://www.thymeleaf.org">
@@ -17,13 +17,13 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <!--Custom styles-->
-    <link rel="stylesheet" type="text/css" href="../static/css/Main2.css">
+    <link rel="stylesheet" type="text/css" href="/../static/css/Main2.css">
 </head>
 <header class="masthead">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="../MainForm"><img src="../static/assets/MODU.PNG" alt="..." /></a>
+            <a class="navbar-brand" href="../MainForm"><img src="/../static/assets/MODU.PNG" alt="..." /></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars ms-1"></i>
@@ -31,7 +31,7 @@
 
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                   <th:block th:unless="${session.member}">
+                    <th:block th:unless="${session.member}">
                         <script>
                             var result = confirm("로그인이 필요한 서비스입니다.");
 
@@ -48,9 +48,9 @@
                     </th:block>
                     <th:block th:if="${session.member}">
                         <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../board/InsertForm">커뮤니티</a></li>
-                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="./Form">제안</a></li>
-                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="./Find">교수찾기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./InsertForm">커뮤니티</a></li>
+                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="../commission/Form">제안</a></li>
+                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="../commission/Find">교수찾기</a></li>
                         <li class="nav-item"><a class="nav-link" href="../MyPage"><td th:text="${session.member.id}"></td>님</a></li>
                         <li class="nav-item"><a class="nav-link" href="../Logout">로그아웃</a></li>
                     </th:block>
@@ -61,23 +61,29 @@
 
     </nav>
 </header>
+<script>
+    tinymce.init({
+        plugins : 'save',
+        language: "ko",
+        menubar: 'file edit view insert format tools table help',
+        toolbar: 'undo redo | bold italic underline strikethrough | fontfamily fontsize blocks | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+        selector: '#tinyText'
+    });
+</script>
 <body>
-<section class="list-section">
-    <div class="list-container">
-        <div class="list-card" th:each="l :${list}">
-            <th:block th:if="${l.delYn.equals('N')} and ${l.updateYn.equals('N')}">
-                <div class="category_list" th:onclick="|location.href='@{detail(pcSeq=${l.pcSeq}, writer=${l.writer})}'|">
-                    <div class="list" >
-                        <strong id="strong_font1" th:utext="${l.title}"></strong>
-                    </div>
-                    <strong id="strong_font2" th:utext="${l.writer}+님"></strong>
-                </div>
-            </th:block>
-        </div>
+<form action="../update" method="post">
+    <div class="select_box">
+        <select id="disable_select" name="category" required>
+            <option><span th:utext="${post.category}"></span></option>
+            </optgroup>
+        </select>
     </div>
-</section>
-
-
+    <div class="tiny_box">
+        <input id="inputBoardSeq" type="hidden" name="boardSeq" th:value="${post.boardSeq}">
+        <input id="inputName" type="text" name="writer" readonly th:value="${session.member.memberName}"/>
+        <input id="inputId" type="text" name="title" th:value="${post.title}"/>
+        <textarea id="tinyText" name="content" style="width: 1000px; height: 500px;" th:utext="${post.content}"></textarea>
+    </div>
+</form>
 </body>
 </html>
-

@@ -38,7 +38,9 @@ public class BoardService implements BoardServiceInt {
             return br.insert(b);
         }else{
             b.setDelYn("N");
-            return br.update(b);
+            b.setUpdateYn("Y");
+            br.update(b);
+            return br.insert(b);
         }
     }
 

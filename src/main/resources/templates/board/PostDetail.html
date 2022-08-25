@@ -83,8 +83,11 @@
         <h1 th:utext="${post.title}" id="postDetail-h1"></h1>
         <div id="postDetail-profile">
             <span th:utext="${post.writer}+'님'"></span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp
             <span th:utext="${post.addDate}" style="color:#a8a5a5"></span>
+            <button id="post-update-btn" onclick="location.href='./updateForm/'+boardSeq" style="color: #8e8bd5">수정</button>
+            <button id="post-delete-btn" onclick="location.href='./deleteForm/'+boardSeq" style="color: #8e8bd5">삭제</button>
+
             <br>
             <hr color="#cccaca" width="100%">
         </div>
@@ -99,16 +102,15 @@
                 <input type="button" id="comment-save-btn" value="등록" style="color: #8e8bd5">
             </div>
         </div>
-
-        <div id="textarea-box-update">
-            <textarea class="postDetail-textarea"  id="comment-update" onkeyup="resize(this)" placeholder="수정할 문장을 입력해주세요" style="overflow: hidden" name="content"></textarea>
-
-            <div id="textarea-update">
-                <div id="tmp"></div>
-                <input type="button" id="comment-update-btn" onClick="hide()" value="수정" style="color: #8e8bd5">
-            </div>
-        </div>
+        <!--htmlComment += '<article id="update-section">'
+                            htmlComment += '<div id="textarea-box-update">'
+                            htmlComment += '<textarea class="postDetail-textarea" id="comment-update" onkeyup="resize(this)" placeholder="수정할 문장을 입력해주세요" style="overflow: hidden" name="content">'+'</textarea>'
+                            htmlComment += '<div id="textarea-update">'
+                            htmlComment += '<input type="button" class="comment-update" id="final-update-btn'+value.bcSeq+'" onclick="hide()" value="수정" style="color: #8e8bd5">'+'</div>'
+                            htmlComment += '</div>'+'</article>'
+                            -->
         <div class="postDetail-comment">
+
         </div>
     </div>
 
@@ -159,56 +161,70 @@
 
 
     //댓글 수정
-    $('#comment-update-btn').click(function (){
-        var tmp = document.getElementById("bc-seq").value;
+
+
+    function commentUpdate(bcSeq){
+        const test = $('#final-update-btn'+bcSeq).closest('#comment-id'+bcSeq).attr('data-num');
+
         console.log('댓글 수정 버튼 클릭')
-        const content = $('#comment-update').val();
-        $.ajax({
-            type:'post',
-            url:'commentUpdate',
-            data: JSON.stringify({
-                "bcSeq": tmp,
-                "writer" : writer,
-                "content" : content,
-                "category":category,
-                "boardSeq":boardSeq
-            }),
-            contentType: 'application/json',
-            success:function (data){
-                console.log('통신성공' + data);
-                alert("댓글이 수정 되었습니다.");
-                commentList();
-                document.getElementById('comment-update').value=" ";
-            },
-            error:function (){
-                alert("통신실패"+data);
-            }
-        });
-    });
+        const content = $('#comment-update'+bcSeq).val();
+        if(content.length==0 || content==" "){
+            alert("수정할 문자를 입력해주세요!")
+            return false;
+        }else{
+            $.ajax({
+                type:'post',
+                url:'commentUpdate',
+                data: JSON.stringify({
+                    "bcSeq": test,
+                    "updateSeq":test,
+                    "writer" : writer,
+                    "content" : content,
+                    "category":category,
+                    "boardSeq":boardSeq
+                }),
+                contentType: 'application/json',
+                success:function (data){
+                    console.log('통신성공' + data);
+                    alert("댓글이 수정 되었습니다.");
+                    commentList();
+                    document.getElementById('comment-update'+bcSeq).value=" ";
+                },
+                error:function (){
+                    alert("통신실패"+data);
+                }
+            });
+        }
 
-    function commentDelete(){
-        //댓글 삭제
-
-        var bcSeq = document.getElementById("bc-seq").value;
-        console.log('댓글 삭제버튼');
-        $.ajax({
-            type:'get',
-            url:'commentDelete/'+bcSeq,
-            contentType: 'application/json',
-            success:function (data){
-                console.log('통신성공');
-                alert("댓글이 삭제되었습니다.");
-                commentList();
-            },
-            error:function (){
-                alert("통신실패"+data);
-            }
-
-        })
 
 
     }
 
+    function commentDelete(bcSeq){
+        const tmp = $('#delete-btn-id'+bcSeq).closest('#comment-id'+bcSeq).attr('data-num');
+        //댓글 삭제
+        console.log('댓글 삭제버튼');
+        if(confirm("정말 삭제하시겠습니까?")){
+            $.ajax({
+                type:'get',
+                url:'commentDelete/'+tmp,
+                contentType: 'application/json',
+                success:function (data){
+                    console.log('통신성공');
+                    alert("댓글이 삭제되었습니다.");
+                    commentList();
+                },
+                error:function (){
+                    alert("통신실패"+data);
+                }
+
+            })
+        }else{
+            return false;
+        }
+
+
+    }
 
 
     //댓글 목록
@@ -220,40 +236,49 @@
             contentType: 'application/json',
             success:function (data){
                 var htmlComment = '';
-                var test1 = '';
                 $.each(data, function (key, value){
-                    if(value.delYn == 'N'){
-                        htmlComment += '<div class="comment-list">';
-                        test1 = '<input type="hidden" id="bc-seq" value="'+value.bcSeq+'">'
+                    if(value.delYn == 'N'&& value.updateYn =='N'){
+                        htmlComment += '<div class="comment-list" id="comment-id'+value.bcSeq+'" data-num="'+value.bcSeq+'">';
                         if(USER_NAME == value.writer){
-                            htmlComment += '<div class="comment-update-delete">'+'<button id="btn-update" style="color:#8e8bd5" onclick="show()">수정</button><button id="btn-delete" onclick="commentDelete()" style="color:#8e8bd5">삭제</button></div>';
+                            htmlComment += '<div class="comment-update-delete" id="update-delete-id'+value.bcSeq+'">'+'<button class="btn-update" style="color:#8e8bd5" onclick="hide('+value.bcSeq+')">수정</button>';
+                            htmlComment += '<button class="btn-delete" id="delete-btn-id'+value.bcSeq+'" onclick="commentDelete('+value.bcSeq+')" style="color:#8e8bd5">삭제</button></div>'
                         }
                         htmlComment += '<div class="comment-writer">'+'<span id="span-writer">'+value.writer+'</div>';
                         if(role == 'Professor'){
                             htmlComment += '<div class="comment-category">'+'<span id="span-category" style="color: #bdbaba">'+value.category+"고수님"+'</div>';
                         }
+                        htmlComment += '<div class="update-section" id="update-section-id'+value.bcSeq+'" style="display: none">'
+                        htmlComment += '<textarea class="update-section-textarea" id="comment-update'+value.bcSeq+'" onkeyup="resize(this)" placeholder="수정할 문장을 입력해주세요" style="overflow: hidden" name="content">'+'</textarea>';
+                        htmlComment += '<div id="div-update">'
+                        htmlComment += '<input type="button" class="update-section-btn" id="final-update-btn'+value.bcSeq+'" onclick="commentUpdate('+value.bcSeq+')" value="수정" style="color: #8e8bd5">'+'</div>';
+                        htmlComment += '</div>'
+                        htmlComment += '<div class="content-section" id="content-section-id'+value.bcSeq+'" style="display: block">'
                         htmlComment += '<div class="comment-content">'+'<span id="span-content">'+value.content+'</div>';
                         if(value.upDate == null){
-                            htmlComment += '<div class="comment-addDate">'+'<span id="span-addDate">'+addTime(value.addDate)+'</div><hr color="#cccaca" width="100%"></div>';
+                            htmlComment += '<div class="comment-addDate">'+'<span id="span-addDate">'+addTime(value.addDate)+'</div></div>';
                         }else{
-                            htmlComment += '<div class="comment-addDate">'+'<span id="span-addDate">'+addTime(value.upDate)+'</div><hr color="#cccaca" width="100%"></div>';
+                            htmlComment += '<div class="comment-addDate">'+'<span id="span-addDate">'+addTime(value.upDate)+'</div></div>';
                         }
+                        htmlComment += '<hr color="#cccaca" width="100%"></div>'
                     }
 
                 })
                 $(".postDetail-comment").html(htmlComment);
-                $("#tmp").html(test1);
             },
             error:function (){
                 alert("댓글 목록 실패..");
             }
         })
     }
-    function show(){
-        document.getElementById("textarea-box-update").style.display = "block";
+    function show(bcSeq){
+        document.getElementById("update-delete-id"+bcSeq).style.display ="block";
+        document.getElementById("content-section-id"+bcSeq).style.display ="block";
+        document.getElementById("update-section-id"+bcSeq).style.display ="none";
     }
-    function hide(){
-        document.getElementById("textarea-box-update").style.display = "none";
+    function hide(bcSeq){
+        document.getElementById("update-delete-id"+bcSeq).style.display ="none";
+        document.getElementById("content-section-id"+bcSeq).style.display = "none";
+        document.getElementById("update-section-id"+bcSeq).style.display ="block";
     }
 
     //댓글 목록보여주기

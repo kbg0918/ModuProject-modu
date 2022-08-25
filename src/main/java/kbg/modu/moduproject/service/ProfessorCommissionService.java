@@ -35,7 +35,9 @@ public class ProfessorCommissionService implements ProfessorCommissionServiceInt
             return pr.insert(pc);
         }else{
             pc.setDelYn("N");
-            return pr.update(pc);
+            pc.setUpdateYn("Y");
+            pr.update(pc);
+            return pr.insert(pc);
         }
     }
 

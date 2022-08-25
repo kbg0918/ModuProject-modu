@@ -37,7 +37,9 @@ public class BoardCommentService implements BoardCommentServiceInt {
             return bcr.insert(bc);
         }
         bc.setDelYn("N");
-        return bcr.update(bc);
+        bc.setUpdateYn("Y");
+        bcr.update(bc);
+        return bcr.insert(bc);
     }
 
     @Override

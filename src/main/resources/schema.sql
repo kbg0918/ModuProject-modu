@@ -1,4 +1,4 @@
-/*유저 테이블*/
+/*유저 테이블 clear*/
 create table if not exists member(
     seq int auto_increment primary key,
     id varchar(255) unique,
@@ -10,7 +10,6 @@ create table if not exists member(
     member_role varchar(255) not null,
     category varchar(255) not null,
     useYn varchar(1) default 'Y' not null,
-    privacy char(1) default 'N' comment '개인정보 동의',
     add_date datetime not null DEFAULT CURRENT_TIMESTAMP,
     up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -48,9 +47,11 @@ create table if not exists member_portfolio(
     up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-/*카테고리에 따른 게시판 테이블 */
+/*카테고리에 따른 게시판 테이블 clear*/
 create table if not exists board(
     board_seq int auto_increment primary key,
+    update_yn char(1) DEFAULT 'N' not null,
+    update_seq int,
     title varchar(255) not null,
     writer varchar(10) not null,
     content varchar(4096) not null,
@@ -62,9 +63,11 @@ create table if not exists board(
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
-/*게시판 댓글*/
+/*게시판 댓글 clear*/
 create table if not exists board_comment(
     bc_seq int auto_increment primary key,
+    update_yn char(1) DEFAULT 'N' not null,
+    update_seq int,
     writer varchar(10) not null,
     content varchar(4096) not null,
     category varchar(30) not null,
@@ -84,7 +87,7 @@ create table if not exists board_views(
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
-/*채팅 방*/
+/*채팅 방 clear*/
 create table if not exists chatting_room(
     cr_seq int auto_increment primary key comment 'chatting_matching',
     room_name varchar(300) not null comment '채팅방 이름',
@@ -94,7 +97,7 @@ create table if not exists chatting_room(
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
-/*채팅 로그*/
+/*채팅 로그 clear*/
 create table if not exists chatting_log(
     cl_seq int auto_increment primary key comment 'chatting_log',
     sender varchar(100) not null comment '보낸 사람',
@@ -105,7 +108,7 @@ create table if not exists chatting_log(
     add_date datetime DEFAULT CURRENT_TIMESTAMP comment '보낸 시간'
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-/*로그인 기록*/
+/*로그인 기록 clear*/
 create table if not exists login_log (
     login_seq int auto_increment primary key,
     id varchar(255) not null,
@@ -125,8 +128,11 @@ create table if not exists member_like(
 
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+/*교수의 명세서 clear*/
 create table if not exists professor_commission(
     pc_seq int auto_increment primary key,
+    update_yn char(1) DEFAULT 'N' not null,
+    update_seq int,
     title varchar(2555) not null,
     writer varchar(100) not null,
     content varchar(10000) not null,

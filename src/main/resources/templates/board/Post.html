@@ -106,18 +106,15 @@
 
 </article>
 <article class="post-section">
-
 <ul class="post-list">
-    <li class="post-li" th:each="p :${post}" th:onclick="|location.href='@{PostDetail(boardSeq=${p.boardSeq})}'|">
-        <th:block th:if="${p.delYn.equals('N')}">
-            <div id="post-update-delete"><button id="post-update-btn" onclick="location.href=''" style="color: #8e8bd5">수정</button><button id="post-delete-btn" style="color: #8e8bd5">삭제</button></div>
+    <li class="post-li" th:each="p :${post}" th:if="${p.delYn.equals('N')} and ${p.updateYn.equals('N')}" th:onclick="|location.href='@{PostDetail(boardSeq=${p.boardSeq})}'|">
             <h5 id="post-h" th:utext="${p.title}"></h5>
             <span id="post-p" th:utext="${p.content}"></span>
             <span id="add-date" th:utext="${p.addDate}"></span>
             <br>
-        </th:block>
         <hr color="#a9a7a7">
         <script>
+            const boardSeq = [[${p.boardSeq}]]
             const addTime = [[${p.addDate}]];
             var time = document.getElementById('add-date');
 
