@@ -23,11 +23,6 @@ public class BoardImp implements BoardRepository {
     }
 
     @Override
-    public Member findByRole(Integer memberSeq) {
-        return tp.queryForObject("select * from member where seq=?", new BeanPropertyRowMapper<>(Member.class), memberSeq);
-    }
-
-    @Override
     public List<Board> findByCategory(String category) {
         return tp.query("select * from board where category =?", new BeanPropertyRowMapper<>(Board.class), category);
     }
@@ -40,6 +35,12 @@ public class BoardImp implements BoardRepository {
     @Override
     public List<Board> categoryList() {
         return tp.query("select * from board", new BeanPropertyRowMapper<>(Board.class));
+    }
+
+    @Override
+    public Integer countView(Integer boardSeq) {
+        return tp.update("update board b set board_view = board_view + 1 where board_seq = ?",
+                boardSeq);
     }
 
     @Override

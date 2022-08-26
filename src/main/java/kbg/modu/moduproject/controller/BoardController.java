@@ -48,7 +48,7 @@ public class BoardController {
         if(category == null){
             mm.put("post",br.categoryList());
         }else{
-            mm.put("post",bs.findByCategory(category));
+            mm.put("post",br.findByCategory(category));
 
         }
         return "board/Post";
@@ -57,6 +57,7 @@ public class BoardController {
     //게시물 상세
     @RequestMapping("board/PostDetail")
     public String detailForm(@RequestParam int boardSeq, ModelMap mm){
+        br.countView(boardSeq);
         mm.put("post", br.findBySeq(boardSeq));
         return "board/PostDetail";
     }
@@ -64,7 +65,7 @@ public class BoardController {
     //게시물 수정
     @RequestMapping("board/updateForm/{boardSeq}")
     public String updateForm(Board b, ModelMap mm, @PathVariable("boardSeq") int boardSeq){
-        mm.put("post", bs.findBySeq(boardSeq));
+        mm.put("post", br.findBySeq(boardSeq));
         return "board/PostUpdate";
     }
 

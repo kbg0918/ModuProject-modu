@@ -16,21 +16,6 @@ public class BoardCommentService implements BoardCommentServiceInt {
     BoardCommentRepository bcr;
 
     @Override
-    public List<BoardComment> findByCategory(String category) {
-        return bcr.findByCategory(category);
-    }
-
-    @Override
-    public BoardComment findByBoardComment(Integer bcSeq) {
-        return bcr.findByBoardComment(bcSeq);
-    }
-
-    @Override
-    public List<BoardComment> findByList(Integer boardSeq) {
-        return bcr.findByList(boardSeq);
-    }
-
-    @Override
     @Transactional
     public boolean save(BoardComment bc) {
         if(bc.getBcSeq() == null){

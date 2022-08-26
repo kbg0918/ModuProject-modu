@@ -48,7 +48,7 @@
                     </th:block>
                     <th:block th:if="${session.member}">
                         <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
-                        <li class="nav-item"><a class="nav-link" href="./InsertForm">커뮤니티</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./Post">커뮤니티</a></li>
                         <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="../commission/Form">제안</a></li>
                         <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="../commission/Find">교수찾기</a></li>
                         <li class="nav-item"><a class="nav-link" href="../MyPage"><td th:text="${session.member.id}"></td>님</a></li>

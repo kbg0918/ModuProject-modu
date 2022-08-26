@@ -6,6 +6,20 @@
 <!------ Include the above in your HEAD tag ---------->
 <meta charset="utf-8">
 <html xmlns:th="http://www.thymeleaf.org">
+<!-- stomp -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:inline="javascript" th:if="${session.member}">
+    var socket = null;
+    const USER_SEQ = [[${session.member.seq}]];
+    const USER_NAME = [[${session.member.memberName}]];
+    const EX_SEQ = localStorage.getItem("EX_SEQ");
+    const EX_NAME = localStorage.getItem("USER_NAME");
+    const PC_SEQ = localStorage.getItem("PC_SEQ");
+    const USER_ROLE = [[${session.member.memberRole}]];
+</script>
+<script th:if="${session.member} and ${session.member.memberRole.equals('Professor')}" src="../static/js/Main.js"></script>
+
 <head>
     <title>MODU - 5000만 국민의 선택</title>
     <!--Made with love by Mutiullah Samim -->
@@ -50,8 +64,8 @@
                     <th:block th:if="${session.member}">
                         <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
                         <li class="nav-item"><a class="nav-link" href="./Post">커뮤니티</a></li>
-                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="./commission/Form">제안</a></li>
-                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="./commission/Find">교수찾기</a></li>
+                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="../commission/Form">제안</a></li>
+                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="../commission/Find">교수찾기</a></li>
                         <li class="nav-item"><a class="nav-link" href="../MyPage"><td th:text="${session.member.id}"></td>님</a></li>
                         <li class="nav-item"><a class="nav-link" href="../Logout">로그아웃</a></li>
                     </th:block>
@@ -111,11 +125,12 @@
             <h5 id="post-h" th:utext="${p.title}"></h5>
             <span id="post-p" th:utext="${p.content}"></span>
             <span id="add-date" th:utext="${p.addDate}"></span>
+            <span id="update-view" th:utext="'조회'+' '+${p.boardView}"></span>
             <br>
         <hr color="#a9a7a7">
         <script>
             const boardSeq = [[${p.boardSeq}]]
-            const addTime = [[${p.addDate}]];
+            const addTime = "[[${p.addDate}]]";
             var time = document.getElementById('add-date');
 
             time.innh

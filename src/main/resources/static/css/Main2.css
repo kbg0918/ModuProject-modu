@@ -378,7 +378,7 @@ header.masthead {
 }
 #add-date{
     position: absolute;
-    left: 71.5%;
+    left: 60%;
     color: #a9a7a7;
 }
 .category-section{
@@ -462,6 +462,16 @@ header.masthead {
     top: 10%;
     width: 600px;
     height: 30px;
+}
+#board-view{
+    position: absolute;
+    top: 10%;
+    left: 47.5%;
+}
+#update-view{
+    position: absolute;
+    left: 91%;
+    color: #a9a7a7;
 }
 #postDetail-body{
     position: relative;

@@ -5,8 +5,7 @@ import kbg.modu.moduproject.domain.Board;
 import java.util.List;
 
 public interface BoardServiceInt {
-    List<Board> findByCategory(String category);
-    Board findBySeq(Integer boardSeq);
+    Integer countView(Integer boardSeq);
     boolean save(Board b);
     boolean delete(Board b);
 }

@@ -24,12 +24,14 @@ public class Board {
     private String writer;
     //내용
     private String content;
-    //카테고리로
+    //카테고리
     private String category;
     //참조
     private Integer memberSeq;
     //삭제는 했지만 DB엔 남아있음
     private String delYn;
+    //조회수
+    private Integer boardView;
     //등록 시간
     private String addDate;
 }

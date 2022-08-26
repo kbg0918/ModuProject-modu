@@ -16,19 +16,6 @@ public class ProfessorCommissionService implements ProfessorCommissionServiceInt
     private ProfessorCommissionRepository pr;
 
 
-
-    @Override
-    public List<ProfessorCommission> findByCategory(String category) {
-
-        return pr.findByCategory(category);
-    }
-
-    @Override
-    public ProfessorCommission findBySeq(Integer pcSeq) {
-
-        return pr.findBySeq(pcSeq);
-    }
-
     @Override
     public boolean save(ProfessorCommission pc) {
         if(pc.getPcSeq() == null){

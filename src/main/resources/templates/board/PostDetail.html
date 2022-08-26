@@ -8,14 +8,10 @@
     var socket = null;
     const USER_SEQ = [[${session.member.seq}]];
     const USER_NAME = [[${session.member.memberName}]];
-    const EX_SEQ = 2;
-    const EX_NAME = '김교수';
-    const PC_SEQ = 1;
+    const EX_SEQ = localStorage.getItem("EX_SEQ");
+    const EX_NAME = localStorage.getItem("USER_NAME");
+    const PC_SEQ = localStorage.getItem("PC_SEQ");
     const USER_ROLE = [[${session.member.memberRole}]];
-
-    localStorage.setItem("USER_SEQ", USER_SEQ);
-    localStorage.setItem("PC_SEQ", PC_SEQ);
-    localStorage.setItem("USER_NAME", USER_NAME);
 
 </script>
 <html xmlns:th="http://www.thymeleaf.org">
@@ -61,9 +57,9 @@
                     </th:block>
                     <th:block th:if="${session.member}">
                         <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../board/InsertForm">커뮤니티</a></li>
-                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="commission/Form">제안</a></li>
-                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="commission/Find">교수찾기</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./Post">커뮤니티</a></li>
+                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="../commission/Form">제안</a></li>
+                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="../commission/Find">교수찾기</a></li>
                         <li class="nav-item"><a class="nav-link" href="../MyPage"><td th:text="${session.member.id}"></td>님</a></li>
                         <li class="nav-item"><a class="nav-link" href="../Logout">로그아웃</a></li>
                     </th:block>
@@ -85,6 +81,7 @@
             <span th:utext="${post.writer}+'님'"></span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp
             <span th:utext="${post.addDate}" style="color:#a8a5a5"></span>
+            <span id="board-view" th:utext="'조회'+' '+${post.boardView}" style="color:#a8a5a5"></span>
             <button id="post-update-btn" onclick="location.href='./updateForm/'+boardSeq" style="color: #8e8bd5">수정</button>
             <button id="post-delete-btn" onclick="location.href='./deleteForm/'+boardSeq" style="color: #8e8bd5">삭제</button>
 
@@ -119,9 +116,11 @@
 
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-
+<script src="../static/js/Main.js"></script>
 <!-- ajax 작동 -->
 <script>
     function resize(event) {

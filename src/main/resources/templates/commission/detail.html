@@ -4,18 +4,12 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script th:inline="javascript">
-    var socket = null;
     const USER_SEQ = [[${session.member.seq}]];
     const USER_NAME = [[${session.member.memberName}]];
     const EX_SEQ = [[${ex_seq}]];
     const EX_NAME = [[${list.writer}]];
     const PC_SEQ = [[${list.pcSeq}]];
     const USER_ROLE = [[${session.member.memberRole}]];
-
-    localStorage.setItem("USER_SEQ", USER_SEQ);
-    localStorage.setItem("PC_SEQ", PC_SEQ);
-    localStorage.setItem("USER_NAME", USER_NAME);
-
 </script>
 <!------ Include the above in your HEAD tag ---------->
 
@@ -62,7 +56,7 @@
                     </th:block>
                     <th:block th:if="${session.member}">
                         <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../board/InsertForm">커뮤니티</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../board/Post">커뮤니티</a></li>
                         <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="commission/Form">제안</a></li>
                         <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="commission/Find">교수찾기</a></li>
                         <li class="nav-item"><a class="nav-link" href="../MyPage"><td th:text="${session.member.id}"></td>님</a></li>
@@ -92,7 +86,7 @@
 <div id="sideNav">
     <th:block th:if="${session.member.memberRole.toString().equals('Professor') and session.member.memberName.equals(list.writer)}">
         <div class="list_chat">
-            <input type="button" th:onclick="|location.href='@{../chat/room}'|" class="btn1" onclick="notice()" value="수락요청 보내기">
+            <input type="button" th:onclick="|location.href='@{../chat/room}'|" class="btn1" id="receive-btn" onclick="receive()" value="수락요청 보내기">
             <input type="button" class="setBtn" onclick="location.href='./delete/'+PC_SEQ" value="삭제">
             <input type="button" class="setBtn" onclick="location.href='./updateForm/'+PC_SEQ" value="수정">
         </div>
@@ -100,7 +94,7 @@
     </th:block>
     <th:block th:if="${session.member.memberRole.toString().equals('Student')}">
         <div class="list_chat">
-            <input type="button" class="btn1" onclick="notice()" value="문의 보내기">
+            <input type="button" class="btn1" id="notice-btn" value="문의 보내기">
         </div>
     </th:block>
 </div>

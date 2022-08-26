@@ -45,7 +45,7 @@ public class BoardCommentController {
     //댓글 목록 form
     @GetMapping("board/commentList")
     public ResponseEntity<List<BoardComment>> commentList(@RequestParam String boardSeq){
-        return new ResponseEntity<>(bcs.findByList(Integer.parseInt(boardSeq)), HttpStatus.OK);
+        return new ResponseEntity<>(bcr.findByList(Integer.parseInt(boardSeq)), HttpStatus.OK);
     }
 
     //댓글 수정 form

@@ -44,11 +44,9 @@ public class ProfessorCommissionController {
     @Autowired
     private ProfessorCommissionRepository professorCommissionRepository;
 
-    @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
 
-    HashMap<String,String> map = new HashMap<>();
-    HashMap<String,String> userSeqMap = new HashMap<>();
+
+
 
 
     @RequestMapping(value="commission/Form", method = RequestMethod.GET)
@@ -75,7 +73,7 @@ public class ProfessorCommissionController {
     //수정
     @RequestMapping(value="commission/updateForm/{pcSeq}")
     public String update(ProfessorCommission pc, ModelMap mm, @PathVariable int pcSeq){
-        mm.put("list", ps.findBySeq(pcSeq));
+        mm.put("list", professorCommissionRepository.findBySeq(pcSeq));
         return "commission/Update";
     }
     
@@ -91,7 +89,7 @@ public class ProfessorCommissionController {
     //게시물 리시트 보는 form
     @RequestMapping("commission/List")
     public String listForm(@RequestParam String category, ModelMap mm){
-        mm.put("list", ps.findByCategory(category));
+        mm.put("list", professorCommissionRepository.findByCategory(category));
         return "commission/List";
     }
 
@@ -110,7 +108,7 @@ public class ProfessorCommissionController {
     //디테일 form
     @RequestMapping(value = "commission/detail", method = RequestMethod.GET)
     public String listDetail(@RequestParam int pcSeq, @RequestParam(required = false) String writer, ModelMap mm){
-        mm.put("list", ps.findBySeq(pcSeq));
+        mm.put("list", professorCommissionRepository.findBySeq(pcSeq));
         Member member = professorCommissionRepository.findByMemberSeq(writer);
         int exSeq = member.getSeq();
         mm.put("ex_seq", exSeq);
@@ -120,58 +118,6 @@ public class ProfessorCommissionController {
     }
 
 
-    @MessageMapping("/topic/ccr/{userSeq}/{exSeq}")
-    @SendTo("topic/ccr/{userSeq}/{exSeq}")
-    public void ChatStomp(Principal principal, SimpMessageHeaderAccessor headerAccessor
-            , @DestinationVariable("userSeq") String userSeq
-            , @DestinationVariable("exSeq") String exSeq) {
 
-
-        //TODO DB에서 채팅방이 미리 만들어져 있는지 확인해서 만들어져 있고
-        //닫혀있지 않다면 기존 채팅방을 사용해야함
-        //또한 해당 전문가의 seq가 정말로 존재하는지 검증하는 로직또한 필요함
-        Gson gson = new Gson();
-        String jsonStr = gson.toJson(ImmutableMap.of("questioner" , userSeq, "rgstDttm" , ""));
-
-        //교수
-        simpMessagingTemplate.convertAndSend("/queue/" + exSeq , jsonStr);
-
-        //학생
-        simpMessagingTemplate.convertAndSend("/queue/" + userSeq , jsonStr);
-
-    }
-
-    @MessageMapping("/notice/{pcSeq}/{userSeq}/{exSeq}")
-    public void noticeStomp(@RequestParam(required = false) String writer, SimpMessageHeaderAccessor sha , @DestinationVariable("pcSeq") String pcSeq, @DestinationVariable("userSeq") String userSeq
-            , @DestinationVariable("exSeq") String exSeq){
-        String msg = "";
-
-        map.put(userSeq.toString(), sha.getUser().getName());
-        System.out.println(map);
-
-
-        Member member =  professorCommissionRepository.findByRole(Integer.parseInt(userSeq));
-        userSeqMap.put(member.getMemberRole(), userSeq);
-
-
-        if(map.size() >= 2){
-            //보내는 곳
-            if(member.getMemberRole().equals("Student")) { //교수한테 보내기
-                System.out.println("교수한테 보내기");
-                msg = "알림! 채팅방 요청" + sha.getUser().getName();
-                simpMessagingTemplate.convertAndSendToUser(map.get(exSeq), "/queue/hello/"+pcSeq, msg);
-            }
-
-            if(member.getMemberRole().equals("Professor")){ //학생한테 보내기
-                System.out.println("학생한테 보내기");
-                msg = "알림! 교수의 수락" + sha.getUser().getName();
-                simpMessagingTemplate.convertAndSendToUser(map.get(userSeqMap.get("Student")),"/queue/hello/"+pcSeq+"/"+userSeqMap.get("Student"), msg);
-            }
-        }
-        else{
-            System.out.println("null 입니다");
-        }
-
-    }
 
 }

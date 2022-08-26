@@ -58,6 +58,7 @@ create table if not exists board(
     category varchar(30) not null,
     member_seq int,
     del_yn char(1) DEFAULT 'N' not null,
+    board_view int DEFAULT 0,
     add_date datetime not null DEFAULT CURRENT_TIMESTAMP,
     up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

@@ -22,13 +22,8 @@ public class BoardService implements BoardServiceInt {
 
 
     @Override
-    public List<Board> findByCategory(String category) {
-        return br.findByCategory(category);
-    }
-
-    @Override
-    public Board findBySeq(Integer boardSeq) {
-        return br.findBySeq(boardSeq);
+    public Integer countView(Integer boardSeq) {
+        return br.countView(boardSeq);
     }
 
     @Override
