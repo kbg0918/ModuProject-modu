@@ -10,15 +10,41 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:inline="javascript" th:if="${session.member}">
-    var socket = null;
     const USER_SEQ = [[${session.member.seq}]];
     const USER_NAME = [[${session.member.memberName}]];
-    const EX_SEQ = localStorage.getItem("EX_SEQ");
-    const EX_NAME = localStorage.getItem("USER_NAME");
-    const PC_SEQ = localStorage.getItem("PC_SEQ");
     const USER_ROLE = [[${session.member.memberRole}]];
+
+    var socket = null;
+    $(document).ready(function(){
+        connectWs();
+    })
+
+    function connectWs(){
+        console.log("연결");
+        var ws = new SockJS('/alarm');
+        socket = ws;
+        ws.onopen = function (){
+            console.log("open")
+        };
+
+        ws.onmessage = function (event){
+            console.log("onmessage 실행")
+            console.log("onmessage"+event.data);
+            let htmlAlarm = '';
+            $('#real-time-notice').html(event.data);
+            $('#real-time-notice').css('display', 'block');
+
+            setTimeout(function(){
+                $('#real-time-notice').css('display','none');
+
+            }, 5000);
+        };
+        ws.onclose = function() {
+            console.log("onclose 실행")
+            console.log('close');
+        };
+    }
 </script>
-<script th:if="${session.member} and ${session.member.memberRole.equals('Professor')}" src="../static/js/Main.js"></script>
 
 <head>
     <title>MODU - 5000만 국민의 선택</title>
@@ -77,7 +103,8 @@
     </nav>
 </header>
 <body>
-
+<!--실시간 알림-->
+<div id="real-time-notice"></div>
 <article class="post-header">
     <h1>모두의 커뮤니티</h1>
     <button id="post-write" onclick="location.href='./InsertForm'">글쓰기</button>
@@ -133,7 +160,6 @@
             const addTime = "[[${p.addDate}]]";
             var time = document.getElementById('add-date');
 
-            time.innh
 
             function changeDate(date){
                 date = new Date(parseInt(date));

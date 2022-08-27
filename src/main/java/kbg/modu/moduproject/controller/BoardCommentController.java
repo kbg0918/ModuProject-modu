@@ -62,6 +62,17 @@ public class BoardCommentController {
         return new ResponseEntity(bcs.delete(bc),HttpStatus.OK);
     }
 
+    //댓글 알림 form
+    @RequestMapping("board/writeComment")
+    public void commentAlert(){
+        System.out.println("됨?");
+    }
+
+    //댓글
+    @GetMapping("/alarm/")
+    public void test(){
+        System.out.println("ㅈㅂ");
+    }
 
 
 }

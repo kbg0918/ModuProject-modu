@@ -3,13 +3,41 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script th:inline="javascript">
+<script th:inline="javascript" th:if="${session.member}">
     const USER_SEQ = [[${session.member.seq}]];
     const USER_NAME = [[${session.member.memberName}]];
-    const EX_SEQ = [[${ex_seq}]];
-    const EX_NAME = [[${list.writer}]];
-    const PC_SEQ = [[${list.pcSeq}]];
     const USER_ROLE = [[${session.member.memberRole}]];
+
+    var socket = null;
+    $(document).ready(function(){
+        connectWs();
+    })
+
+    function connectWs(){
+        console.log("연결");
+        var ws = new SockJS('/alarm');
+        socket = ws;
+        ws.onopen = function (){
+            console.log("open")
+        };
+
+        ws.onmessage = function (event){
+            console.log("onmessage 실행")
+            console.log("onmessage"+event.data);
+            let htmlAlarm = '';
+            $('#real-time-notice').html(event.data);
+            $('#real-time-notice').css('display', 'block');
+
+            setTimeout(function(){
+                $('#real-time-notice').css('display','none');
+
+            }, 5000);
+        };
+        ws.onclose = function() {
+            console.log("onclose 실행")
+            console.log('close');
+        };
+    }
 </script>
 <!------ Include the above in your HEAD tag ---------->
 
@@ -99,7 +127,8 @@
     </th:block>
 </div>
 </tbody>
-
+<!--실시간 알림-->
+<div id="real-time-notice"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 

@@ -4,15 +4,41 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-<script th:inline="javascript">
-    var socket = null;
+<script th:inline="javascript" th:if="${session.member}">
     const USER_SEQ = [[${session.member.seq}]];
     const USER_NAME = [[${session.member.memberName}]];
-    const EX_SEQ = localStorage.getItem("EX_SEQ");
-    const EX_NAME = localStorage.getItem("USER_NAME");
-    const PC_SEQ = localStorage.getItem("PC_SEQ");
     const USER_ROLE = [[${session.member.memberRole}]];
 
+    var socket = null;
+    $(document).ready(function(){
+        connectWs();
+    })
+
+    function connectWs(){
+        console.log("연결");
+        var ws = new SockJS('/alarm');
+        socket = ws;
+        ws.onopen = function (){
+            console.log("open")
+        };
+
+        ws.onmessage = function (event){
+            console.log("onmessage 실행")
+            console.log("onmessage"+event.data);
+            let htmlAlarm = '';
+            $('#real-time-notice-2').html(event.data);
+            $('#real-time-notice').css('display', 'block');
+
+            setTimeout(function(){
+                $('#real-time-notice').css('display','none');
+
+            }, 5000);
+        };
+        ws.onclose = function() {
+            console.log("onclose 실행")
+            console.log('close');
+        };
+    }
 </script>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -89,6 +115,7 @@
             <hr color="#cccaca" width="100%">
         </div>
     </div>
+    <div id="msgStack"></div>
     <div id="postDetail-body">
         <span th:utext="${post.content}" style="font-size: 18px"></span>
     </div><hr color="#cccaca" width="100%">
@@ -96,7 +123,7 @@
         <div id="textarea-box">
             <textarea class="postDetail-textarea"  id="comment-textarea" onkeyup="resize(this)" placeholder="댓글을 남겨보세요" style="overflow: hidden" name="content"></textarea>
             <div id="textarea-save">
-                <input type="button" id="comment-save-btn" value="등록" style="color: #8e8bd5">
+                <input type="button" id="comment-save-btn" onclick="commentInsert()" value="등록" style="color: #8e8bd5">
             </div>
         </div>
         <!--htmlComment += '<article id="update-section">'
@@ -111,26 +138,55 @@
         </div>
     </div>
 
-
 </article>
+<!--실시간 알림-->
+<div id="real-time-notice" style="display: none">
+    <div id="real-time-notice-2"></div>
+</div>
 
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.5/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="../static/js/Main.js"></script>
 <!-- ajax 작동 -->
 <script>
     function resize(event) {
         event.style.height = "1px";
         event.style.height = (12+event.scrollHeight)+"px";
     }
+
     const role = '[[${session.member.memberRole}]]';
+    const name = '[[${session.member.memberName}]]'
     const writer = '[[${session.member.memberName}]]';
     const category = '[[${session.member.category}]]';
     const boardSeq = '[[${post.boardSeq}]]';
+    const boardWriter = '[[${post.writer}]]';
+    const boardTitle = '[[${post.title}]]'
+
+
+
+    function commentInsert(insertData){
+        console.log("commentSocket",socket)
+        $.ajax({
+            url: 'writeComment',
+            type: 'post',
+            data:insertData,
+            processData: false, contentType: false,
+            enctype : 'multipart/form-data',
+            success : function (data){
+                commentList();
+                if(writer != boardWriter){
+                    if(socket){
+
+                        let socketMsg = "comment"+","+writer+","+boardWriter+","+boardSeq+","+boardTitle;
+                        console.log(socketMsg);
+                        socket.send(socketMsg);
+                    }
+                }
+            }
+        })
+    }
 
     //댓글 등록
     $('#textarea-save').click(function (){

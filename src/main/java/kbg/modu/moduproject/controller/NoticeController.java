@@ -3,18 +3,15 @@ package kbg.modu.moduproject.controller;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
-import com.sun.istack.Nullable;
 import kbg.modu.moduproject.domain.Member;
 import kbg.modu.moduproject.repo.ProfessorCommissionRepository;
 import kbg.modu.moduproject.service.ProfessorCommissionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +20,7 @@ import java.security.Principal;
 import java.util.HashMap;
 
 @Controller
-public class noticeController {
+public class NoticeController {
 
     @Autowired
     private ProfessorCommissionService ps;

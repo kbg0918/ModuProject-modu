@@ -1,78 +1,97 @@
 package kbg.modu.moduproject.handler;
 
+
+import kbg.modu.moduproject.domain.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
+
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 
 public class EchoHandler extends TextWebSocketHandler {
-
-    //1:N
+    private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
+    //로그인 한 인원 전체
     private List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
-    //1:1
+
+    // 로그인중인 개별유저
     private Map<String, WebSocketSession> users = new HashMap<String, WebSocketSession>();
 
-    //클라이언트와 서버 연결부분
+
+    // 클라이언트가 서버로 연결시
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        String senderId = getMemberId(session); // 접속한 유저의 http세션을 조회하여 id를 얻는 함수
-        if(senderId!=null) {	// 로그인 값이 있는 경우만
-            users.put(senderId, session);   // 로그인중 개별유저 저장
-        }
+        logger.info("Socket 연결");
+        sessions.add(session);
+        logger.info("현재 접속한 사람"+currentUserName(session));//현재 접속한 사람
+        String senderId = currentUserName(session);
+        users.put(senderId,session);
+        System.out.println(currentUserName(session)+"---currentUserName은?");
+        System.out.println(sessions+"세션의 접속한 사람?");
+        System.out.println(users+"로그인중인 개별유저는?");
     }
 
-    //클라이언트가 DATA 전송 시
+
+    //클라이언트가 data 전송시
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        String senderId = getMemberId(session);
-        String msg = message.getPayload();//자바스크립트에서 넘어온 Msg
-        if(msg != null){
-            String[] strs = msg.split(",");
-            if(strs != null && strs.length == 4) {
-                String type = strs[0];
-                String target = strs[1]; // m_id 저장
-                String content = strs[2];
-                String url = strs[3];
-                WebSocketSession targetSession = users.get(target);  // 메시지를 받을 세션 조회
+        logger.info("session 누굴까요? "+currentUserName(session));
+        String msg = message.getPayload();
+        logger.info("msg="+msg);
 
-                // 실시간 접속시
-                if(targetSession!=null) {
-                    // ex: [&분의일] 신청이 들어왔습니다.
-                    TextMessage tmpMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + content + "</a>" );
-                    targetSession.sendMessage(tmpMsg);
+        if(msg != null){
+            logger.info("if문 check");
+            String[] strs = msg.split(",");
+            if(strs != null){
+                String cmd = strs[0];
+                String commentWriter = strs[1];
+                String boardWriter = strs[2];
+                String boardSeq = strs[3];
+                String boardTitle = strs[4];
+                logger.info("split 저장 check"+cmd);
+                WebSocketSession replyWriterSession = users.get(commentWriter);
+                WebSocketSession boardWriterSession = users.get(boardWriter);
+                System.out.println(users);
+                logger.info("게시판 작성자="+users.get(boardWriter));
+                logger.info("게시판 작성자="+boardWriterSession);
+
+                if("comment".equals(cmd) && boardWriterSession != null){
+                    TextMessage tmpMsg = new TextMessage(commentWriter+"님이"+"<a id='notice-a' href='/board/PostDetail?boardSeq="+boardSeq+"' style=\"color:white\"/>"+boardTitle+"에 댓글을 달았습니다!</a>");
+                    boardWriterSession.sendMessage(tmpMsg);
                 }
             }
+        }
+    }
 
+    // 연결 해제될 때
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        logger.info("Socket 끊기");
+        sessions.remove(session);
+        users.remove(session);
+    }
 
+    // 접속한 유저의 http세션을 조회하여 이름을 얻는 함수
+    private String currentUserName(WebSocketSession session) {
+        Map<String, Object> httpSession = session.getAttributes();
+        Member loginUser = (Member)httpSession.get("member");
+        if(loginUser == null) {
+            String mid = session.getId();
+            return mid;
+        }else{
+            String mid = loginUser.getMemberName();
+            return mid;
         }
 
-        
 
     }
 
-    //연결 끊기기
-   @Override
-    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-       String senderId = getMemberId(session);
-       if(senderId!=null) {	// 로그인 값이 있는 경우만
-           users.remove(senderId);
-           sessions.remove(session);
-       }
-    }
 
-    private String getMemberId(WebSocketSession session) {
-        Map<String, Object> httpSession = session.getAttributes();
-        String m_id = (String) httpSession.get("m_id"); // 세션에 저장된 m_id 기준 조회
-        return m_id==null? null: m_id;
-    }
 }
