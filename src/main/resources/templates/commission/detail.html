@@ -38,6 +38,8 @@
             console.log('close');
         };
     }
+
+
 </script>
 <!------ Include the above in your HEAD tag ---------->
 
@@ -114,15 +116,15 @@
 <div id="sideNav">
     <th:block th:if="${session.member.memberRole.toString().equals('Professor') and session.member.memberName.equals(list.writer)}">
         <div class="list_chat">
-            <input type="button" th:onclick="|location.href='@{../chat/room}'|" class="btn1" id="receive-btn" onclick="receive()" value="수락요청 보내기">
-            <input type="button" class="setBtn" onclick="location.href='./delete/'+PC_SEQ" value="삭제">
-            <input type="button" class="setBtn" onclick="location.href='./updateForm/'+PC_SEQ" value="수정">
+            <input type="button" th:onclick="|location.href='@{../chat/room}'|" class="btn1" id="receive-btn" value="수락요청 보내기">
+            <input type="button" class="setBtn" onclick="location.href='./delete/'+list.pcSeq" value="삭제">
+            <input type="button" class="setBtn" onclick="location.href='./updateForm/'+list.pcSeq" value="수정">
         </div>
 
     </th:block>
     <th:block th:if="${session.member.memberRole.toString().equals('Student')}">
         <div class="list_chat">
-            <input type="button" class="btn1" id="notice-btn" value="문의 보내기">
+            <input type="button" class="btn1" id="notice-btn" onclick="commissionNotice()" value="문의 보내기">
         </div>
     </th:block>
 </div>
@@ -131,9 +133,63 @@
 <div id="real-time-notice"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    const seq = '[[${session.member.seq}]]';
+    const writer = '[[${session.member.memberName}]]';
+    const commissionWriter = '[[${list.writer}]]'
+    const pcSeq = [[${list.pcSeq}]];
+    const pcTitle = '[[${list.title}]]';
+    const pcCategory = '[[${list.category}]]';
 
-<script src="../static/js/Main.js"></script>
+    function commissionNotice(insertData){
+        console.log("commission",socket)
+        $.ajax({
+            url:'notice',
+            type: 'post',
+            data:insertData,
+            processData: false, contentType: false,
+            enctype : 'multipart/form-data',
+            success: function (data){
+                if(writer != commissionWriter){
+                    if(socket){
+                        let socketMsg = "commission"+","+writer+","+commissionWriter+","+pcSeq+","+pcTitle+","+pcCategory;
+                        console.log(socketMsg);
+                        socket.send(socketMsg);
+                    }
+                }
+            },
+            errors:function(){
+                console.log("실패");
+            }
+        })
+    }
+    //알람 DB 저장
+    $('#notice-btn').click(function (){
+        console.log('알람 DB 저장');
+        $.ajax({
+            type:'post',
+            url:'../noticeSave',
+            data: JSON.stringify({
+                "memberSeq":seq,
+                "typeSeq" : pcSeq,
+                "writeType":'commission',
+                "userWriter" : writer,
+                "writer": commissionWriter,
+                "title": pcTitle,
+                "category": pcCategory,
+            }),
+            contentType: 'application/json',
+            success:function (data){
+                console.log('통신성공' + data);
+                alert("알람 저장 완료!");
 
+            },
+            error:function (){
+                alert("통신실패"+data);
+            }
+        });
+    });
+</script>
 </body>
 </html>
 

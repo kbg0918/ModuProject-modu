@@ -1,7 +1,7 @@
 package kbg.modu.moduproject.config;
 
 
-import kbg.modu.moduproject.handler.EchoHandler;
+import kbg.modu.moduproject.handler.NoticeHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.WebSocketHandler;
@@ -16,12 +16,12 @@ public class WebSocketConfig  implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(EchoHandler(),"/alarm")
+        registry.addHandler(NoticeHandler(),"/alarm")
                 .addInterceptors(new HttpSessionHandshakeInterceptor()).withSockJS();
     }
 
     @Bean
-    public WebSocketHandler EchoHandler(){
-        return new EchoHandler();
+    public WebSocketHandler NoticeHandler(){
+        return new NoticeHandler();
     }
 }

@@ -3,7 +3,7 @@ create table if not exists member(
     seq int auto_increment primary key,
     id varchar(255) unique,
     pwd varchar(255) not null,
-    member_name varchar(255) not null,
+    member_name varchar(255) unique,
     address varchar(255),
     telNo varchar(255) ,
     email varchar(255) ,
@@ -12,6 +12,18 @@ create table if not exists member(
     useYn varchar(1) default 'Y' not null,
     add_date datetime not null DEFAULT CURRENT_TIMESTAMP,
     up_date datetime on update CURRENT_TIMESTAMP
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+create table if not exists notice(
+ notice_seq int auto_increment primary key,
+ member_seq int,
+ type_seq int,
+ write_type varchar(20) not null,
+ user_writer varchar(20) not null,
+ writer varchar(20) not null,
+ title varchar(100) not null,
+ category varchar(20) not null,
+ add_date datetime not null DEFAULT CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 

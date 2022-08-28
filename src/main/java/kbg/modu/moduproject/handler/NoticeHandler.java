@@ -12,11 +12,9 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 
-
-public class EchoHandler extends TextWebSocketHandler {
+public class NoticeHandler extends TextWebSocketHandler {
     private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
     //로그인 한 인원 전체
     private List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
@@ -50,23 +48,35 @@ public class EchoHandler extends TextWebSocketHandler {
             logger.info("if문 check");
             String[] strs = msg.split(",");
             if(strs != null){
-                String cmd = strs[0];
-                String commentWriter = strs[1];
-                String boardWriter = strs[2];
-                String boardSeq = strs[3];
-                String boardTitle = strs[4];
-                logger.info("split 저장 check"+cmd);
-                WebSocketSession replyWriterSession = users.get(commentWriter);
-                WebSocketSession boardWriterSession = users.get(boardWriter);
+                String type = strs[0];
+                String userWriter = strs[1];
+                String writer = strs[2];
+                String seq = strs[3];
+                String title = strs[4];
+                String category = strs[5];
+                logger.info("split 저장 check"+type);
+                WebSocketSession userWriterSession = users.get(userWriter);
+                WebSocketSession writerSession = users.get(writer);
                 System.out.println(users);
-                logger.info("게시판 작성자="+users.get(boardWriter));
-                logger.info("게시판 작성자="+boardWriterSession);
+                logger.info("게시판 작성자="+users.get(writer));
+                logger.info("게시판 작성자="+writerSession);
 
-                if("comment".equals(cmd) && boardWriterSession != null){
-                    TextMessage tmpMsg = new TextMessage(commentWriter+"님이"+"<a id='notice-a' href='/board/PostDetail?boardSeq="+boardSeq+"' style=\"color:white\"/>"+boardTitle+"에 댓글을 달았습니다!</a>");
-                    boardWriterSession.sendMessage(tmpMsg);
+                if("comment".equals(type) && writerSession != null){
+                    TextMessage tmpMsg = new TextMessage(userWriter+"님이"+"<a id='notice-a' href='/board/PostDetail?boardSeq="+seq+"' style=\"color:white\"/>"+title+"에 댓글을 달았습니다!</a>");
+                    writerSession.sendMessage(tmpMsg);
+                }
+                else if("commission".equals(type) && writerSession != null){
+                    if(sessions.contains(writerSession)){
+                        TextMessage tmgMsg = new TextMessage(userWriter+"님이"+"<a id='notice-a' href='/commission/detail?pcSeq="+seq+"' style=\"color:white\"/>"+title+"("+category+")"+"에서 채팅요청을 보냈습니다!</a>");
+                        writerSession.sendMessage(tmgMsg);
+                    }else{
+                        TextMessage tmgMsg = new TextMessage(writer+"님은"+"<p> 현재 접속중이 아닙니다.</p>");
+                        userWriterSession.sendMessage(tmgMsg);
+                    }
+
                 }
             }
+
         }
     }
 

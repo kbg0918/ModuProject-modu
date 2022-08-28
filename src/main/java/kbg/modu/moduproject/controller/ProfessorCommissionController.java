@@ -109,12 +109,14 @@ public class ProfessorCommissionController {
     @RequestMapping(value = "commission/detail", method = RequestMethod.GET)
     public String listDetail(@RequestParam int pcSeq, @RequestParam(required = false) String writer, ModelMap mm){
         mm.put("list", professorCommissionRepository.findBySeq(pcSeq));
-        Member member = professorCommissionRepository.findByMemberSeq(writer);
-        int exSeq = member.getSeq();
-        mm.put("ex_seq", exSeq);
-
 
         return "commission/detail";
+    }
+
+    @RequestMapping("/commission/notice")
+    @ResponseBody
+    public void commissionNotice(){
+        System.out.println("commissionNotice");
     }
 
 

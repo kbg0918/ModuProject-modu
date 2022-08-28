@@ -12,6 +12,7 @@
     var socket = null;
     $(document).ready(function(){
         connectWs();
+        noticeList();
     })
 
     function connectWs(){
@@ -39,6 +40,7 @@
             console.log('close');
         };
     }
+
 </script>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -125,6 +127,7 @@
             <div id="textarea-save">
                 <input type="button" id="comment-save-btn" onclick="commentInsert()" value="등록" style="color: #8e8bd5">
             </div>
+            <div id="alarmTest" onclick="noticeList()"></div>
         </div>
         <!--htmlComment += '<article id="update-section">'
                             htmlComment += '<div id="textarea-box-update">'
@@ -155,7 +158,7 @@
         event.style.height = "1px";
         event.style.height = (12+event.scrollHeight)+"px";
     }
-
+    const seq = '[[${session.member.seq}]]';
     const role = '[[${session.member.memberRole}]]';
     const name = '[[${session.member.memberName}]]'
     const writer = '[[${session.member.memberName}]]';
@@ -163,6 +166,7 @@
     const boardSeq = '[[${post.boardSeq}]]';
     const boardWriter = '[[${post.writer}]]';
     const boardTitle = '[[${post.title}]]'
+    const boardCategory = '[[${post.category}]]'
 
 
 
@@ -178,12 +182,58 @@
                 commentList();
                 if(writer != boardWriter){
                     if(socket){
-
-                        let socketMsg = "comment"+","+writer+","+boardWriter+","+boardSeq+","+boardTitle;
+                        let socketMsg = "comment"+","+writer+","+boardWriter+","+boardSeq+","+boardTitle+","+boardCategory;
                         console.log(socketMsg);
                         socket.send(socketMsg);
                     }
                 }
+            }
+        })
+    }
+    //알람 DB 저장
+    $('#comment-save-btn').click(function (){
+        console.log('알람 DB 저장');
+        $.ajax({
+            type:'post',
+            url:'../noticeSave',
+            data: JSON.stringify({
+                "memberSeq":seq,
+                "typeSeq" : boardSeq,
+                "writeType":'comment',
+                "userWriter" : writer,
+                "writer": boardWriter,
+                "title":boardTitle,
+                "category":category,
+            }),
+            contentType: 'application/json',
+            success:function (data){
+                noticeList();
+                console.log('통신성공' + data);
+                alert("알람 저장 완료!");
+
+            },
+            error:function (){
+                alert("통신실패"+data);
+            }
+        });
+    });
+
+    function noticeList(){
+        $.ajax({
+            type: 'get',
+            url:'../noticeList',
+            data:{'writer':boardWriter},
+            contentType: 'application/json',
+            success: function (data){
+                console.log("댓글리스트 성공")
+                var alarmList = '';
+                $.each(data, function (ket,value){
+                    alarmList += '<span>'+value.userWriter+'</span>'
+                })
+                $('#alarmTest').html(alarmList);
+            },
+            errors:function (){
+                console.log("실패..")
             }
         })
     }
@@ -216,8 +266,6 @@
 
 
     //댓글 수정
-
-
     function commentUpdate(bcSeq){
         const test = $('#final-update-btn'+bcSeq).closest('#comment-id'+bcSeq).attr('data-num');
 
@@ -251,13 +299,12 @@
             });
         }
 
-
-
     }
 
+
+    //댓글 삭제
     function commentDelete(bcSeq){
         const tmp = $('#delete-btn-id'+bcSeq).closest('#comment-id'+bcSeq).attr('data-num');
-        //댓글 삭제
         console.log('댓글 삭제버튼');
         if(confirm("정말 삭제하시겠습니까?")){
             $.ajax({
@@ -280,6 +327,7 @@
 
 
     }
+
 
 
     //댓글 목록
