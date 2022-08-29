@@ -22,9 +22,9 @@ public class NoticeImp implements NoticeRepository {
     }
 
     @Override
-    public Member findBySeq(String userWriter) {
-        return tp.queryForObject("select * from notice where user_writer = ?",
-                new BeanPropertyRowMapper<>(Member.class), userWriter);
+    public Member findBySeq(String writer) {
+        return tp.queryForObject("select * from notice where writer = ?",
+                new BeanPropertyRowMapper<>(Member.class), writer);
     }
 
     @Override

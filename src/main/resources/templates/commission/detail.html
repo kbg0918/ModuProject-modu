@@ -105,14 +105,41 @@
     <div class="list_detail">
         <div class="detail">
             <strong id="detail_font1" th:utext="${list.title}"></strong>
+
         </div>
-        <div class="detail_btn"><h4><b>상세 살명</b></h4><br>
+        <div id="detail-btn">
+            <div id="detail-page1"><h5><b><a>상세 설명</a></b></h5></div>
+            <div id="detail-page2"><h5><b>리뷰</b></h5></div>
+
         </div>
+        <br>
         <hr width="100%" color=#b4adad>
 
-        <strong id="detail_font2" th:utext="${list.content}"></strong>
+        <div id="detail-content" style="display: block">
+            <strong id="detail_font2" th:utext="${list.content}"></strong>
+        </div>
+        <div id="review-page" style="display: none">
+            <span>리뷰 페이지</span>
+        </div>
     </div>
 </div>
+<script>
+    var offset = $('#detail-btn').offset();
+    $('#detail-page1').click(function (){
+        $('#detail-page1').css("border-bottom", "solid 2px black");
+        $('#detail-page2').css("border-bottom", "solid 0px");
+        $('#detail-content').css("display","block");
+        $('#review-page').css("display","none");
+        $('html').animate({scrollTop:offset.top},400);
+    })
+    $('#detail-page2').click(function (){
+        $('#detail-page2').css("border-bottom", "solid 2px black");
+        $('#detail-page1').css("border-bottom", "solid 0px");
+        $('#detail-content').css("display","none");
+        $('#review-page').css("display","block");
+        $('html').animate({scrollTop:offset.top},400);
+    })
+</script>
 <div id="sideNav">
     <th:block th:if="${session.member.memberRole.toString().equals('Professor') and session.member.memberName.equals(list.writer)}">
         <div class="list_chat">

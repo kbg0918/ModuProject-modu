@@ -817,9 +817,27 @@ header.masthead {
     background-color: #7875C9;
 }
 
-.detail_btn{
+#detail-btn{
     position: relative;
-    top: 8%;
+
+    top: 6.7%;
+}
+#detail-page1{
+    position: relative;
+    width: 76px;
+    height: 40px;
+    border-bottom: solid 2px black;
+}
+#detail-page2{
+    position: absolute;
+    left: 13.5%;
+    bottom: 1%;
+    width: 68px;
+    height: 40px;
+}
+#review-page{
+    position: relative;
+    width: 700px;
 }
 
 #sideNav{

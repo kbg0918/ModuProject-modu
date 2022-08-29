@@ -179,7 +179,6 @@
             processData: false, contentType: false,
             enctype : 'multipart/form-data',
             success : function (data){
-                commentList();
                 if(writer != boardWriter){
                     if(socket){
                         let socketMsg = "comment"+","+writer+","+boardWriter+","+boardSeq+","+boardTitle+","+boardCategory;
@@ -207,7 +206,6 @@
             }),
             contentType: 'application/json',
             success:function (data){
-                noticeList();
                 console.log('통신성공' + data);
                 alert("알람 저장 완료!");
 
@@ -217,18 +215,17 @@
             }
         });
     });
-
     function noticeList(){
         $.ajax({
             type: 'get',
             url:'../noticeList',
-            data:{'writer':boardWriter},
+            data:{'writer':name},
             contentType: 'application/json',
             success: function (data){
                 console.log("댓글리스트 성공")
                 var alarmList = '';
                 $.each(data, function (ket,value){
-                    alarmList += '<span>'+value.userWriter+'</span>'
+                    alarmList += '<span>'+value.category+'</span>'
                 })
                 $('#alarmTest').html(alarmList);
             },

@@ -14,6 +14,7 @@ create table if not exists member(
     up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+/*실시간 알람 테이블 clear*/
 create table if not exists notice(
  notice_seq int auto_increment primary key,
  member_seq int,
@@ -28,12 +29,15 @@ create table if not exists notice(
 
 
 /*리뷰 테이블*/
-create table if not exists memberComment(
-    mc_seq int auto_increment primary key,
+create table if not exists review(
+    review_seq int auto_increment primary key,
     content varchar(4096) not null,
-    writer varchar(255) not null,
+    writer varchar(20) not null,
     star_score int not null,
-    member_seq int null,
+    pc_seq int null,
+    update_seq int null,
+    update_Yn char(1) default 'N' not null ,
+    del_Yn char(1) default 'N' not null ,
     add_date datetime not null DEFAULT CURRENT_TIMESTAMP,
     up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -79,13 +83,13 @@ create table if not exists board(
 /*게시판 댓글 clear*/
 create table if not exists board_comment(
     bc_seq int auto_increment primary key,
-    update_yn char(1) DEFAULT 'N' not null,
     update_seq int,
+    board_seq int,
     writer varchar(10) not null,
     content varchar(4096) not null,
     category varchar(30) not null,
-    board_seq int,
     del_yn char(1) DEFAULT 'N' not null,
+    update_yn char(1) DEFAULT 'N' not null,
     add_date datetime DEFAULT CURRENT_TIMESTAMP,
     up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
