@@ -22,7 +22,7 @@ public class Review {
     //내용
     private String content;
     //별점
-    private Integer starScore;
+    private float starScore;
     //수정여부
     private String updateYn;
     //삭제여부

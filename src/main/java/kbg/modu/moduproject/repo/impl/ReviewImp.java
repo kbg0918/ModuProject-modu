@@ -5,9 +5,11 @@ import kbg.modu.moduproject.repo.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class ReviewImp implements ReviewRepository {
 
     @Autowired
@@ -32,7 +34,7 @@ public class ReviewImp implements ReviewRepository {
 
     @Override
     public boolean insert(Review r) {
-        return tp.update("insert into review(writer, content, star_score, update_seq, pc_seq values(?,?,?,?,?))",
+        return tp.update("insert into review(writer, content, star_score, update_seq, pc_seq) values(?,?,?,?,?)",
                 r.getWriter(), r.getContent(), r.getStarScore(), r.getUpdateSeq(), r.getPcSeq())==1;
     }
 }

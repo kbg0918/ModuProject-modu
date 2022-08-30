@@ -120,15 +120,28 @@
             <strong id="detail_font2" th:utext="${list.content}"></strong>
         </div>
         <div id="review-page" style="display: none">
+            <div id="star-section" style="display: none">
+                <span class="star">
+              ★★★★★
+              <span>★★★★★</span>
+              <input id="star-id" type="range" oninput="drawStar(this)" value="1" step="0.5" min="0" max="5">
+            </span>
+            </div>
             <button id="review-save-btn" style="display: block">리뷰쓰기</button>
             <div id="review-save-section" style="display:none">
-                <textarea class="review-save-write" onkeyup="resize(this)" placeholder="후기를 남겨보세요!" style="overflow: hidden" name="content"></textarea>
+                <textarea class="review-save-write" id="review-content" onkeyup="resize(this)" placeholder="후기를 남겨보세요!" style="overflow: hidden" name="content"></textarea>
+                <input type="button" id="review-save" value="등록" style="color: white">
             </div>
-            <input type="button" id="review-save" value="등록" style="color: white">
+            <div class="review-List">
+
+            </div>
         </div>
     </div>
 </div>
 <script>
+    const drawStar = (target) => {
+        document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
+    }
     function resize(event) {
         event.style.height = "1px";
         event.style.height = (12+event.scrollHeight)+"px";
@@ -146,6 +159,7 @@
         $('#detail-page1').css("border-bottom", "solid 0px");
         $('#detail-content').css("display","none");
         $('#review-page').css("display","block");
+        $('.star-section').css("display","block");
         $('html').animate({scrollTop:offset.top},400);
     })
 
@@ -153,14 +167,15 @@
         $('#review-save-btn').css("display","none");
         $('#review-save-section').css("display","block");
         $('#review-save').css("display","block");
+        $('#star-section').css("display","block");
     })
 </script>
 <div id="sideNav">
     <th:block th:if="${session.member.memberRole.toString().equals('Professor') and session.member.memberName.equals(list.writer)}">
         <div class="list_chat">
             <input type="button" th:onclick="|location.href='@{../chat/room}'|" class="btn1" id="receive-btn" value="수락요청 보내기">
-            <input type="button" class="setBtn" onclick="location.href='./delete/'+list.pcSeq" value="삭제">
-            <input type="button" class="setBtn" onclick="location.href='./updateForm/'+list.pcSeq" value="수정">
+            <input type="button" class="setBtn" onclick="location.href='./delete/'+pcSeq" value="삭제">
+            <input type="button" class="setBtn" onclick="location.href='./updateForm/'+pcSeq" value="수정">
         </div>
 
     </th:block>
@@ -233,6 +248,65 @@
     });
 
     //후기 저장
+    $('#review-save').click(function (){
+        $('#review-save-btn').css("display","block");
+        $('#review-save-section').css("display","none");
+        $('#review-save').css("display","none");
+        $('#star-section').css("display","none");
+        document.querySelector(`.star span`).style.width = `${0 * 20}%`;
+        console.log('후기 등록 버튼 클릭');
+        const content = $('#review-content').val();
+        const starScore = $('#star-id').val();
+        $.ajax({
+            type:'post',
+            url:'reviewSave',
+            data: JSON.stringify({
+                "writer" : writer,
+                "content" : content,
+                "starScore":starScore,
+                "pcSeq":pcSeq,
+            }),
+            contentType: 'application/json',
+            success:function (data){
+                console.log('통신성공' + data);
+                alert("리뷰가 등록 되었습니다.");
+                reviewList();
+                document.getElementById('review-content').value=" ";
+            },
+            error:function (){
+                alert("통신실패"+data);
+            }
+        });
+    });
+    $(document).ready(function(){
+        reviewList();
+    });
+
+
+    //후기 목록 불러오기
+    function reviewList(){
+        $.ajax({
+            type: 'get',
+            url : 'reviewList',
+            data: {'pcSeq':pcSeq},
+            contentType: 'application/json',
+            success:function (data){
+                console.log("리뷰 목록 성공")
+                var htmlReview = '';
+                $.each(data, function (key, value){
+                    if(value.delYn == 'N'&& value.updateYn =='N'){
+                        htmlReview += '<div class="review-comment" id="review-id'+value.pcSeq+'" data-num="'+value.pcSeq+'">'
+                        htmlReview += '<span class="star" id="star-rating-id" onclick="d()">'+'★★★★★'+'<span style="width:'+value.starScore*20+'%">★★★★★</span>'+'</span>'
+                        htmlReview += '<div id="review-writer">'+value.writer+'</div>'
+                    }
+                })
+                $(".review-List").html(htmlReview);
+            },
+            error:function (){
+                alert("리뷰 목록 실패..");
+            }
+        })
+    }
 </script>
 </body>
 </html>

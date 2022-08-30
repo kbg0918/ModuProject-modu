@@ -33,7 +33,7 @@ create table if not exists review(
     review_seq int auto_increment primary key,
     content varchar(4096) not null,
     writer varchar(20) not null,
-    star_score int not null,
+    star_score float not null,
     pc_seq int null,
     update_seq int null,
     update_Yn char(1) default 'N' not null ,

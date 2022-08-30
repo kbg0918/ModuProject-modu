@@ -841,14 +841,37 @@ header.masthead {
 }
 #review-save-btn{
     position: relative;
-    width: 100px;
+    width: 90px;
     height: 50px;
-    left: 80%;
+    left: 87%;
     border: solid 1px #7875C9;
     background-color: #aca9f8;
     border-radius: 8px;
     box-shadow: 1px 1px 8px 1px #7875C9;
     color: white;
+}
+.star {
+    position: relative;
+    font-size: 2rem;
+    color: #ddd;
+}
+
+.star input {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.star span {
+    width: 0;
+    position: absolute;
+    left: 0;
+    color: #aca9f8;
+    overflow: hidden;
+    pointer-events: none;
 }
 #review-save-section{
     position: relative;
@@ -882,7 +905,7 @@ header.masthead {
     position: absolute;
     width: 90px;
     height: 50px;
-    left: 87%;
+    left: 102%;
     bottom:11%;
     border: solid 1px #7875C9;
     background-color: #aca9f8;
