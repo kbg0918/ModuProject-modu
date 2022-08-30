@@ -105,12 +105,13 @@
     <div class="list_detail">
         <div class="detail">
             <strong id="detail_font1" th:utext="${list.title}"></strong>
-
         </div>
+        <div id="location1"></div>
+        <br>
+        <div id="location2"></div>
         <div id="detail-btn">
             <div id="detail-page1"><h5><b><a>상세 설명</a></b></h5></div>
             <div id="detail-page2"><h5><b>리뷰</b></h5></div>
-
         </div>
         <br>
         <hr width="100%" color=#b4adad>
@@ -119,12 +120,20 @@
             <strong id="detail_font2" th:utext="${list.content}"></strong>
         </div>
         <div id="review-page" style="display: none">
-            <span>리뷰 페이지</span>
+            <button id="review-save-btn" style="display: block">리뷰쓰기</button>
+            <div id="review-save-section" style="display:none">
+                <textarea class="review-save-write" onkeyup="resize(this)" placeholder="후기를 남겨보세요!" style="overflow: hidden" name="content"></textarea>
+            </div>
+            <input type="button" id="review-save" value="등록" style="color: white">
         </div>
     </div>
 </div>
 <script>
-    var offset = $('#detail-btn').offset();
+    function resize(event) {
+        event.style.height = "1px";
+        event.style.height = (12+event.scrollHeight)+"px";
+    }
+    var offset = $('#location1').offset();
     $('#detail-page1').click(function (){
         $('#detail-page1').css("border-bottom", "solid 2px black");
         $('#detail-page2').css("border-bottom", "solid 0px");
@@ -138,6 +147,12 @@
         $('#detail-content').css("display","none");
         $('#review-page').css("display","block");
         $('html').animate({scrollTop:offset.top},400);
+    })
+
+    $('#review-save-btn').click(function (){
+        $('#review-save-btn').css("display","none");
+        $('#review-save-section').css("display","block");
+        $('#review-save').css("display","block");
     })
 </script>
 <div id="sideNav">
@@ -216,6 +231,8 @@
             }
         });
     });
+
+    //후기 저장
 </script>
 </body>
 </html>

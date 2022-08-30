@@ -21,7 +21,7 @@
 }
 @media (min-width: 1400px) {
     .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
-        max-width: 1000px;
+        max-width: 1130px;
     }
 }
 
@@ -755,7 +755,7 @@ header.masthead {
     right: 110px;
     width: 250px;
     height: 50px;
-    border: 1px solid #7878ee;
+    border: 1px solid #9494f5;
     background-color: #7878ee;
     border-radius: 8px;
     color: white;
@@ -838,6 +838,58 @@ header.masthead {
 #review-page{
     position: relative;
     width: 700px;
+}
+#review-save-btn{
+    position: relative;
+    width: 100px;
+    height: 50px;
+    left: 80%;
+    border: solid 1px #7875C9;
+    background-color: #aca9f8;
+    border-radius: 8px;
+    box-shadow: 1px 1px 8px 1px #7875C9;
+    color: white;
+}
+#review-save-section{
+    position: relative;
+    top: 10%;
+    width: 600px;
+    min-height: 60px;
+    height: auto;
+    border: solid 1px #ececec;
+    border-radius: 8px;
+}
+#review-save-section:hover{
+    border: solid 1px #c8c5fa;
+    box-shadow: 1px 1px 8px 1px #c8c5fa;
+}
+.review-save-write{
+    position: relative;
+    margin-top: 15px;
+    left: 2%;
+    width: 540px;
+    height: 25px;
+    border: none;
+    resize: none;
+    outline: none;
+}
+.review-save-write::placeholder{
+    position: relative;
+    font-size: 15px;
+    color: #bdbaba;
+}
+#review-save{
+    position: absolute;
+    width: 90px;
+    height: 50px;
+    left: 87%;
+    bottom:11%;
+    border: solid 1px #7875C9;
+    background-color: #aca9f8;
+    border-radius: 8px;
+    box-shadow: 1px 1px 8px 1px #7875C9;
+    color: white;
+    display: none;
 }
 
 #sideNav{
