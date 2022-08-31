@@ -253,10 +253,10 @@
         $('#review-save-section').css("display","none");
         $('#review-save').css("display","none");
         $('#star-section').css("display","none");
-        document.querySelector(`.star span`).style.width = `${0 * 20}%`;
-        console.log('후기 등록 버튼 클릭');
         const content = $('#review-content').val();
         const starScore = $('#star-id').val();
+        console.log('후기 등록 버튼 클릭');
+        document.querySelector(`.star span`).style.width = `${0 * 20}%`;
         $.ajax({
             type:'post',
             url:'reviewSave',
@@ -281,8 +281,87 @@
     $(document).ready(function(){
         reviewList();
     });
+    //리뷰 수정
+    function reviewUpdate(reviewSeq){
+        const seq = $('#final-update-btn'+reviewSeq).closest('#review-id'+reviewSeq).attr('data-num');
+        show(reviewSeq);
+        console.log('댓글 수정 버튼 클릭')
+        const content = $('#review-update'+reviewSeq).val();
+        const starScore = $('#starUpdate-id'+reviewSeq).val();
+        if(content.length==0 || content==" "){
+            alert("수정할 문자를 입력해주세요!")
+            return false;
+        }else{
+            $.ajax({
+                type:'post',
+                url:'reviewUpdate',
+                data: JSON.stringify({
+                    "reviewSeq": seq,
+                    "updateSeq":seq,
+                    "writer" : writer,
+                    "content" : content,
+                    "starScore":starScore,
+                    "pcSeq":pcSeq
+                }),
+                contentType: 'application/json',
+                success:function (data){
+                    console.log('통신성공' + data);
+                    alert("댓글이 수정 되었습니다.");
+                    reviewList();
+                    document.getElementById('review-update'+reviewSeq).value=" ";
+                },
+                error:function (){
+                    alert("통신실패"+data);
+                }
+            });
+        }
 
+    }
 
+    //리뷰 삭제
+    function reviewDelete(reviewSeq){
+        const tmp = $('#delete-btn-id'+reviewSeq).closest('#review-id'+reviewSeq).attr('data-num');
+        console.log('댓글 삭제버튼');
+        if(confirm("정말 삭제하시겠습니까?")){
+            $.ajax({
+                type:'get',
+                url:'reviewDelete/'+tmp,
+                contentType: 'application/json',
+                success:function (data){
+                    console.log('통신성공');
+                    alert("댓글이 삭제되었습니다.");
+                    reviewList();
+                },
+                error:function (){
+                    alert("통신실패"+data);
+                }
+
+            })
+        }else{
+            return false;
+        }
+    }
+
+    function show(reviewSeq){
+        document.getElementById("update-delete-id"+reviewSeq).style.display ="block";
+        document.getElementById("update-section-id"+reviewSeq).style.display = "block";
+        document.getElementById("update-section-id"+reviewSeq).style.display ="none";
+        document.getElementById("review-List-Content-id"+reviewSeq).style.display="block";
+        document.getElementById("starUpdate-rating-id"+reviewSeq).style.display="none";
+    }
+    function hide(reviewSeq){
+        document.getElementById("update-delete-id"+reviewSeq).style.display ="none";
+        document.getElementById("update-section-id"+reviewSeq).style.display = "none";
+        document.getElementById("update-section-id"+reviewSeq).style.display ="block";
+        document.getElementById("review-List-Content-id"+reviewSeq).style.display="none";
+        document.getElementById("starUpdate-rating-id"+reviewSeq).style.display="block";
+    }
+    function Star(reviewSeq){
+        (target) => {
+            document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
+            document.getElementById('star-rating-id'+reviewSeq).style.width= `${target.value * 20}%`;
+        }
+    }
     //후기 목록 불러오기
     function reviewList(){
         $.ajax({
@@ -295,9 +374,28 @@
                 var htmlReview = '';
                 $.each(data, function (key, value){
                     if(value.delYn == 'N'&& value.updateYn =='N'){
-                        htmlReview += '<div class="review-comment" id="review-id'+value.pcSeq+'" data-num="'+value.pcSeq+'">'
-                        htmlReview += '<span class="star" id="star-rating-id" onclick="d()">'+'★★★★★'+'<span style="width:'+value.starScore*20+'%">★★★★★</span>'+'</span>'
-                        htmlReview += '<div id="review-writer">'+value.writer+'</div>'
+                        htmlReview += '<div class="review-comment" id="review-id'+value.reviewSeq+'" data-num="'+value.reviewSeq+'">'
+                        if(USER_NAME == value.writer){
+                            htmlReview += '<div class="review-update-delete" id="update-delete-id'+value.reviewSeq+'">'+'<button class="review-update" style="color:#8e8bd5" onclick="hide('+value.reviewSeq+')">수정</button>';
+                            htmlReview += '<button class="review-delete" id="delete-btn-id'+value.reviewSeq+'" onclick="reviewDelete('+value.reviewSeq+')" style="color:#8e8bd5">삭제</button></div>'
+                        }
+                        htmlReview += '<span class="review-star" id="star-rating-id'+value.reviewSeq+'">'+'★★★★★'+'<span style="width:'+value.starScore*20+'%">★★★★★</span>'+'</span>'
+                        if(value.upDate == null){
+                            htmlReview += '<div id="review-writer">'+value.writer+' | <div id="review-addDate" style="color: #bdbaba">'+addTime(value.addDate)+'</div>'+'</div>'
+                        }
+                        else{
+                            htmlReview += '<div id="review-writer">'+value.writer+' | <div id="review-addDate" style="color: #bdbaba">'+addTime(value.upDate)+'</div>'+'</div>'
+                        }
+
+                        htmlReview += '<span class="starUpdate" id="starUpdate-rating-id'+value.reviewSeq+'" style="display: none">'+'★★★★★'+'<span>★★★★★</span>'
+                        htmlReview += '<input id="starUpdate-id'+value.reviewSeq+'" type="range" oninput="Star('+value.reviewSeq+')" value="1" step="0.5" min="0" max="5">'+'</span>'
+                        htmlReview += '<div class="review-update-section" id="update-section-id'+value.reviewSeq+'" style="display: none">'
+                        htmlReview += '<textarea class="review-update-section-textarea" id="review-update'+value.reviewSeq+'" onkeyup="resize(this)" placeholder="수정할 문장을 입력해주세요!" style="overflow: hidden" name="content">'+'</textarea>';
+                        htmlReview += '<div id="div-review-update">'
+                        htmlReview += '<input type="button" class="review-update-section-btn" id="final-update-btn'+value.reviewSeq+'" onclick="reviewUpdate('+value.reviewSeq+')" value="수정" style="color: #8e8bd5">'+'</div>';
+                        htmlReview += '</div>'
+                        htmlReview += '<div class="review-List-Content" id="review-List-Content-id'+value.reviewSeq+'" style="display: block">'+value.content+'</div>'
+                        htmlReview += '<hr color="#cccaca" width="100%"></div>'
                     }
                 })
                 $(".review-List").html(htmlReview);
@@ -306,6 +404,18 @@
                 alert("리뷰 목록 실패..");
             }
         })
+    }
+    //db에서 가져온 시간 변환
+    function addTime(date){
+        date = new Date(date);
+        year = date.getFullYear();
+        //자바스크립트는 0부터 11까지만 된다고 함 고로 +1
+        month = date.getMonth()+1;
+        day = date.getDate();
+        hour = date.getHours();
+        minute = date.getMinutes();
+        strDate = year+"-"+month+"-"+day+" "+hour+":"+minute;
+        return strDate;
     }
 </script>
 </body>

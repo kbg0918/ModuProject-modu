@@ -110,8 +110,11 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp
             <span th:utext="${post.addDate}" style="color:#a8a5a5"></span>
             <span id="board-view" th:utext="'조회'+' '+${post.boardView}" style="color:#a8a5a5"></span>
-            <button id="post-update-btn" onclick="location.href='./updateForm/'+boardSeq" style="color: #8e8bd5">수정</button>
-            <button id="post-delete-btn" onclick="location.href='./deleteForm/'+boardSeq" style="color: #8e8bd5">삭제</button>
+            <th:block th:if="${session.member.memberName}==${post.writer}">
+                <button id="post-update-btn" onclick="location.href='./updateForm/'+boardSeq" style="color: #8e8bd5">수정</button>
+                <button id="post-delete-btn" onclick="location.href='./deleteForm/'+boardSeq" style="color: #8e8bd5">삭제</button>
+            </th:block>
+
 
             <br>
             <hr color="#cccaca" width="100%">

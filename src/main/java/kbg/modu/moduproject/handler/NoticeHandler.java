@@ -62,8 +62,10 @@ public class NoticeHandler extends TextWebSocketHandler {
                 logger.info("게시판 작성자="+writerSession);
 
                 if("comment".equals(type) && writerSession != null){
-                    TextMessage tmpMsg = new TextMessage(userWriter+"님이"+"<a id='notice-a' href='/board/PostDetail?boardSeq="+seq+"' style=\"color:white\"/>"+title+"에 댓글을 달았습니다!</a>");
-                    writerSession.sendMessage(tmpMsg);
+                    if(sessions.contains(writerSession)){
+                        TextMessage tmgMsg = new TextMessage(userWriter+"님이"+"<a id='notice-a' href='/commission/detail?pcSeq="+seq+"' style=\"color:white\"/>"+title+"("+category+")"+"에서 채팅요청을 보냈습니다!</a>");
+                        writerSession.sendMessage(tmgMsg);
+                    }
                 }
                 else if("commission".equals(type) && writerSession != null){
                     if(sessions.contains(writerSession)){
