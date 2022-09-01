@@ -11459,6 +11459,16 @@ header.masthead .masthead-heading {
   text-decoration: none;
 }
 
+#notice-list-section{
+  position: absolute;
+  top: 80%;
+  left: 55.3%;
+  width: 300px;
+  height: 580px;
+  background-color: #dcacbe;
+  border-radius: 8px;
+}
+
 @media (min-width: 768px) {
   header.masthead {
     padding-top: 11rem;

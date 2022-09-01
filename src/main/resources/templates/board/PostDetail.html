@@ -40,7 +40,25 @@
             console.log('close');
         };
     }
-
+    function noticeList(){
+        $.ajax({
+            type: 'get',
+            url:'../noticeList',
+            data:{'writer':name},
+            contentType: 'application/json',
+            success: function (data){
+                console.log("댓글리스트 성공")
+                var alarmList = '';
+                $.each(data, function (ket,value){
+                    alarmList += '<span>'+value.category+'</span>'
+                })
+                $('#alarmTest').html(alarmList);
+            },
+            errors:function (){
+                console.log("실패..")
+            }
+        })
+    }
 </script>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -130,7 +148,6 @@
             <div id="textarea-save">
                 <input type="button" id="comment-save-btn" onclick="commentInsert()" value="등록" style="color: #8e8bd5">
             </div>
-            <div id="alarmTest" onclick="noticeList()"></div>
         </div>
         <!--htmlComment += '<article id="update-section">'
                             htmlComment += '<div id="textarea-box-update">'
@@ -218,25 +235,7 @@
             }
         });
     });
-    function noticeList(){
-        $.ajax({
-            type: 'get',
-            url:'../noticeList',
-            data:{'writer':name},
-            contentType: 'application/json',
-            success: function (data){
-                console.log("댓글리스트 성공")
-                var alarmList = '';
-                $.each(data, function (ket,value){
-                    alarmList += '<span>'+value.category+'</span>'
-                })
-                $('#alarmTest').html(alarmList);
-            },
-            errors:function (){
-                console.log("실패..")
-            }
-        })
-    }
+
 
     //댓글 등록
     $('#textarea-save').click(function (){

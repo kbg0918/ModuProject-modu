@@ -31,7 +31,7 @@ public class NoticeController {
     //알람 목록
     @GetMapping("noticeList")
     public ResponseEntity<List<Notice>> noticeList(@RequestParam String writer){
-        System.out.println(writer+"응애?");
+        System.out.println(writer);
         System.out.println(ns.noticeList(writer)+"이거나옴?");
         return new ResponseEntity<>(ns.noticeList(writer),HttpStatus.OK);
     }

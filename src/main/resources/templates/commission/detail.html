@@ -130,7 +130,7 @@
             <button id="review-save-btn" style="display: block">리뷰쓰기</button>
             <div id="review-save-section" style="display:none">
                 <textarea class="review-save-write" id="review-content" onkeyup="resize(this)" placeholder="후기를 남겨보세요!" style="overflow: hidden" name="content"></textarea>
-                <input type="button" id="review-save" value="등록" style="color: white">
+                <input type="button" id="review-save" onclick="reviewNotice()" value="등록" style="color: white">
             </div>
             <div class="review-List">
 
@@ -187,7 +187,9 @@
 </div>
 </tbody>
 <!--실시간 알림-->
-<div id="real-time-notice"></div>
+<div id="real-time-notice" style="display: none">
+    <div id="real-time-notice-2"></div>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script>
@@ -198,6 +200,7 @@
     const pcTitle = '[[${list.title}]]';
     const pcCategory = '[[${list.category}]]';
 
+    //채팅 문의 요청
     function commissionNotice(insertData){
         console.log("commission",socket)
         $.ajax({
@@ -220,9 +223,32 @@
             }
         })
     }
+    //리뷰 등록 알림
+    function reviewNotice(insertData){
+        console.log("review",socket)
+        $.ajax({
+            url:'review',
+            type: 'post',
+            data:insertData,
+            processData: false, contentType: false,
+            enctype : 'multipart/form-data',
+            success: function (data){
+                if(writer != commissionWriter){
+                    if(socket){
+                        let socketMsg = "review"+","+writer+","+commissionWriter+","+pcSeq+","+pcTitle+","+pcCategory;
+                        console.log(socketMsg);
+                        socket.send(socketMsg);
+                    }
+                }
+            },
+            errors:function(){
+                console.log("실패");
+            }
+        })
+    }
     //알람 DB 저장
     $('#notice-btn').click(function (){
-        console.log('알람 DB 저장');
+        console.log('문의알람 DB 저장');
         $.ajax({
             type:'post',
             url:'../noticeSave',
@@ -230,6 +256,31 @@
                 "memberSeq":seq,
                 "typeSeq" : pcSeq,
                 "writeType":'commission',
+                "userWriter" : writer,
+                "writer": commissionWriter,
+                "title": pcTitle,
+                "category": pcCategory,
+            }),
+            contentType: 'application/json',
+            success:function (data){
+                console.log('통신성공' + data);
+                alert("알람 저장 완료!");
+
+            },
+            error:function (){
+                alert("통신실패"+data);
+            }
+        });
+    });
+    $('#review-save').click(function (){
+        console.log('리뷰알람 DB 저장');
+        $.ajax({
+            type:'post',
+            url:'../noticeSave',
+            data: JSON.stringify({
+                "memberSeq":seq,
+                "typeSeq" : pcSeq,
+                "writeType":'review',
                 "userWriter" : writer,
                 "writer": commissionWriter,
                 "title": pcTitle,
@@ -287,7 +338,8 @@
         show(reviewSeq);
         console.log('댓글 수정 버튼 클릭')
         const content = $('#review-update'+reviewSeq).val();
-        const starScore = $('#starUpdate-id'+reviewSeq).val();
+        const starScore = $('#star-id').val();
+        alert(starScore)
         if(content.length==0 || content==" "){
             alert("수정할 문자를 입력해주세요!")
             return false;
@@ -347,21 +399,23 @@
         document.getElementById("update-section-id"+reviewSeq).style.display = "block";
         document.getElementById("update-section-id"+reviewSeq).style.display ="none";
         document.getElementById("review-List-Content-id"+reviewSeq).style.display="block";
-        document.getElementById("starUpdate-rating-id"+reviewSeq).style.display="none";
+        /*document.getElementById("star-update-id"+reviewSeq).style.display="none";*/
     }
     function hide(reviewSeq){
         document.getElementById("update-delete-id"+reviewSeq).style.display ="none";
         document.getElementById("update-section-id"+reviewSeq).style.display = "none";
         document.getElementById("update-section-id"+reviewSeq).style.display ="block";
         document.getElementById("review-List-Content-id"+reviewSeq).style.display="none";
-        document.getElementById("starUpdate-rating-id"+reviewSeq).style.display="block";
+        /*document.getElementById("star-update-id"+reviewSeq).style.display="block";*/
     }
-    function Star(reviewSeq){
-        (target) => {
-            document.querySelector(`.star span`).style.width = `${target.value * 20}%`;
-            document.getElementById('star-rating-id'+reviewSeq).style.width= `${target.value * 20}%`;
-        }
+    function ss(aa){
+
     }
+    const updateStar  = (target) => {
+        alert(ss()+'테스트중')
+        document.getElementById('star-span-id'+1).style.width = `${target.value * 20}%`;
+    }
+
     //후기 목록 불러오기
     function reviewList(){
         $.ajax({
@@ -376,7 +430,7 @@
                     if(value.delYn == 'N'&& value.updateYn =='N'){
                         htmlReview += '<div class="review-comment" id="review-id'+value.reviewSeq+'" data-num="'+value.reviewSeq+'">'
                         if(USER_NAME == value.writer){
-                            htmlReview += '<div class="review-update-delete" id="update-delete-id'+value.reviewSeq+'">'+'<button class="review-update" style="color:#8e8bd5" onclick="hide('+value.reviewSeq+')">수정</button>';
+                            htmlReview += '<div class="review-update-delete" id="update-delete-id'+value.reviewSeq+'">'+'<button class="review-update" style="color:#8e8bd5" onclick="hide('+value.reviewSeq+'); ss('+value.reviewSeq+')">수정</button>';
                             htmlReview += '<button class="review-delete" id="delete-btn-id'+value.reviewSeq+'" onclick="reviewDelete('+value.reviewSeq+')" style="color:#8e8bd5">삭제</button></div>'
                         }
                         htmlReview += '<span class="review-star" id="star-rating-id'+value.reviewSeq+'">'+'★★★★★'+'<span style="width:'+value.starScore*20+'%">★★★★★</span>'+'</span>'
@@ -387,8 +441,9 @@
                             htmlReview += '<div id="review-writer">'+value.writer+' | <div id="review-addDate" style="color: #bdbaba">'+addTime(value.upDate)+'</div>'+'</div>'
                         }
 
-                        htmlReview += '<span class="starUpdate" id="starUpdate-rating-id'+value.reviewSeq+'" style="display: none">'+'★★★★★'+'<span>★★★★★</span>'
-                        htmlReview += '<input id="starUpdate-id'+value.reviewSeq+'" type="range" oninput="Star('+value.reviewSeq+')" value="1" step="0.5" min="0" max="5">'+'</span>'
+                        /*htmlReview += '<span class="starUpdate" id="star-update-id'+value.reviewSeq+'" style="display: none">★★★★★'+'<span id="star-span-id'+value.reviewSeq+'">★★★★★</span>'
+                        htmlReview += '<input id="starUpdate-id'+value.reviewSeq+'" type="range" oninput="updateStar(this)" value="1" step="0.5" min="0" max="5">'+'</span>'
+                        */
                         htmlReview += '<div class="review-update-section" id="update-section-id'+value.reviewSeq+'" style="display: none">'
                         htmlReview += '<textarea class="review-update-section-textarea" id="review-update'+value.reviewSeq+'" onkeyup="resize(this)" placeholder="수정할 문장을 입력해주세요!" style="overflow: hidden" name="content">'+'</textarea>';
                         htmlReview += '<div id="div-review-update">'

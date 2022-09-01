@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
@@ -22,6 +22,7 @@
     var socket = null;
     $(document).ready(function(){
         connectWs();
+        noticeList();
     })
 
     function connectWs(){
@@ -49,9 +50,41 @@
             console.log('close');
         };
     }
+    function noticeList(){
+        $.ajax({
+            type: 'get',
+            url:'../noticeList',
+            data:{'writer':USER_NAME},
+            contentType: 'application/json',
+            success: function (data){
+                console.log("댓글리스트 성공")
+                var alarmList = '';
+                $.each(data, function (ket,value){
+                    alarmList += '<span>'+value.category+'</span>'
+                })
+                $('#notice-data').html(alarmList);
+            },
+            errors:function (){
+                console.log("실패..")
+            }
+        })
+    }
+
+    //특정 영역이 아닐시 영역 닫기
+    $('html').click(function (e){
+        if(!$(e.target).hasClass('nav-link')){
+            document.getElementById("notice-list-section").style.display='block';
+        }
+    })
+    $('html').click(function (e){
+        if($(e.target).parents('.nav-link').length <1){
+            document.getElementById("notice-list-section").style.display='none';
+        }
+    })
+
+
 </script>
 <body id="page-top">
-<!--실시간 알림-->
 <!--실시간 알림-->
 <div id="real-time-notice" style="display: none">
     <div id="real-time-notice-2"></div>
@@ -75,12 +108,20 @@
                     <li class="nav-item"><a class="nav-link" href="board/Post">커뮤니티</a></li>
                     <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="commission/Form">제안</a></li>
                     <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="commission/Find">교수찾기</a></li>
+                    <li class="nav-item"><a class="nav-link" id="notice-list"><img src="../static/img/alram.png"/></a></li>
                     <li class="nav-item"><a class="nav-link" href="MyPage"><td th:text="${session.member.id}"></td>님</a></li>
                     <li class="nav-item"><a class="nav-link" href="Logout">로그아웃</a></li>
                 </th:block>
             </ul>
         </div>
     </div>
+    <div id="notice-list-section" style="display: none">
+        <a id="notice-link">
+            <span id="notice-data"></span>
+            <p>ㅠ</p>
+        </a>
+    </div>
+
 </nav>
 
 <!-- Masthead-->

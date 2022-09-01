@@ -115,8 +115,14 @@ public class ProfessorCommissionController {
 
     @RequestMapping("/commission/notice")
     @ResponseBody
-    public void commissionNotice(){
-        System.out.println("commissionNotice");
+    public void commissionChatNotice(){
+        System.out.println("commissionChatNotice");
+    }
+
+    @RequestMapping("/commission/review")
+    @ResponseBody
+    public void reviewNotice(){
+        System.out.println("reviewNotice");
     }
 
 

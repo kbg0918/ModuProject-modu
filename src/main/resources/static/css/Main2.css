@@ -491,6 +491,22 @@ header.masthead {
     bottom: 0;
     width: 100%;
 }
+#real-time-notice-2{
+    position: relative;
+    text-align: center;
+    width: 270px;
+    height: 50px;
+    font-size: 18px;
+    color: white;
+    padding-bottom: 3px;
+    border: solid 1px #dcacbe;
+    background-color: #dcacbe;
+    border-radius: 6px;
+    box-shadow: 1px 1px 6px 1px #dcacbe;
+}
+#notice-a{
+    text-decoration: none;
+}
 #textarea-box{
     position: relative;
     top: 10%;
