@@ -127,7 +127,7 @@
               <input id="star-id" type="range" oninput="drawStar(this)" value="1" step="0.5" min="0" max="5">
             </span>
             </div>
-            <button id="review-save-btn" style="display: block">리뷰쓰기</button>
+            <button th:unless="${session.member.memberName} == ${list.writer}" id="review-save-btn" style="display: block">리뷰쓰기</button>
             <div id="review-save-section" style="display:none">
                 <textarea class="review-save-write" id="review-content" onkeyup="resize(this)" placeholder="후기를 남겨보세요!" style="overflow: hidden" name="content"></textarea>
                 <input type="button" id="review-save" onclick="reviewNotice()" value="등록" style="color: white">

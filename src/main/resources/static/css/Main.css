@@ -11463,10 +11463,72 @@ header.masthead .masthead-heading {
   position: absolute;
   top: 80%;
   left: 55.3%;
-  width: 300px;
+  width: 360px;
   height: 580px;
-  background-color: #dcacbe;
+  background-color: white;
   border-radius: 8px;
+  box-shadow: 1px 1px 6px 1px #ded8d8;
+}
+#notice-list-header{
+  position: relative;
+  width: 360px;
+  height: 45px;
+  font-size: 18px;
+
+}
+#header-span{
+  position: relative;
+  left: 10%;
+  top: 28%;
+  color: #7875C9;
+}
+.inquiry-data-section{
+  position: relative;
+  width: 360px;
+  height: 535px;
+}
+.notice-data-section{
+  position: relative;
+  width: 360px;
+  height: 535px;
+}
+.notice-div{
+  position: relative;
+  width: 360px;
+  height: 60px;
+}
+#list-data{
+  position: relative;
+  top: 10%;
+  left: 5%;
+  font-size: 14px;
+}
+#list-date{
+  position: relative;
+  left: 5%;
+  font-size: 12px;
+}
+.notice-div:hover{
+  background-color: #ded8d8;
+}
+
+#header-notice{
+  position: absolute;
+  width: 50px;
+  height: 45px;
+  left: 8%;
+  padding-top: 2.5%;
+  padding-left: 2.5%;
+  border-bottom: 2px solid #7875C9;
+  color: #7875C9;
+}
+#header-chat{
+  position: absolute;
+  width: 50px;
+  height: 45px;
+  left: 22%;
+  padding-top: 2.5%;
+  padding-left: 2.5%;
 }
 
 @media (min-width: 768px) {

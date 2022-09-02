@@ -63,13 +63,13 @@ public class NoticeHandler extends TextWebSocketHandler {
 
                 if("comment".equals(type) && writerSession != null){
                     if(sessions.contains(writerSession)){
-                        TextMessage tmgMsg = new TextMessage(userWriter+"님이"+"<a id='notice-a' href='/commission/detail?pcSeq="+seq+"' style=\"color:white\"/>"+title+"("+category+")"+"댓글을 등록했습니다!</a>");
+                        TextMessage tmgMsg = new TextMessage(userWriter+"님이"+"<a id='notice-a' href='/board/PostDetail?boardSeq="+seq+"' style=\"color:white\">"+title+"("+category+")"+"에 댓글을 등록했습니다!</a>");
                         writerSession.sendMessage(tmgMsg);
                     }
                 }
                 else if("commission".equals(type) && writerSession != null){
                     if(sessions.contains(writerSession)){
-                        TextMessage tmgMsg = new TextMessage(userWriter+"님이"+"<a id='notice-a' href='/commission/detail?pcSeq="+seq+"' style=\"color:white\"/>"+title+"("+category+")"+"에서 채팅요청을 보냈습니다!</a>");
+                        TextMessage tmgMsg = new TextMessage(userWriter+"님이"+"<a id='notice-a' href='/commission/detail?pcSeq="+seq+"' style=\"color:white\">"+title+"("+category+")"+"에서 채팅요청을 보냈습니다!</a>");
                         writerSession.sendMessage(tmgMsg);
                     }else{
                         TextMessage tmgMsg = new TextMessage(writer+"님은"+"<p> 현재 접속중이 아닙니다.</p>");
@@ -79,7 +79,7 @@ public class NoticeHandler extends TextWebSocketHandler {
                 }
                 else if("review".equals(type) && writerSession != null){
                     if(sessions.contains(writerSession)){
-                        TextMessage tmgMsg = new TextMessage(userWriter+"님이"+"<a id='notice-a' href='/commission/detail?pcSeq="+seq+"' style=\"color:white\"/>"+title+"("+category+")"+"리뷰를 등록했습니다!</a>");
+                        TextMessage tmgMsg = new TextMessage(userWriter+"님이"+"<a id='notice-a' href='/commission/detail?pcSeq="+seq+"' style=\"color:white\">"+title+"("+category+")"+"에 리뷰를 등록했습니다!</a>");
                         writerSession.sendMessage(tmgMsg);
                     }
                 }

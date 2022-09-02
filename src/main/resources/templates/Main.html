@@ -59,10 +59,32 @@
             success: function (data){
                 console.log("댓글리스트 성공")
                 var alarmList = '';
+                var inquiryList = '';
                 $.each(data, function (ket,value){
-                    alarmList += '<span>'+value.category+'</span>'
+                    if(value.writeType == 'comment'){
+                        alarmList += '<div class=notice-div onclick="location.href=`/board/PostDetail?boardSeq=`+'+value.typeSeq+'">'
+                        alarmList += '<span id="list-data">'+value.userWriter+'님이'+' 게시물'+'('+value.category+')'+value.title+'에 댓글을 달았습니다!'+'</span>'
+                        alarmList += '<br>'
+                        alarmList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
+                        alarmList += '</div>'
+                    }
+                    else if(value.writeType == 'review'){
+                        alarmList += '<div class=notice-div onclick="location.href=`/commission/detail?pcSeq=`+'+value.typeSeq+'">'
+                        alarmList += '<span id="list-data">'+value.userWriter+'님이'+' 제안서'+'('+value.category+')'+value.title+'에 리뷰를 등록했습니다!'+'</span>'
+                        alarmList += '<br>'
+                        alarmList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
+                        alarmList += '</div>'
+                    }
+                    else if(value.writeType == 'commission'){
+                        inquiryList += '<div class=notice-div onclick="location.href=`/commission/detail?pcSeq=`+'+value.typeSeq+'">'
+                        inquiryList += '<span id="list-data">'+value.userWriter+'님이'+' 제안서'+'('+value.category+')'+value.title+'에서 채팅요청을 보냈습니다.'+'</span>'
+                        inquiryList += '<br>'
+                        inquiryList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
+                        inquiryList += '</div>'
+                    }
                 })
-                $('#notice-data').html(alarmList);
+                $('.notice-data-section').html(alarmList);
+                $('.inquiry-data-section').html(inquiryList);
             },
             errors:function (){
                 console.log("실패..")
@@ -72,15 +94,28 @@
 
     //특정 영역이 아닐시 영역 닫기
     $('html').click(function (e){
-        if(!$(e.target).hasClass('nav-link')){
-            document.getElementById("notice-list-section").style.display='block';
-        }
-    })
-    $('html').click(function (e){
-        if($(e.target).parents('.nav-link').length <1){
+        if(!$(e.target).is('#notice-list') && !$(e.target).is('#notice-list-header') && !$(e.target).hasClass('notice-data-section') && !$(e.target).is('#header-notice')
+            && !$(e.target).is('#header-chat')){
             document.getElementById("notice-list-section").style.display='none';
         }
     })
+    $('html').click(function (e){
+        if($(e.target).is('#notice-list') || $(e.target).is('#alarm-img')){
+            document.getElementById("notice-list-section").style.display='block';
+        }
+    })
+    //db에서 가져온 시간 변환
+    function addTime(date){
+        date = new Date(date);
+        year = date.getFullYear();
+        //자바스크립트는 0부터 11까지만 된다고 함 고로 +1
+        month = date.getMonth()+1;
+        day = date.getDate();
+        hour = date.getHours();
+        minute = date.getMinutes();
+        strDate = year+"-"+month+"-"+day+" "+hour+":"+minute;
+        return strDate;
+    }
 
 
 </script>
@@ -108,7 +143,7 @@
                     <li class="nav-item"><a class="nav-link" href="board/Post">커뮤니티</a></li>
                     <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="commission/Form">제안</a></li>
                     <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="commission/Find">교수찾기</a></li>
-                    <li class="nav-item"><a class="nav-link" id="notice-list"><img src="../static/img/alram.png"/></a></li>
+                    <li class="nav-item"><a class="nav-link" id="notice-list"><img id="alarm-img" src="../static/img/alram.png"/></a></li>
                     <li class="nav-item"><a class="nav-link" href="MyPage"><td th:text="${session.member.id}"></td>님</a></li>
                     <li class="nav-item"><a class="nav-link" href="Logout">로그아웃</a></li>
                 </th:block>
@@ -116,11 +151,38 @@
         </div>
     </div>
     <div id="notice-list-section" style="display: none">
-        <a id="notice-link">
-            <span id="notice-data"></span>
-            <p>ㅠ</p>
-        </a>
+        <div id="notice-list-header">
+            <div id="header-notice">알림</div>
+            <div id="header-chat">채팅</div>
+        </div>
+        <div class="notice-data-section">
+
+        </div>
+        <div class="inquiry-data-section" style="display: none">
+
+        </div>
+
     </div>
+    <script>
+        $('#header-notice').click(function (){
+            $('#header-notice').css("border-bottom", "solid 2px #7875C9")
+            $('#header-notice').css("color","#7875C9")
+            $('.notice-data-section').css("display","block")
+            $('#header-chat').css("border-bottom", "solid 0px")
+            $('#header-chat').css("color","black")
+            $('.inquiry-data-section').css("display","none")
+        })
+        $('#header-chat').click(function (){
+            $('#header-chat').css("border-bottom", "solid 2px #7875C9")
+            $('#header-chat').css("color","#7875C9")
+            $('.inquiry-data-section').css("display","block")
+            $('#header-notice').css("border-bottom", "solid 0px")
+            $('#header-notice').css("color","black")
+            $('.notice-data-section').css("display","none")
+        })
+
+
+    </script>
 
 </nav>
 
