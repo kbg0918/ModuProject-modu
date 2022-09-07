@@ -14,7 +14,6 @@ create table if not exists member(
     up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-/*실시간 알람 테이블 clear*/
 create table if not exists notice(
  notice_seq int auto_increment primary key,
  member_seq int,
@@ -24,21 +23,17 @@ create table if not exists notice(
  writer varchar(20) not null,
  title varchar(100) not null,
  category varchar(20) not null,
- notice_read char(1) default 'N',
  add_date datetime not null DEFAULT CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 /*리뷰 테이블*/
-create table if not exists review(
-    review_seq int auto_increment primary key,
+create table if not exists memberComment(
+    mc_seq int auto_increment primary key,
     content varchar(4096) not null,
-    writer varchar(20) not null,
-    star_score float not null,
-    pc_seq int null,
-    update_seq int null,
-    update_Yn char(1) default 'N' not null ,
-    del_Yn char(1) default 'N' not null ,
+    writer varchar(255) not null,
+    star_score int not null,
+    member_seq int null,
     add_date datetime not null DEFAULT CURRENT_TIMESTAMP,
     up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -84,13 +79,13 @@ create table if not exists board(
 /*게시판 댓글 clear*/
 create table if not exists board_comment(
     bc_seq int auto_increment primary key,
+    update_yn char(1) DEFAULT 'N' not null,
     update_seq int,
-    board_seq int,
     writer varchar(10) not null,
     content varchar(4096) not null,
     category varchar(30) not null,
+    board_seq int,
     del_yn char(1) DEFAULT 'N' not null,
-    update_yn char(1) DEFAULT 'N' not null,
     add_date datetime DEFAULT CURRENT_TIMESTAMP,
     up_date datetime on update CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -161,3 +156,26 @@ create table if not exists professor_commission(
     up_date datetime on update CURRENT_TIMESTAMP
 
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*
+CREATE TABLE file (
+    file_seq int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '일련번호',
+    board_idx int(10) unsigned NOT NULL COMMENT '게시글 번호',
+    original_file_name varchar(255) NOT NULL COMMENT '원본 파일 이름',
+    stored_file_path varchar(500) NOT NULL COMMENT '파일 저장 경로',
+    file_size int(15) unsigned NOT NULL COMMENT '파일 크기',
+    creator_id varchar(50) NOT NULL COMMENT '작성자 아이디',
+    created_datetime datetime NOT NULL COMMENT '작성시간',
+    updater_id varchar(50) DEFAULT NULL COMMENT '수정자 아이디',
+    updated_datetime datetime DEFAULT NULL COMMENT '수정시간',
+    deleted_yn char(1) NOT NULL DEFAULT 'N' COMMENT '삭제 여부',
+    PRIMARY KEY (idx)
+);
+*/
+CREATE TABLE t_file(
+    file_name varchar(255) NOT NULL comment '파일 이름',
+    file_path varchar(500) NOT NULL comment '파일 저장 경로',
+    uuid varchar(40) NOT NULL comment '고유 식별 번호',
+    image char(1) NOT NULL DEFAULT 'N' comment '파일의 타입. 이미지 여부'
+                   --이미지이면 미리보기 있게, 아니면 미리보기 없게.  가능할란가
+)

@@ -1,4 +1,4 @@
-package kbg.modu.moduproject.config;
+package kbg.modu.moduproject.config.websocket;
 import kbg.modu.moduproject.handler.UUIDHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.handler.invocation.HandlerMethodReturnValueHandler;

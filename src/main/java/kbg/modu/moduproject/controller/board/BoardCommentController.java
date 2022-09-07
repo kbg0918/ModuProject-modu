@@ -1,4 +1,4 @@
-package kbg.modu.moduproject.controller;
+package kbg.modu.moduproject.controller.board;
 
 import kbg.modu.moduproject.domain.BoardComment;
 import kbg.modu.moduproject.repo.BoardCommentRepository;
