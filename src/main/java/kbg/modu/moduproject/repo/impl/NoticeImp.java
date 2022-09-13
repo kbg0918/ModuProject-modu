@@ -32,4 +32,22 @@ public class NoticeImp implements NoticeRepository {
         tp.update("insert into notice(member_seq, type_seq, write_type, user_writer, writer, title, category) values(?,?,?,?,?,?,?)",
                 n.getMemberSeq(), n.getTypeSeq(), n.getWriteType(), n.getUserWriter(), n.getWriter(), n.getTitle(), n.getCategory());
     }
+
+    @Override
+    public void updateRead(Notice n) {
+        tp.update("update notice set notice_read = ? where notice_seq =?",
+                n.getNoticeRead(), n.getNoticeSeq());
+    }
+
+    @Override
+    public void delete(Notice n){
+        tp.update("update notice set notice_delete_yn = ?, notice_read = ? where writer = ?",
+                n.getNoticeDeleteYn(), n.getNoticeRead(), n.getWriter());
+    }
+
+    @Override
+    public void allRead(Notice n) {
+        tp.update("update notice set notice_read = ? where writer =?",
+                n.getNoticeRead(), n.getWriter());
+    }
 }

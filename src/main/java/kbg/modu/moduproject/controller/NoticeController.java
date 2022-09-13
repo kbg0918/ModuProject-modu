@@ -5,6 +5,7 @@ import kbg.modu.moduproject.domain.Notice;
 import kbg.modu.moduproject.repo.NoticeRepository;
 import kbg.modu.moduproject.service.NoticeService;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,9 +32,24 @@ public class NoticeController {
     //알람 목록
     @GetMapping("noticeList")
     public ResponseEntity<List<Notice>> noticeList(@RequestParam String writer){
-        System.out.println(writer);
-        System.out.println(ns.noticeList(writer)+"이거나옴?");
         return new ResponseEntity<>(ns.noticeList(writer),HttpStatus.OK);
+    }
+
+    @PostMapping("noticeRead")
+    public void noticeRead(@RequestBody Notice n){
+        ns.update(n);
+    }
+
+    @PostMapping("noticeAllRead")
+    public void noticeAllRead(@RequestBody Notice n){
+        ns.allRead(n);
+    }
+
+
+    @GetMapping("noticeDelete")
+    public void noticeDelete(Notice n, @RequestParam String writer){
+        n.setWriter(writer);
+        ns.delete(n);
     }
 
 }

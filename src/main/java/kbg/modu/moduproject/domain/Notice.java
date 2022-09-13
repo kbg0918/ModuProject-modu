@@ -26,4 +26,6 @@ public class Notice {
     //알람 읽음 여부
     private String noticeRead;
     private String addDate;
+    //알람 삭제
+    private String noticeDeleteYn;
 }

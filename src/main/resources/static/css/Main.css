@@ -11463,7 +11463,7 @@ header.masthead .masthead-heading {
   position: absolute;
   top: 80%;
   left: 55.3%;
-  width: 360px;
+  width: 380px;
   height: 580px;
   background-color: white;
   border-radius: 8px;
@@ -11471,7 +11471,7 @@ header.masthead .masthead-heading {
 }
 #notice-list-header{
   position: relative;
-  width: 360px;
+  width: 380px;
   height: 45px;
   font-size: 18px;
 
@@ -11482,20 +11482,35 @@ header.masthead .masthead-heading {
   top: 28%;
   color: #7875C9;
 }
+
 .inquiry-data-section{
   position: relative;
-  width: 360px;
-  height: 535px;
+  width: 380px;
+  height: 500px;
+  overflow: auto;
 }
 .notice-data-section{
   position: relative;
-  width: 360px;
-  height: 535px;
+  width: 380px;
+  height: 500px;
+  overflow: auto;
 }
 .notice-div{
   position: relative;
   width: 360px;
   height: 60px;
+}
+.notice-check{
+  position: relative;
+  width: 10px;
+  height: 10px;
+  bottom: 110%;
+  left: 80%;
+}
+#check-pie{
+  position: absolute;
+  font-size: 30px;
+  color: #f52121;
 }
 #list-data{
   position: relative;
@@ -11507,6 +11522,35 @@ header.masthead .masthead-heading {
   position: relative;
   left: 5%;
   font-size: 12px;
+}
+#read-check{
+  position: relative;
+  top: 23%;
+  left: 67%;
+  font-size: 15px;
+}
+.notice-update-delete{
+  position: relative;
+  width: 380px;
+  height: 35px;
+}
+#notice-all-read{
+  position: relative;
+  top:20%;
+  left: 4%;
+  font-size: 15px;
+}
+#notice-read-delete{
+  position: relative;
+  top:20%;
+  left: 41%;
+  font-size: 15px;
+}
+#notice-all-delete{
+  position: relative;
+  top:20%;
+  left: 43%;
+  font-size: 15px;
 }
 .notice-div:hover{
   background-color: #ded8d8;
@@ -11530,7 +11574,15 @@ header.masthead .masthead-heading {
   padding-top: 2.5%;
   padding-left: 2.5%;
 }
-
+#header-hr{
+  position: absolute;
+  top: 64%;
+  box-shadow: 1px 1px 6px 1px #b0aeae;
+}
+#notice-hr{
+  margin-top: 6%;
+  box-shadow: 1px 1px 6px 1px #b0aeae;
+}
 @media (min-width: 768px) {
   header.masthead {
     padding-top: 11rem;

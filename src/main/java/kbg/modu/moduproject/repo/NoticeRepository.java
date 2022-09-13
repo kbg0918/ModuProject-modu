@@ -10,4 +10,7 @@ public interface NoticeRepository {
     List<Notice> noticeList(String writer);
     Member findBySeq(String userWriter);
     void insert(Notice n);
+    void updateRead(Notice n);
+    public void delete(Notice n);
+    public void allRead(Notice n);
 }

@@ -2,6 +2,7 @@ package kbg.modu.moduproject.service;
 
 import kbg.modu.moduproject.domain.Notice;
 import kbg.modu.moduproject.repo.NoticeRepository;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,5 +23,22 @@ public class NoticeService{
     @Transactional
     public void save(Notice n) {
         nr.insert(n);
+    }
+
+    @Transactional
+    public void update(Notice n){
+        nr.updateRead(n);
+    }
+
+    @Transactional
+    public void delete(Notice n){
+        n.setNoticeRead("Y");
+        n.setNoticeDeleteYn("Y");
+        nr.delete(n);
+    }
+
+    @Transactional
+    public void allRead(Notice n){
+        nr.allRead(n);
     }
 }
