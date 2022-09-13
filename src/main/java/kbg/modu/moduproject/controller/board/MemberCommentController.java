@@ -1,4 +1,4 @@
-package kbg.modu.moduproject.controller;
+package kbg.modu.moduproject.controller.board;
 
 import kbg.modu.moduproject.service.MemberCommentService;
 import kbg.modu.moduproject.domain.MemberComment;

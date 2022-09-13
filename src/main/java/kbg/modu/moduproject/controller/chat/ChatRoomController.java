@@ -1,4 +1,4 @@
-package kbg.modu.moduproject.controller;
+package kbg.modu.moduproject.controller.chat;
 
 import kbg.modu.moduproject.domain.ChatMessage;
 import kbg.modu.moduproject.domain.ChatRoom;

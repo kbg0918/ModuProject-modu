@@ -25,8 +25,7 @@ create table if not exists notice(
  title varchar(100) not null,
  category varchar(20) not null,
  notice_read char(1) default 'N',
- add_date datetime not null DEFAULT CURRENT_TIMESTAMP,
- notice_delete_yn char(1) default 'N'
+ add_date datetime not null DEFAULT CURRENT_TIMESTAMP
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 

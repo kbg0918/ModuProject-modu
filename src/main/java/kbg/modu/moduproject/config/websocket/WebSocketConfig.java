@@ -1,4 +1,4 @@
-package kbg.modu.moduproject.config;
+package kbg.modu.moduproject.config.websocket;
 
 
 import kbg.modu.moduproject.handler.NoticeHandler;

@@ -1,4 +1,4 @@
-package kbg.modu.moduproject.controller;
+package kbg.modu.moduproject.controller.chat;
 
 
 import com.google.common.collect.ImmutableMap;
