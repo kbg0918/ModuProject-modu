@@ -27,5 +27,5 @@ public class Notice {
     private String noticeRead;
     private String addDate;
     //알람 삭제
-    private String noticeDeleteYn;
+    private String delYn;
 }

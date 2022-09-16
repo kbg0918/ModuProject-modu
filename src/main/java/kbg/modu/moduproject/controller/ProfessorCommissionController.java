@@ -99,9 +99,8 @@ public class ProfessorCommissionController {
         return "commission/ProfessorFind";
     }
 
-    @RequestMapping(value = "commission/ProFind", method = RequestMethod.POST)
-    public String find(@RequestParam String category){
-
+    @RequestMapping(value = "commission/ProFind/{category}", method = RequestMethod.GET)
+    public String find(@PathVariable String category){
         return "redirect:/commission/List?category="+category;
     }
 

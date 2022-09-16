@@ -33,7 +33,7 @@ public class NoticeService{
     @Transactional
     public void delete(Notice n){
         n.setNoticeRead("Y");
-        n.setNoticeDeleteYn("Y");
+        n.setDelYn("Y");
         nr.delete(n);
     }
 

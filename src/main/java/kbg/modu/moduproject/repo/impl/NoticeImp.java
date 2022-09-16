@@ -41,8 +41,8 @@ public class NoticeImp implements NoticeRepository {
 
     @Override
     public void delete(Notice n){
-        tp.update("update notice set notice_delete_yn = ?, notice_read = ? where writer = ?",
-                n.getNoticeDeleteYn(), n.getNoticeRead(), n.getWriter());
+        tp.update("update notice set del_Yn = ?, notice_read = ? where writer = ?",
+                n.getDelYn(), n.getNoticeRead(), n.getWriter());
     }
 
     @Override

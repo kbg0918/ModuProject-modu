@@ -83,14 +83,14 @@
                 var alarmCheck = '';
                 $.each(data, function (ket,value){
                     if(value.writeType == 'comment'){
-                        if(value.noticeRead == "N" && value.noticeDeleteYn == "N"){
+                        if(value.noticeRead == "N" && value.delYn == "N"){
                             alarmCheck += '<sapn id="check-pie">'+'.'+'</span>'
                             alarmList += '<div class=notice-div id="notice-seq'+value.noticeSeq+'" onclick="location.href=`/board/PostDetail?boardSeq=`+'+value.typeSeq+'; read('+value.noticeSeq+')">'
                             alarmList += '<span id="list-data">'+value.userWriter+'님이'+' 게시물'+'('+value.category+')'+value.title+'에 댓글을 달았습니다!'+'</span>'
                             alarmList += '<br>'
                             alarmList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
                             alarmList += '</div>'
-                        }else if(value.noticeRead =="Y" && value.noticeDeleteYn == "N"){
+                        }else if(value.noticeRead =="Y" && value.delYn == "N"){
                             alarmList += '<div class=notice-div id="notice-seq'+value.noticeSeq+'" style="background-color: #e0dada" onclick="location.href=`/board/PostDetail?boardSeq=`+'+value.typeSeq+'; read('+value.noticeSeq+')">'
                             alarmList += '<span id="list-data">'+value.userWriter+'님이'+' 게시물'+'('+value.category+')'+value.title+'에 댓글을 달았습니다!'+'</span>'
                             alarmList += '<br>'
@@ -152,8 +152,6 @@
         strDate = year+"-"+month+"-"+day+" "+hour+":"+minute;
         return strDate;
     }
-
-
 </script>
 <body id="page-top">
 <!--실시간 알림-->
@@ -179,7 +177,7 @@
                     <li class="nav-item"><a class="nav-link" href="board/Post">커뮤니티</a></li>
                     <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="commission/Form">제안</a></li>
                     <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="commission/Find">교수찾기</a></li>
-                    <li class="nav-item"><a class="nav-link" id="notice-list"><img id="alarm-img" src="../static/img/alram.png"/></a>
+                    <li class="nav-item"><a class="nav-link" id="notice-list"><img id="alarm-img" src="../static/img/notification.png"/></a>
                         <div class="notice-check"></div>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="MyPage"><td th:text="${session.member.id}"></td>님</a></li>
@@ -276,39 +274,154 @@
 </nav>
 
 <!-- Masthead-->
-<header class="masthead">
-    <th:block th:if="${session.member}">
-        <div class="container">
-            <div class="masthead-subheading">MODU를 찾아주셔서 감사합니다.</div>
-            <div class="masthead-heading text-uppercase" >모르는 것이 있을 때는???</div>
-            <a class="btn btn-primary btn-xl text-uppercase" href="MODUChatting">매칭하기</a>
-        </div>
-    </th:block>
-    <th:block th:unless="${session.member}">
-        <div class="container">
-            <div class="masthead-subheading">MODU를 찾아주셔서 감사합니다.</div>
-            <div class="masthead-heading text-uppercase" >모르는 것이 있을 때는?</div>
-            <a class="btn btn-primary btn-xl text-uppercase" href="LoginForm">MODU</a>
-        </div>
-    </th:block>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script>
+<article class="banner-section" id="banner-id">
+    <div class="banner-in">
+        <div class="swiper-container">
+            <!-- 보여지는 영역 -->
+            <div class="swiper-wrapper">
+                <!-- div class="swiper-slide" 를 추가하면된다 -->
+                <div class="swiper-slide">
+                    <p id="cookPro-m">" 내가
+                        <br>
+                        &nbsp;&nbsp;&nbsp;요리업계
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;정점에 서 있는 이유. "</p>
+                    <div id="img-cook"></div>
+                </div>
+                <div class="swiper-slide">
+                    <p id="dogPro-m">" 통제할 수 있는
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;사람이 칭찬을 하면
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;감동이 돼요. "</p>
+                    <div id="img-dog"></div>
+                </div>
+                <div class="swiper-slide">
+                    <p id="babyPro-m">" 열심히 사는데
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;자꾸만
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;마음이 답답한가요? "</p>
+                    <div id="img-baby"></div>
+                </div>
+                <div class="swiper-slide">
+                    <p id="mathPro-m">" 열심히 안해도
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;되니까
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;그냥 해봐. "</p>
+                    <div id="img-math"></div>
+                </div>
+                <div class="swiper-slide">
+                    <p id="sportsPro-m">" 흥민이
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;절대 월드클래스
+                        <br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;아닙니다. "</p>
+                    <div id="img-sports"></div>
+                </div>
+            </div>
+            <!-- 방향 버튼 상황에 따라 추가 삭제가능 -->
 
-</header>
-<!-- Services-->
-<section class="page-section" id="Category">
-    <div class="container">
-        <div class="text-center">
-            <!--<h2 class="section-heading text-uppercase">교수를 찾아보세요</h2>-->
-            <form action="commission/ProFind" method="post">
-                <input class="sub" type="submit" name="category" value="Math">
-                <input class="sub" type="submit" name="category" value="English">
-                <input class="sub" type="submit" name="category" value="Korea">
-                <input class="sub" type="submit" name="category" value="Science">
-            </form>
         </div>
+
     </div>
+    <button class="swiper-btn-next"><img  src="../static/img/right-arrow.png"/></button>
+    <button class="swiper-btn-prev"><img  src="../static/img/left-arrow.png"/></button>
+</article>
+<script>
+
+    const swiper = new Swiper('.swiper-container', {
+        //기본 셋팅
+        //방향 셋팅 vertical 수직, horizontal 수평 설정이 없으면 수평
+        direction: 'horizontal',
+        //한번에 보여지는 페이지 숫자
+        slidesPerView: 1,
+        //드레그 기능 true 사용가능 false 사용불가
+        debugger: true,
+        //마우스 휠기능 true 사용가능 false 사용불가
+        mousewheel: true,
+        //반복 기능 true 사용가능 false 사용불가
+        loop: true,
+        //선택된 슬라이드를 중심으로 true 사용가능 false 사용불가 djqt
+        autoplay:{
+            delay: 3500,
+        },
+        centeredSlides: true,
+        spaceBetween : 100,
+        pagination: {
+            //페이지 기능
+            el: '.swiper-pagination',
+            //클릭 가능여부
+            clickable: true,
+        },
+
+        //방향표
+        navigation: {
+            //다음페이지 설정
+            nextEl: '.swiper-btn-next',
+            //이전페이지 설정
+            prevEl: '.swiper-btn-prev',
+        },
+
+    });
+    swiper.on('transitionEnd', function() {
+        var check = swiper.realIndex+1;
+        if(check==1){
+            document.getElementById('banner-id').style.backgroundColor ='#4f4c4b';
+        }
+        else if(check==2){
+            document.getElementById('banner-id').style.backgroundColor ='#b2b259';
+        }
+        else if(check==3){
+            document.getElementById('banner-id').style.backgroundColor ='#043f6e';
+        }
+        else if(check==4){
+            document.getElementById('banner-id').style.backgroundColor ='#562f75';
+        }
+        else if(check==5){
+            document.getElementById('banner-id').style.backgroundColor ='#938d8d';
+        }
+    });
+
+</script>
+<!-- Services-->
+<section class="category-page-section">
+    <div id="cook-category" th:onclick="|location.href='@{../commission/ProFind/cook}'|">
+    </div>
+    <div id="cook-name">
+        요리
+    </div>
+    <div id="breeder-category" th:onclick="|location.href='@{../commission/ProFind/breeder}'|">
+    </div>
+    <div id="breeder-name">
+        애완동물
+    </div>
+    <div id="parenting-category" th:onclick="|location.href='@{../commission/ProFind/parenting}'|">
+    </div>
+    <div id="parenting-name">
+        육아
+    </div>
+    <div id="educate-category" th:onclick="|location.href='@{../commission/ProFind/educate}'|">
+    </div>
+    <div id="educate-name">
+        교육
+    </div>
+    <div id="sports-category" th:onclick="|location.href='@{../commission/ProFind/sports}'|">
+    </div>
+    <div id="sports-name">
+        스포츠
+    </div>
+
+
+
 </section>
 <!-- Portfolio Grid-->
-<section class="page-section bg-light" id="portfolio">
+<section id="portfolio" style="background-color: white">
     <th:block th:if="${session.member}">
         <div class="container">
             <div class="text-center">
@@ -316,9 +429,6 @@
                 <h3 class="section-subheading text-muted">게시판 들어갈 자리</h3>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-sm-6 mb-4">
-                    상위 몇개의 게시판이 들어갔으면 좋겠습니다.
-                </div>
             </div>
         </div>
     </th:block>
@@ -327,17 +437,9 @@
 </section>
 
 <!-- About-->
-<section class="page-section" id="about">
-    <div class="container">
-        <div class="text-center">
-            <h2 class="section-heading text-uppercase">여기에 뭐가 들어가면 좋을지..</h2>
-            <h3 class="section-subheading text-muted"></h3>
-        </div>
-
-    </div>
-</section>
 <!-- Team-->
 <!-- Clients-->
+
 <div class="py-5">
     <div class="container">
         <div class="row align-items-center">
@@ -359,9 +461,6 @@
 <!-- Contact-->
 
 <!-- Footer-->
-<footer class="footer py-4">
-    이 자리엔 찾아오는 길, 만든 사람, git hub 주소 이런거 들어가면 좋을 듯 싶슴다.
-</footer>
 <!-- Portfolio Modals-->
 <!-- Portfolio item 1 modal popup-->
 <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
@@ -577,6 +676,7 @@
 
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- Core theme JS-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>

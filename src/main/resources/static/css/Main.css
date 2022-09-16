@@ -11437,6 +11437,132 @@ header.masthead .masthead-heading {
   margin-bottom: 2rem;
   font-family: 'Pretendard-Regular', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+.swiper-container {
+  width:800px;
+  height:400px;
+}
+.swiper-wrapper{
+  width: 600px;
+}
+.banner-section{
+  margin-top: 60px;
+  height: 420px;
+  background-color: #646260;
+}
+.banner-in{
+  position: relative;
+  width: 560px;
+  height: 380px;
+  left: 30%;
+}
+#img-cook{
+  position: relative;
+  top: 8%;
+  left: 45%;
+  width: 350px;
+  height: 300px;
+  background-color: white;
+  background-image: url("../img/cookPro.jpg");
+}
+#cookPro-m{
+  position: absolute;
+  top: 28%;
+  left: 4%;
+  font-size: 26px;
+  color: white;
+}
+#img-dog{
+  position: relative;
+  top: 8%;
+  left: 45%;
+  width: 350px;
+  height: 300px;
+  background-color: white;
+  background-image: url("../img/dogPro.jpg");
+}
+#dogPro-m{
+  position: absolute;
+  top: 28%;
+  left: 4%;
+  font-size: 26px;
+  color: white;
+}
+#img-baby{
+  position: relative;
+  top: 8%;
+  left: 45%;
+  width: 350px;
+  height: 300px;
+  background-color: white;
+  background-image: url("../img/babyPro.jpg");
+}
+#babyPro-m{
+  position: absolute;
+  top: 28%;
+  left: 4%;
+  font-size: 26px;
+  color: white;
+}
+#img-math{
+  position: relative;
+  top: 13%;
+  left: 45%;
+  width: 350px;
+  height: 254px;
+  background-color: white;
+  background-image: url("../img/mathPro.jpg");
+}
+#mathPro-m{
+  position: absolute;
+  top: 28%;
+  left: 4%;
+  font-size: 26px;
+  color: white;
+}
+#img-sports{
+  position: relative;
+  top: 8%;
+  left: 45%;
+  width: 350px;
+  height: 300px;
+  background-color: white;
+  background-image: url("../img/sportsPro.jpg");
+}
+#sportsPro-m{
+  position: absolute;
+  top: 28%;
+  left: 4%;
+  font-size: 26px;
+  color: white;
+}
+
+
+#button-prev{
+  position: relative;
+  top: 17%;
+}
+.swiper-btn-prev{
+  position: absolute;
+  top:13%;
+  left: 25%;
+  width: 50px;
+  height: 50px;
+  background-color: #f5f1f1;
+  opacity: 20%;
+  border-radius: 50px;
+  border: none;
+}
+.swiper-btn-next{
+  position: absolute;
+  top: 13%;
+  left: 72%;
+  width: 50px;
+  height: 50px;
+  background-color: #f5f1f1;
+  opacity: 20%;
+  border-radius: 50px;
+  border: none;
+}
 #real-time-notice{
   position: fixed;
   bottom: 0;
@@ -11467,7 +11593,7 @@ header.masthead .masthead-heading {
   height: 580px;
   background-color: white;
   border-radius: 8px;
-  box-shadow: 1px 1px 6px 1px #ded8d8;
+  box-shadow: 1px 1px 3px 1px #ded8d8;
 }
 #notice-list-header{
   position: relative;
@@ -11553,6 +11679,7 @@ header.masthead .masthead-heading {
   font-size: 15px;
 }
 .notice-div:hover{
+  width: 380px;
   background-color: #ded8d8;
 }
 
@@ -11929,17 +12056,94 @@ section#contact form#contactForm :-ms-input-placeholder {
   font-size: 0.9rem;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+.category-page-section{
+  position: relative;
+  left: 28%;
+  width: 800px;
+  height: 70px;
 
-
-.sub{
-  width: 100px;
-  height: 50px;
-  border: 1px solid #F2DFBC;
-  background-color: #F2DFBC;
-  border-radius: 5px;
-  color: black;
-  padding: 5px;
 }
+#cook-category{
+  position: absolute;
+  top: 30%;
+  left: 5%;
+  width: 52px;
+  height: 52px;
+  background-image: url("../img/category_icon/cook-icon.png");
+  cursor:pointer;
+}
+#cook-name{
+  position: absolute;
+  left: 2.5%;
+  text-align: center;
+  width: 88px;
+  height: 41px;
+}
+#breeder-category{
+  position: absolute;
+  left: 25%;
+  top: 30%;
+  width: 52px;
+  height: 52px;
+  background-image: url("../img/category_icon/breeder-icon.png");
+  cursor:pointer;
+}
+#breeder-name{
+  position: absolute;
+  left: 22.6%;
+  text-align: center;
+  width: 88px;
+  height: 41px;
+}
+#parenting-category{
+  position: absolute;
+  left: 45%;
+  top: 30%;
+  width: 52px;
+  height: 52px;
+  background-image: url("../img/category_icon/parenting-icon.png");
+  cursor:pointer;
+}
+#parenting-name{
+  position: absolute;
+  left: 43.2%;
+  text-align: center;
+  width: 88px;
+  height: 41px;
+}
+#educate-category{
+  position: absolute;
+  left: 65%;
+  top: 30%;
+  width: 52px;
+  height: 52px;
+  background-image: url("../img/category_icon/educate-icon.png");
+  cursor:pointer;
+}
+#educate-name{
+  position: absolute;
+  left: 62.7%;
+  text-align: center;
+  width: 88px;
+  height: 41px;
+}
+#sports-category{
+  position: absolute;
+  left: 85%;
+  top: 30%;
+  width: 52px;
+  height: 52px;
+  background-image: url("../img/category_icon/sports-icon.png");
+  cursor:pointer;
+}
+#sports-name{
+  position: absolute;
+  left: 82.9%;
+  text-align: center;
+  width: 88px;
+  height: 41px;
+}
+
 
 html{
   background-size: cover;
