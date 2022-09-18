@@ -2,7 +2,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-
+<script src="../static/js/scripts.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 <meta charset="utf-8">
 <html xmlns:th="http://www.thymeleaf.org">
@@ -36,17 +36,104 @@
                         <li class="nav-item"><a class="nav-link" href="SignUpForm">회원가입</a></li>
                     </th:block>
                     <th:block th:if="${session.member}">
-                        <li class="nav-item"><a class="nav-link" href="#Category">카테고리</a></li>
-                        <li class="nav-item"><a class="nav-link" href="board/InsertForm">커뮤니티</a></li>
-                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="commission/Form">제안</a></li>
-                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="commission/Find">교수찾기</a></li>
-                        <li class="nav-item"><a class="nav-link" href="MyPage"><td th:text="${session.member.id}"></td>님</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Logout">로그아웃</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
+                        <li class="nav-item"><a class="nav-link" href="./Post">커뮤니티</a></li>
+                        <li th:if="${session.member.memberRole} == 'Professor'" class="nav-item"><a class="nav-link" href="../commission/Form">제안</a></li>
+                        <li th:if="${session.member.memberRole} == 'Student'" class="nav-item"><a class="nav-link" href="../commission/Find">교수찾기</a></li>
+                        <li class="nav-item"><a class="nav-link" id="notice-list"><img id="alarm-img" src="../static/img/notification.png"/></a>
+                            <span class="notice-check"></span>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="../MyPage"><td th:text="${session.member.id}"></td>님</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Logout">로그아웃</a></li>
                     </th:block>
                 </ul>
             </div>
 
         </div>
+        <div id="notice-list-section" style="display: none">
+            <div id="notice-list-header">
+                <div id="header-notice">알림</div>
+                <div id="header-chat">채팅</div>
+                <hr id="header-hr" color="#cccaca" width="100%">
+            </div>
+
+            <div class="notice-data-section">
+
+            </div>
+            <div class="inquiry-data-section" style="display: none">
+
+            </div>
+            <div class="notice-update-delete">
+                <span id="notice-all-read">모두 읽기</span>
+                <span id="notice-read-delete">읽은 알림 삭제</span>
+                <span id="notice-all-delete">모두 삭제</span>
+            </div>
+
+        </div>
+        <script>
+
+            $('#header-notice').click(function (){
+                $('#header-notice').css("border-bottom", "solid 2px #7875C9")
+                $('#header-notice').css("color","#7875C9")
+                $('.notice-data-section').css("display","block")
+                $('#header-chat').css("border-bottom", "solid 0px")
+                $('#header-chat').css("color","black")
+                $('.inquiry-data-section').css("display","none")
+            })
+            $('#header-chat').click(function (){
+                $('#header-chat').css("border-bottom", "solid 2px #7875C9")
+                $('#header-chat').css("color","#7875C9")
+                $('.inquiry-data-section').css("display","block")
+                $('#header-notice').css("border-bottom", "solid 0px")
+                $('#header-notice').css("color","black")
+                $('.notice-data-section').css("display","none")
+            })
+
+            //알림 모두 읽음
+            $('#notice-all-read').click(function (){
+                console.log('알림 모두 읽음');
+                $.ajax({
+                    type: 'post',
+                    url: 'noticeAllRead',
+                    data:JSON.stringify({
+                        writer:USER_NAME,
+                        noticeRead : "Y",
+                    }),
+                    contentType: 'application/json',
+                    success:function (data){
+                        console.log('통신성공');
+                        noticeList();
+                    },
+                    error:function(){
+                        alert('통신실패')
+                    }
+                })
+            })
+
+            //알림 모두 삭제
+            $('#notice-all-delete').click(function (){
+                console.log('알림 모두 삭제');
+                if(confirm("정말 삭제하시겠습니까?")){
+                    $.ajax({
+                        type:'get',
+                        url:'noticeDelete',
+                        data:{writer : USER_NAME},
+                        contentType: 'application/json',
+                        success:function(data){
+                            console.log('통신성공');
+                            alert("알림이 삭제되었습니다.");
+                            noticeList();
+                        },
+                        error:function(){
+                            alert('통신실패')
+                        }
+                    })
+                }else{
+                    return false;
+                }
+            })
+
+        </script>
 
     </nav>
 </header>
@@ -116,8 +203,10 @@
                     <div class="col-md-8 mb-3">
                         <label for="category">카테고리</label>
                         <select class="custom-select d-block w-100" id="category" name="category">
-                            <option value="education">교육</option>
-                            <option value="cooking">요리</option>
+                            <option value="cook">요리</option>
+                            <option value="breeder">애완동물</option>
+                            <option value="parenting">육아</option>
+                            <option value="educate">교육</option>
                             <option value="sports">스포츠</option>
                         </select>
                     </div>

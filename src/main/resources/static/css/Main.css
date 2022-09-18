@@ -11630,7 +11630,7 @@ header.masthead .masthead-heading {
   position: relative;
   width: 10px;
   height: 10px;
-  bottom: 110%;
+  bottom: 138%;
   left: 80%;
 }
 #check-pie{
@@ -12161,6 +12161,10 @@ body{
 .container{
   height: 100%;
   align-content: center;
+}
+#logo{
+  position: relative;
+  bottom: 5px;
 }
 
 .card{

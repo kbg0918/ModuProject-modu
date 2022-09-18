@@ -485,6 +485,10 @@ header.masthead {
     width: 600px;
     height: auto;
 }
+#logo{
+    position: relative;
+    bottom: 5px;
+}
 
 #real-time-notice{
     position: fixed;
@@ -506,6 +510,131 @@ header.masthead {
 }
 #notice-a{
     text-decoration: none;
+}
+#notice-list-section{
+    position: absolute;
+    top: 80%;
+    left: 55.3%;
+    width: 380px;
+    height: 580px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 1px 1px 3px 1px #ded8d8;
+}
+#notice-list-header{
+    position: relative;
+    width: 380px;
+    height: 45px;
+    font-size: 18px;
+
+}
+#header-span{
+    position: relative;
+    left: 10%;
+    top: 28%;
+    color: #7875C9;
+}
+
+.inquiry-data-section{
+    position: relative;
+    width: 380px;
+    height: 500px;
+    overflow: auto;
+}
+.notice-data-section{
+    position: relative;
+    width: 380px;
+    height: 500px;
+    overflow: auto;
+}
+.notice-div{
+    position: relative;
+    width: 360px;
+    height: 60px;
+}
+.notice-check{
+    position: relative;
+    width: 10px;
+    height: 10px;
+    bottom: 138%;
+    left: 80%;
+}
+#check-pie{
+    position: absolute;
+    font-size: 30px;
+    color: #f52121;
+}
+#list-data{
+    position: relative;
+    top: 10%;
+    left: 5%;
+    font-size: 14px;
+}
+#list-date{
+    position: relative;
+    left: 5%;
+    font-size: 12px;
+}
+#read-check{
+    position: relative;
+    top: 23%;
+    left: 67%;
+    font-size: 15px;
+}
+.notice-update-delete{
+    position: relative;
+    width: 380px;
+    height: 35px;
+}
+#notice-all-read{
+    position: relative;
+    top:20%;
+    left: 4%;
+    font-size: 15px;
+}
+#notice-read-delete{
+    position: relative;
+    top:20%;
+    left: 41%;
+    font-size: 15px;
+}
+#notice-all-delete{
+    position: relative;
+    top:20%;
+    left: 43%;
+    font-size: 15px;
+}
+.notice-div:hover{
+    width: 380px;
+    background-color: #ded8d8;
+}
+
+#header-notice{
+    position: absolute;
+    width: 50px;
+    height: 45px;
+    left: 8%;
+    padding-top: 2.5%;
+    padding-left: 2.5%;
+    border-bottom: 2px solid #7875C9;
+    color: #7875C9;
+}
+#header-chat{
+    position: absolute;
+    width: 50px;
+    height: 45px;
+    left: 22%;
+    padding-top: 2.5%;
+    padding-left: 2.5%;
+}
+#header-hr{
+    position: absolute;
+    top: 64%;
+    box-shadow: 1px 1px 6px 1px #b0aeae;
+}
+#notice-hr{
+    margin-top: 6%;
+    box-shadow: 1px 1px 6px 1px #b0aeae;
 }
 #textarea-box{
     position: relative;
@@ -778,7 +907,7 @@ header.masthead {
 }
 .setBtn{
     position: relative;
-    bottom: 190px;
+    bottom: 140px;
     left: 45px;
     width: 50px;
     height: 35px;
