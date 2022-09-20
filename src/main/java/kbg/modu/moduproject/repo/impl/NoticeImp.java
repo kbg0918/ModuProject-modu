@@ -28,6 +28,12 @@ public class NoticeImp implements NoticeRepository {
     }
 
     @Override
+    public Notice findReadNotice(String writer) {
+        return tp.queryForObject("select * from notice where writer =?",
+                new BeanPropertyRowMapper<>(Notice.class), writer);
+    }
+
+    @Override
     public void insert(Notice n) {
         tp.update("insert into notice(member_seq, type_seq, write_type, user_writer, writer, title, category) values(?,?,?,?,?,?,?)",
                 n.getMemberSeq(), n.getTypeSeq(), n.getWriteType(), n.getUserWriter(), n.getWriter(), n.getTitle(), n.getCategory());

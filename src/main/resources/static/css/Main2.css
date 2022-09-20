@@ -564,6 +564,13 @@ header.masthead {
     font-size: 30px;
     color: #f52121;
 }
+#accept{
+    position: relative;
+    left: 90%;
+    bottom: 20%;
+    font-size: 17px;
+    cursor: pointer;
+}
 #list-data{
     position: relative;
     top: 10%;

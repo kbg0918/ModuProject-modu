@@ -9,6 +9,7 @@ import java.util.List;
 public interface NoticeRepository {
     List<Notice> noticeList(String writer);
     Member findBySeq(String userWriter);
+    Notice findReadNotice(String writer);
     void insert(Notice n);
     void updateRead(Notice n);
     public void delete(Notice n);

@@ -15,7 +15,7 @@ public class ChatRoomImp implements ChatRoomRepository {
 
     @Override
     public void save(ChatRoom chatRoom) {
-        tp.update("insert into chatting_room(room_name, professor_name, pc_seq) values(?,?,?)",
-                chatRoom.getRoomName(), chatRoom.getProfessorName(), chatRoom.getPcSeq());
+        tp.update("insert into chatting_room(room_name, room_id, professor_name, pc_seq) values(?,?,?,?)",
+                chatRoom.getRoomName(), chatRoom.getRoomId() ,chatRoom.getProfessorName(), chatRoom.getPcSeq());
     }
 }

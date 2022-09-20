@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="../static/js/scripts.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-<meta charset="utf-8">
-<html xmlns:th="http://www.thymeleaf.org">
-<!-- stomp -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <script th:inline="javascript" th:if="${session.member}">
     const USER_SEQ = [[${session.member.seq}]];
     const USER_NAME = [[${session.member.memberName}]];
@@ -98,7 +94,7 @@
                     else if(value.writeType == 'review'){
                         if(value.noticeRead == "N" && value.delYn == "N"){
                             alarmCheck = '<sapn id="check-pie">'+'.'+'</span>'
-                            alarmList += '<div class=notice-div onclick="location.href=`/commission/detail?pcSeq=`+'+value.typeSeq+'; read('+value.noticeSeq+')">'
+                            alarmList += '<div class=notice-div onclick="location.href=`/commission/detail?pcSeq=`+'+value.typeSeq+'">'
                             alarmList += '<span id="list-data">'+value.userWriter+'님이'+' 제안서'+'('+value.category+')'+value.title+'에 리뷰를 등록했습니다!'+'</span>'
                             alarmList += '<br>'
                             alarmList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
@@ -116,11 +112,10 @@
                     else if(value.writeType == 'commission'){
                         if(value.noticeRead == "N" && value.delYn == "N"){
                             alarmCheck = '<sapn id="check-pie">'+'.'+'</span>'
-                            inquiryList += '<div class=notice-div onclick="read('+value.noticeSeq+')">'
+                            inquiryList += '<div class=notice-div onclick="location.href=`/commission/detail?pcSeq=`+'+value.typeSeq+'">'
                             inquiryList += '<span id="list-data">'+value.userWriter+'님이'+' 제안서'+'('+value.category+')'+value.title+'에서 채팅요청을 보냈습니다.'+'</span>'
                             inquiryList += '<br>'
                             inquiryList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
-                            inquiryList += '<div id="accept" onclick="YN('+value.typeSeq+')">'+'수락'+'</div>'
                             inquiryList += '</div>'
                         }else if(value.noticeRead =="Y" && value.delYn == "N"){
                             inquiryList += '<div class=notice-div style="background-color: #e0dada" onclick="location.href=`/commission/detail?pcSeq=`+'+value.typeSeq+'">'
@@ -130,6 +125,7 @@
                             inquiryList += '<span id="read-check">'+'읽음'+'</span>'
                             inquiryList += '</div>'
                         }
+
                     }
                 })
                 $('.notice-data-section').html(alarmList);
@@ -140,29 +136,6 @@
                 console.log("실패..")
             }
         })
-    }
-    //채팅 방 DB저장
-    function YN(typeSeq){
-        if(confirm("수락하시겠습니까?")){
-            alert("DB 등록")
-            $.ajax({
-                type: 'post',
-                url:'/room',
-                data:JSON.stringify({
-                    roomName : USER_NAME+'교수님의 방',
-                    pcSeq : typeSeq,
-                }),
-                contentType: 'application/json',
-                success:function (data){
-                    console.log("통신 성공"+data);
-                },
-                error:function (){
-                    alert("통신 실패");
-                }
-            })
-        }else{
-            return false;
-        }
     }
 
 
@@ -193,24 +166,29 @@
         return strDate;
     }
 </script>
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>MODU - 5000만 국민의 선택</title>
     <!--Made with love by Mutiullah Samim -->
 
     <!--Bootsrap 4 CDN-->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <!--Fontawesome CDN-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
     <!--Custom styles-->
     <link rel="stylesheet" type="text/css" href="../static/css/Main2.css">
+    <script src="../static/js/scripts.js"></script>
 </head>
+
 <header class="masthead">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand" href="../MainForm"><img src="../static/assets/MODU.PNG" alt="..." /></a>
+            <a class="navbar-brand" onclick="location.href='MainForm'"><img src="../static/assets/MODU.PNG" alt="..." /></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
                 <i class="fas fa-bars ms-1"></i>
@@ -218,21 +196,11 @@
 
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                   <th:block th:unless="${session.member}">
-                        <script>
-                            var result = confirm("로그인이 필요한 서비스입니다.");
-
-                            if(result)
-                            {
-                                window.location.href="../LoginForm";
-
-                            }
-                            else
-                            {
-                                window.location.href="../MainForm";
-                            }
-                        </script>
+                    <th:block th:unless="${session.member}">
+                        <li class="nav-item"><a class="nav-link" href="LoginForm">로그인</a></li>
+                        <li class="nav-item"><a class="nav-link" href="SignUpForm">회원가입</a></li>
                     </th:block>
+
                     <th:block th:if="${session.member}">
                         <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
                         <li class="nav-item"><a class="nav-link" href="./Post">커뮤니티</a></li>
@@ -308,30 +276,6 @@
                 })
             })
 
-            //읽은 알림 삭제
-            $('#notice-read-delete').click(function (){
-                console.log('읽은 알림 삭제');
-                if(confirm("정말 삭제하시겠습니까?")){
-                    $.ajax({
-                        type:'get',
-                        url:'noticeReadDelete',
-                        data:{writer : USER_NAME},
-                        contentType: 'application/json',
-                        success:function(data){
-                            console.log('통신성공');
-                            alert("알림이 삭제되었습니다.");
-                            noticeList();
-                        },
-                        error:function(){
-                            alert('통신실패')
-                        }
-                    })
-                }else{
-                    return false;
-                }
-            })
-
-
             //알림 모두 삭제
             $('#notice-all-delete').click(function (){
                 console.log('알림 모두 삭제');
@@ -360,24 +304,19 @@
     </nav>
 </header>
 <body>
-<section class="list-section">
-    <div class="list-container">
-        <div class="list-card" th:each="l :${list}">
-            <th:block th:if="${l.delYn.equals('N')} and ${l.updateYn.equals('N')}">
-                <div class="category_list" th:onclick="|location.href='@{detail(pcSeq=${l.pcSeq}, writer=${l.writer})}'|">
-                    <div class="list" >
-                        <strong id="strong_font1" th:utext="${l.title}"></strong>
-                    </div>
-                    <strong id="strong_font2" th:utext="${l.writer}+님"></strong>
-                </div>
-            </th:block>
-        </div>
-    </div>
-</section>
-</body>
-<!--실시간 알림-->
-<div id="real-time-notice" style="display: none">
-    <div id="real-time-notice-2"></div>
+<div class="container">
+    <button class="btn btn-primary" type="button" id="aaa">채팅방 개설</button>
 </div>
-</html>
+<!-- JavaScript -->
+<script>
 
+    var SEQ = localStorage.getItem("PC_SEQ");
+    var nam = localStorage.getItem("USER_NAME");
+    var userSeq = localStorage.getItem("USER_SEQ");
+
+    $('#aaa').click(function (){
+
+    })
+</script>
+</body>
+</html>

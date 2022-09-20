@@ -110,6 +110,7 @@ create table if not exists board_views(
 create table if not exists chatting_room(
     cr_seq int auto_increment primary key comment 'chatting_matching',
     room_name varchar(300) not null comment '채팅방 이름',
+    room_id varchar(100) not null comment '룸 아이디',
     professor_name varchar(25) not null comment '방을 만든 교수의 이름',
     pc_seq int not null,
     add_date datetime DEFAULT CURRENT_TIMESTAMP comment '보낸 시간'

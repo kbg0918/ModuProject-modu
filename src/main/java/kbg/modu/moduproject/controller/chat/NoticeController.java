@@ -45,6 +45,11 @@ public class NoticeController {
         ns.allRead(n);
     }
 
+    @GetMapping("noticeReadDelete")
+    public void noticeAllRead(Notice n, @RequestParam String writer){
+        n.setWriter(writer);
+        ns.readDelete(n);
+    }
 
     @GetMapping("noticeDelete")
     public void noticeDelete(Notice n, @RequestParam String writer){

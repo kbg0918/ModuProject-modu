@@ -38,6 +38,15 @@ public class NoticeService{
     }
 
     @Transactional
+    public void readDelete(Notice n){
+        if(nr.findReadNotice(n.getWriter()).getNoticeRead().equals("Y")){
+            nr.delete(n);
+        }else{
+            System.out.println("읽은 알림이 없습니다.");
+        }
+    }
+
+    @Transactional
     public void allRead(Notice n){
         nr.allRead(n);
     }

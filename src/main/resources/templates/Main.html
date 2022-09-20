@@ -14,6 +14,8 @@
 <!-- stomp -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="/webjars/vue/2.6.14/dist/vue.min.js"></script>
+<script src="/webjars/axios/0.21.1/dist/axios.min.js"></script>
 <script th:inline="javascript" th:if="${session.member}">
     const USER_SEQ = [[${session.member.seq}]];
     const USER_NAME = [[${session.member.memberName}]];
@@ -81,10 +83,11 @@
                 var alarmList = '';
                 var inquiryList = '';
                 var alarmCheck = '';
+                var noticeYn = '';
                 $.each(data, function (ket,value){
                     if(value.writeType == 'comment'){
                         if(value.noticeRead == "N" && value.delYn == "N"){
-                            alarmCheck += '<sapn id="check-pie">'+'.'+'</span>'
+                            alarmCheck = '<sapn id="check-pie">'+'.'+'</span>'
                             alarmList += '<div class=notice-div id="notice-seq'+value.noticeSeq+'" onclick="location.href=`/board/PostDetail?boardSeq=`+'+value.typeSeq+'; read('+value.noticeSeq+')">'
                             alarmList += '<span id="list-data">'+value.userWriter+'님이'+' 게시물'+'('+value.category+')'+value.title+'에 댓글을 달았습니다!'+'</span>'
                             alarmList += '<br>'
@@ -101,18 +104,41 @@
 
                     }
                     else if(value.writeType == 'review'){
-                        alarmList += '<div class=notice-div onclick="location.href=`/commission/detail?pcSeq=`+'+value.typeSeq+'">'
-                        alarmList += '<span id="list-data">'+value.userWriter+'님이'+' 제안서'+'('+value.category+')'+value.title+'에 리뷰를 등록했습니다!'+'</span>'
-                        alarmList += '<br>'
-                        alarmList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
-                        alarmList += '</div>'
+                        if(value.noticeRead == "N" && value.delYn == "N"){
+                            alarmCheck = '<sapn id="check-pie">'+'.'+'</span>'
+                            alarmList += '<div class=notice-div onclick="location.href=`/commission/detail?pcSeq=`+'+value.typeSeq+'; read('+value.noticeSeq+')">'
+                            alarmList += '<span id="list-data">'+value.userWriter+'님이'+' 제안서'+'('+value.category+')'+value.title+'에 리뷰를 등록했습니다!'+'</span>'
+                            alarmList += '<br>'
+                            alarmList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
+                            alarmList += '</div>'
+                        }else if(value.noticeRead =="Y" && value.delYn == "N"){
+                            alarmList += '<div class=notice-div style="background-color: #e0dada" onclick="location.href=`/commission/detail?pcSeq=`+'+value.typeSeq+'">'
+                            alarmList += '<span id="list-data">'+value.userWriter+'님이'+' 제안서'+'('+value.category+')'+value.title+'에 리뷰를 등록했습니다!'+'</span>'
+                            alarmList += '<br>'
+                            alarmList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
+                            alarmList += '<span id="read-check">'+'읽음'+'</span>'
+                            alarmList += '</div>'
+                        }
+
                     }
                     else if(value.writeType == 'commission'){
-                        inquiryList += '<div class=notice-div onclick="location.href=`/commission/detail?pcSeq=`+'+value.typeSeq+'">'
-                        inquiryList += '<span id="list-data">'+value.userWriter+'님이'+' 제안서'+'('+value.category+')'+value.title+'에서 채팅요청을 보냈습니다.'+'</span>'
-                        inquiryList += '<br>'
-                        inquiryList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
-                        inquiryList += '</div>'
+                        if(value.noticeRead == "N" && value.delYn == "N"){
+                            alarmCheck = '<sapn id="check-pie">'+'.'+'</span>'
+                            inquiryList += '<div class=notice-div onclick="read('+value.noticeSeq+')">'
+                            inquiryList += '<span id="list-data">'+value.userWriter+'님이'+' 제안서'+'('+value.category+')'+value.title+'에서 채팅요청을 보냈습니다.'+'</span>'
+                            inquiryList += '<br>'
+                            inquiryList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
+                            inquiryList += '<div id="accept" onclick="YN('+value.typeSeq+')">'+'수락'+'</div>'
+                            inquiryList += '</div>'
+                        }else if(value.noticeRead =="Y" && value.delYn == "N"){
+                            inquiryList += '<div class=notice-div style="background-color: #e0dada" onclick="location.href=`/commission/detail?pcSeq=`+'+value.typeSeq+'">'
+                            inquiryList += '<span id="list-data">'+value.userWriter+'님이'+' 제안서'+'('+value.category+')'+value.title+'에서 채팅요청을 보냈습니다.'+'</span>'
+                            inquiryList += '<br>'
+                            inquiryList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
+                            inquiryList += '<span id="read-check">'+'읽음'+'</span>'
+                            inquiryList += '</div>'
+                        }
+
                     }
                 })
                 $('.notice-data-section').html(alarmList);
@@ -125,11 +151,39 @@
         })
     }
 
+    var SEQ = localStorage.getItem("PC_SEQ");
+    var nam = localStorage.getItem("USER_NAME");
+    var userSeq = localStorage.getItem("USER_SEQ");
+
+    //채팅 방 DB저장
+    function YN(typeSeq){
+        if(confirm("수락하시겠습니까?")){
+            alert("DB 등록")
+            $.ajax({
+                type: 'post',
+                url:'/room',
+                data:JSON.stringify({
+                    roomName : USER_NAME+'교수님의 방',
+                    pcSeq : typeSeq,
+                }),
+                contentType: 'application/json',
+                success:function (data){
+                    console.log("통신 성공"+data);
+                },
+                error:function (){
+                    alert("통신 실패");
+                }
+            })
+        }else{
+            return false;
+        }
+    }
+
 
     //특정 영역이 아닐시 영역 닫기
     $('html').click(function (e){
         if(!$(e.target).is('#notice-list') && !$(e.target).is('#notice-list-header') && !$(e.target).hasClass('notice-data-section') && !$(e.target).is('#header-notice')
-            && !$(e.target).is('#header-chat') && !$(e.target).hasClass('notice-update-delete')
+            && !$(e.target).is('#header-chat') && !$(e.target).hasClass('notice-update-delete') && !$(e.target).hasClass('inquiry-data-section')
             && !$(e.target).is('#notice-all-read') && !$(e.target).is('#notice-read-delete') && !$(e.target).is('#notice-all-delete') ){
             document.getElementById("notice-list-section").style.display='none';
         }
@@ -197,7 +251,6 @@
 
         </div>
         <div class="inquiry-data-section" style="display: none">
-
         </div>
         <div class="notice-update-delete">
             <span id="notice-all-read">모두 읽기</span>
@@ -207,6 +260,7 @@
 
     </div>
     <script>
+
 
         $('#header-notice').click(function (){
             $('#header-notice').css("border-bottom", "solid 2px #7875C9")
@@ -244,6 +298,29 @@
                     alert('통신실패')
                 }
             })
+        })
+
+        //읽은 알림 삭제
+        $('#notice-read-delete').click(function (){
+            console.log('읽은 알림 삭제');
+            if(confirm("정말 삭제하시겠습니까?")){
+                $.ajax({
+                    type:'get',
+                    url:'noticeReadDelete',
+                    data:{writer : USER_NAME},
+                    contentType: 'application/json',
+                    success:function(data){
+                        console.log('통신성공');
+                        alert("알림이 삭제되었습니다.");
+                        noticeList();
+                    },
+                    error:function(){
+                        alert('통신실패')
+                    }
+                })
+            }else{
+                return false;
+            }
         })
 
         //알림 모두 삭제
