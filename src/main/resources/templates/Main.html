@@ -25,6 +25,7 @@
     $(document).ready(function(){
         connectWs();
         noticeList();
+        chatRoomList();
     })
 
     function connectWs(){
@@ -71,6 +72,30 @@
         })
     }
 
+    //채팅방 목록
+    function chatRoomList(){
+        $.ajax({
+            type: 'get',
+            url:'../chatRoomList',
+            data:{'writer':USER_NAME},
+            contentType: 'application/json',
+            success: function (data){
+                console.log("채팅방 목록 성공")
+                var roomList = '';
+                var alarmCheck = '';
+                $.each(data, function (key, value){
+                    alarmCheck = '<sapn id="check-pie">'+'.'+'</span>'
+                    roomList += '<div class=notice-div onclick="location.href=`/room/chatting/`+'+value.roomId+'">'
+                    roomList += '<span id="list-data">'+value.roomId+'</span>'
+                    roomList += '<br>'
+                    roomList += '</div>'
+                })
+                $('.chatRoom-list-section').html(roomList);
+                $('.notice-check').html(alarmCheck);
+            }
+        })
+    }
+
     //알림목록
     function noticeList(){
         $.ajax({
@@ -79,12 +104,12 @@
             data:{'writer':USER_NAME},
             contentType: 'application/json',
             success: function (data){
-                console.log("댓글리스트 성공")
+                console.log("알람 성공")
                 var alarmList = '';
                 var inquiryList = '';
                 var alarmCheck = '';
                 var noticeYn = '';
-                $.each(data, function (ket,value){
+                $.each(data, function (key,value){
                     if(value.writeType == 'comment'){
                         if(value.noticeRead == "N" && value.delYn == "N"){
                             alarmCheck = '<sapn id="check-pie">'+'.'+'</span>'
@@ -240,10 +265,15 @@
             </ul>
         </div>
     </div>
+    <div onclick="location.href='room/chatting/1'">
+        하이루~
+
+    </div>
     <div id="notice-list-section" style="display: none">
         <div id="notice-list-header">
             <div id="header-notice">알림</div>
             <div id="header-chat">채팅</div>
+            <div id="header-chatRoom">채팅방</div>
             <hr id="header-hr" color="#cccaca" width="100%">
         </div>
 
@@ -251,6 +281,10 @@
 
         </div>
         <div class="inquiry-data-section" style="display: none">
+        </div>
+
+        <div class="chatRoom-list-section">
+
         </div>
         <div class="notice-update-delete">
             <span id="notice-all-read">모두 읽기</span>
@@ -269,6 +303,9 @@
             $('#header-chat').css("border-bottom", "solid 0px")
             $('#header-chat').css("color","black")
             $('.inquiry-data-section').css("display","none")
+            $('#header-chatRoom').css("border-bottom", "solid 0px")
+            $('#header-chatRoom').css("color","black")
+            $('.chatRoom-list-section').css("display","none")
         })
         $('#header-chat').click(function (){
             $('#header-chat').css("border-bottom", "solid 2px #7875C9")
@@ -277,6 +314,20 @@
             $('#header-notice').css("border-bottom", "solid 0px")
             $('#header-notice').css("color","black")
             $('.notice-data-section').css("display","none")
+            $('#header-chatRoom').css("border-bottom", "solid 0px")
+            $('#header-chatRoom').css("color","black")
+            $('.chatRoom-list-section').css("display","none")
+        })
+        $('#header-chatRoom').click(function (){
+            $('#header-chatRoom').css("border-bottom", "solid 2px #7875C9")
+            $('#header-chatRoom').css("color","#7875C9")
+            $('.chatRoom-list-section').css("display","block")
+            $('#header-notice').css("border-bottom", "solid 0px")
+            $('#header-notice').css("color","black")
+            $('.notice-data-section').css("display","none")
+            $('#header-chat').css("border-bottom", "solid 0px")
+            $('#header-chat').css("color","black")
+            $('.inquiry-data-section').css("display","none")
         })
 
         //알림 모두 읽음

@@ -11621,6 +11621,12 @@ header.masthead .masthead-heading {
   height: 500px;
   overflow: auto;
 }
+.chatRoom-list-section{
+  position: relative;
+  width: 380px;
+  height: 500px;
+  overflow: auto;
+}
 .notice-div{
   position: relative;
   width: 360px;
@@ -11706,6 +11712,14 @@ header.masthead .masthead-heading {
   width: 50px;
   height: 45px;
   left: 22%;
+  padding-top: 2.5%;
+  padding-left: 2.5%;
+}
+#header-chatRoom{
+  position: absolute;
+  width: 70px;
+  height: 45px;
+  left: 36%;
   padding-top: 2.5%;
   padding-left: 2.5%;
 }
