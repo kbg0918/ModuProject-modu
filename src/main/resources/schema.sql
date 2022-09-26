@@ -112,8 +112,9 @@ create table if not exists chatting_room(
     room_name varchar(300) not null comment '채팅방 이름',
     room_id varchar(100) not null comment '룸 아이디',
     professor_name varchar(25) not null comment '방을 만든 교수의 이름',
+    user_writer_name varchar(30) not null comment '요청 보낸 학생의 이름',
     pc_seq int not null,
-    add_date datetime DEFAULT CURRENT_TIMESTAMP comment '보낸 시간'
+    add_date datetime DEFAULT CURRENT_TIMESTAMP comment '방 만들어진 시간'
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 

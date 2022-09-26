@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface ChatRoomRepository {
     void save(ChatRoom chatRoom);
-    public List<ChatRoom> charRoomList(String writer);
+    List<ChatRoom> charRoomList(String writer);
+    ChatRoom findByRoomId(String roomId);
 }

@@ -71,7 +71,6 @@
             }
         })
     }
-
     //채팅방 목록
     function chatRoomList(){
         $.ajax({
@@ -85,9 +84,10 @@
                 var alarmCheck = '';
                 $.each(data, function (key, value){
                     alarmCheck = '<sapn id="check-pie">'+'.'+'</span>'
-                    roomList += '<div class=notice-div onclick="location.href=`/room/chatting/`+'+value.roomId+'">'
-                    roomList += '<span id="list-data">'+value.roomId+'</span>'
+                    roomList += '<div class=notice-div onclick="location.href=`/room/chatting/'+value.roomId+'`">'
+                    roomList += '<span id="list-data">'+value.userWriterName+'님의 요청에 의한 채팅'+'</span>'
                     roomList += '<br>'
+                    roomList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
                     roomList += '</div>'
                 })
                 $('.chatRoom-list-section').html(roomList);
@@ -95,6 +95,7 @@
             }
         })
     }
+
 
     //알림목록
     function noticeList(){
@@ -153,7 +154,7 @@
                             inquiryList += '<span id="list-data">'+value.userWriter+'님이'+' 제안서'+'('+value.category+')'+value.title+'에서 채팅요청을 보냈습니다.'+'</span>'
                             inquiryList += '<br>'
                             inquiryList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
-                            inquiryList += '<div id="accept" onclick="YN('+value.typeSeq+')">'+'수락'+'</div>'
+                            inquiryList += '<div id="accept" onclick="YN('+value.typeSeq+',\'' + value.userWriter + '\')">'+'수락'+'</div>'
                             inquiryList += '</div>'
                         }else if(value.noticeRead =="Y" && value.delYn == "N"){
                             inquiryList += '<div class=notice-div style="background-color: #e0dada" onclick="location.href=`/commission/detail?pcSeq=`+'+value.typeSeq+'">'
@@ -181,15 +182,16 @@
     var userSeq = localStorage.getItem("USER_SEQ");
 
     //채팅 방 DB저장
-    function YN(typeSeq){
+    function YN(typeSeq, userWriter){
         if(confirm("수락하시겠습니까?")){
             alert("DB 등록")
             $.ajax({
                 type: 'post',
                 url:'/room',
                 data:JSON.stringify({
-                    roomName : USER_NAME+'교수님의 방',
+                    roomName : USER_NAME+' 교수님의 방',
                     pcSeq : typeSeq,
+                    userWriterName : userWriter
                 }),
                 contentType: 'application/json',
                 success:function (data){
@@ -264,10 +266,6 @@
                 </th:block>
             </ul>
         </div>
-    </div>
-    <div onclick="location.href='room/chatting/1'">
-        하이루~
-
     </div>
     <div id="notice-list-section" style="display: none">
         <div id="notice-list-header">

@@ -11629,8 +11629,12 @@ header.masthead .masthead-heading {
 }
 .notice-div{
   position: relative;
-  width: 360px;
+  width: 370px;
   height: 60px;
+}
+.notice-div:hover{
+  width: 370px;
+  background-color: #ded8d8;
 }
 .notice-check{
   position: relative;
@@ -11692,11 +11696,6 @@ header.masthead .masthead-heading {
   left: 43%;
   font-size: 15px;
 }
-.notice-div:hover{
-  width: 380px;
-  background-color: #ded8d8;
-}
-
 #header-notice{
   position: absolute;
   width: 50px;

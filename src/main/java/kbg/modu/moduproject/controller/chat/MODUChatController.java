@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -61,18 +62,18 @@ public class MODUChatController {
     @PostMapping("/room")
     @ResponseBody
     public ChatRoom createRoom(@RequestBody ChatRoom cr) {
-        System.out.println(cr);
-        return chatService.createRoom(cr.getRoomName(), cr.getPcSeq());
+        return chatService.createRoom(cr.getRoomName(), cr.getPcSeq(), cr.getUserWriterName());
     }
 
     // 채팅방 입장 화면
     @GetMapping("/room/chatting/{roomId}")
-    public String roomDetail(Model model, @PathVariable String roomId, ChatRoom room) {
+    public String roomDetail(Model model, @PathVariable String roomId, ChatRoom room, ModelMap mm) {
         //방에 따른 인원수 제한
         System.out.println("여기 들어 오니 혹시?");
         m1.put(roomId, room.getUserCount());
         model.addAttribute("roomId", roomId);
-        return "/chat/roomDetail";
+        mm.put("roomInfo", chatRoomRepository.findByRoomId(roomId));
+        return "/chat/MODURoom";
     }
     // 특정 채팅방 조회
     @GetMapping("/room/{roomId}")

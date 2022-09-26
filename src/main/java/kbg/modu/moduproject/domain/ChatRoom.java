@@ -25,8 +25,10 @@ public class ChatRoom {
     private String roomName;
     //교수 이름
     private String professorName;
+    private String userWriterName;
     //제안서 번호
     private Integer pcSeq;
+    private String addDate;
     private int userCount;
 
     public static ChatRoom create(String name) {

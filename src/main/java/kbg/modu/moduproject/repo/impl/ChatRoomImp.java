@@ -18,13 +18,19 @@ public class ChatRoomImp implements ChatRoomRepository {
 
     @Override
     public void save(ChatRoom chatRoom) {
-        tp.update("insert into chatting_room(room_name, room_id, professor_name, pc_seq) values(?,?,?,?)",
-                chatRoom.getRoomName(), chatRoom.getRoomId() ,chatRoom.getProfessorName(), chatRoom.getPcSeq());
+        tp.update("insert into chatting_room(room_name, room_id, professor_name, user_writer_name, pc_seq) values(?,?,?,?,?)",
+                chatRoom.getRoomName(), chatRoom.getRoomId() ,chatRoom.getProfessorName(), chatRoom.getUserWriterName(), chatRoom.getPcSeq());
     }
 
     @Override
     public List<ChatRoom> charRoomList(String writer) {
         return tp.query("select * from chatting_room where professor_name = ?",
                 new BeanPropertyRowMapper<>(ChatRoom.class), writer);
+    }
+
+    @Override
+    public ChatRoom findByRoomId(String roomId) {
+        return tp.queryForObject("select * from chatting_room where room_id = ?",
+                new BeanPropertyRowMapper<>(ChatRoom.class), roomId);
     }
 }

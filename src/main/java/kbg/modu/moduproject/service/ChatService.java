@@ -47,14 +47,16 @@ public class ChatService {
     }
 
     //채팅방 생성
-    public ChatRoom createRoom(String name, int pcSeq) {
+    public ChatRoom createRoom(String name, int pcSeq, String userWriterName) {
         ChatRoom chatRoom = ChatRoom.create(name);
         chatRooms.put(chatRoom.getRoomId(), chatRoom);
+        System.out.println(chatRoom.getUserWriterName()+"넌 뭐가나옴?");
         ProfessorCommission p = professorCommissionRepository.findBySeq(pcSeq);
         chatRoom = ChatRoom.builder()
                 .roomName(chatRoom.getRoomName())
                 .roomId(chatRoom.getRoomId())
                 .professorName(p.getWriter())
+                .userWriterName(userWriterName)
                 .pcSeq(pcSeq)
                 .build();
         chatRoomRepository.save(chatRoom);
