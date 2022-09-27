@@ -372,16 +372,8 @@
 
 </article>
 <article id="chat-section">
-    <div class="chat-Student">
-        <div class="chat-Student-content">
-            ㅎㅇgd
-            gd
-            gdgdgd
-            <br>
-            <br>
-            <br>
-            gd
-        </div>
+    <div class="chat-send">
+
     </div>
     <div class="chat-Professor">
 
@@ -390,6 +382,14 @@
 <article id="chat-section-bottom">
     <div id="room-message">
         <textarea id="room-message-area" onkeyup="resize(this)" placeholder="댓글을 남겨보세요" name="content"></textarea>
+    </div>
+    <div id="chat-send-section">
+        <button id="chat-send" value="보내기">
+
+        </button>
+    </div>
+    <div>
+
     </div>
 </article>
 
@@ -400,6 +400,33 @@
         event.style.height = "1px";
         event.style.height = (12+event.scrollHeight)+"px";
     }
+
+    var socket = new SockJS('/ws/chat');
+    stompClient = Stomp.over(socket);
+
+
+    roomId = '[[${roomInfo.roomId}]]'
+    pcSeq = [[${roomInfo.pcSeq}]]
+    stompClient.connect({}, function (){
+        var send = '';
+        $('#chat-send').click(function (){
+            const content = $('#room-message-area').val();
+        stompClient.send("/modu/room/message/"+pcSeq,{},
+            JSON.stringify({sender: "gd", type:'JOIN', message:content}))
+
+        stompClient.subscribe("/queue/room/"+roomId, function (message){
+            var msg = JSON.parse(message.body);
+            alert(msg)
+            send += '<div class="chat-send">'
+            send += '<div class="chat-send-content">'
+            send += '<span>'+msg.message+'</span>'
+            send += '</div></div>'
+            $("#chat-section").html(send);
+            document.getElementById('room-message-area').value=" ";
+        })
+        })
+    })
+
 </script>
 <script src="/../static/js/scripts.js"></script>
 </html>

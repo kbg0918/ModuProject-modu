@@ -1212,17 +1212,16 @@ header.masthead {
     border: 1px solid #dad8d8;
     overflow: auto;
 }
-.chat-Student{
+.chat-send{
     position: relative;
     width: 990px;
     top: 10%;
 
 }
-.chat-Student-content{
+.chat-send-content{
     position: relative;
     left: 68%;
     width: 282px;
-    border: 1px solid white;
     border-radius: 15px;
     background-color: white;
 }
