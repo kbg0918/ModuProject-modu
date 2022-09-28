@@ -21,5 +21,6 @@ public class MODUMessageController {
     public void chatSend(ChatMessage message, @DestinationVariable String pcSeq){
         System.out.println("들어오니 보자 한 번");
         simpMessagingTemplate.convertAndSend("/queue/room/"+message.getRoomId(),message);
+        System.out.println(message.getRoomId());
     }
 }

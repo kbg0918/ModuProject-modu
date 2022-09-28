@@ -1215,12 +1215,24 @@ header.masthead {
 .chat-send{
     position: relative;
     width: 990px;
-    top: 10%;
+    margin-top: 20px;
 
 }
 .chat-send-content{
     position: relative;
     left: 68%;
+    width: 282px;
+    border-radius: 15px;
+    background-color: white;
+}
+.chat-recv{
+    position: relative;
+    width: 990px;
+    margin-top: 20px;
+}
+.chat-recv-content{
+    position: relative;
+    left: 10%;
     width: 282px;
     border-radius: 15px;
     background-color: white;
@@ -1292,8 +1304,27 @@ header.masthead {
     color: #bdbaba;
 }
 
+#chat-send-section{
+    position: absolute;
+    width: 100px;
+    height: 36px;
+    left: 88%;
+    bottom: 30.3%;
+}
+#chat-send-message{
+    position: absolute;
+    width: 100px;
+    height: 36px;
+    background-color: #eacdae;
+    border: solid 1px #d0b99d;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px 1px #dadce0;
+}
 
-
+#chat-send-message:hover{
+    background-color: #efd8c3;
+    box-shadow: 1px 1px 3px 1px #dadce0 inset;
+}
 
 
 

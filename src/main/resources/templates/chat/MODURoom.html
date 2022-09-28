@@ -221,19 +221,19 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                     <th:block th:unless="${session.member}">
-<!--                        <script>-->
-<!--                            var result = confirm("로그인이 필요한 서비스입니다.");-->
+                        <script>
+                            var result = confirm("로그인이 필요한 서비스입니다.");
 
-<!--                            if(result)-->
-<!--                            {-->
-<!--                                window.location.href="/../LoginForm";-->
+                            if(result)
+                            {
+                                window.location.href="../LoginForm";
 
-<!--                            }-->
-<!--                            else-->
-<!--                            {-->
-<!--                                window.location.href="/../MainForm";-->
-<!--                            }-->
-<!--                        </script>-->
+                            }
+                            else
+                            {
+                                window.location.href="../MainForm";
+                            }
+                        </script>
                     </th:block>
                     <th:block th:if="${session.member}">
                         <li class="nav-item"><a class="nav-link" href="#services">카테고리</a></li>
@@ -372,20 +372,14 @@
 
 </article>
 <article id="chat-section">
-    <div class="chat-send">
-
-    </div>
-    <div class="chat-Professor">
-
-    </div>
 </article>
 <article id="chat-section-bottom">
     <div id="room-message">
         <textarea id="room-message-area" onkeyup="resize(this)" placeholder="댓글을 남겨보세요" name="content"></textarea>
     </div>
     <div id="chat-send-section">
-        <button id="chat-send" value="보내기">
-
+        <button id="chat-send-message">
+            보내기
         </button>
     </div>
     <div>
@@ -404,27 +398,38 @@
     var socket = new SockJS('/ws/chat');
     stompClient = Stomp.over(socket);
 
+    var roomId = '[[${roomInfo.roomId}]]'
+    var cSeq = '[[${roomInfo.pcSeq}]]'
+    var userName = '[[${session.member.memberName}]]'
 
-    roomId = '[[${roomInfo.roomId}]]'
-    pcSeq = [[${roomInfo.pcSeq}]]
     stompClient.connect({}, function (){
-        var send = '';
-        $('#chat-send').click(function (){
-            const content = $('#room-message-area').val();
-        stompClient.send("/modu/room/message/"+pcSeq,{},
-            JSON.stringify({sender: "gd", type:'JOIN', message:content}))
-
+        console.log("STOMP Connection")
         stompClient.subscribe("/queue/room/"+roomId, function (message){
             var msg = JSON.parse(message.body);
-            alert(msg)
-            send += '<div class="chat-send">'
-            send += '<div class="chat-send-content">'
-            send += '<span>'+msg.message+'</span>'
-            send += '</div></div>'
-            $("#chat-section").html(send);
-            document.getElementById('room-message-area').value=" ";
+            var chatSender = msg.sender;
+            var send = '';
+            if(chatSender == userName){
+                send += '<div class="chat-send">'
+                send += '<div class="chat-send-content">'
+                send += '<span>'+msg.message+'</span>'
+                send += '</div></div>'
+                $("#chat-section").append(send);
+            }else{
+                send += '<div class="chat-recv">'
+                send += '<div class="chat-recv-content">'
+                send += '<span>'+msg.message+'</span>'
+                send += '</div></div>'
+                $("#chat-section").append(send);
+            }
         })
-        })
+
+
+    })
+    $("#chat-send-message").click(function (){
+        var msg = document.getElementById("room-message-area");
+        console.log("보내기 버튼 누르기")
+        stompClient.send("/modu/room/message/"+cSeq,{}, JSON.stringify({sender: userName, type:'JOIN', roomId:roomId, message:msg.value}))
+        msg.value = '';
     })
 
 </script>
