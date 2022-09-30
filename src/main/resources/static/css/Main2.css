@@ -1212,6 +1212,17 @@ header.masthead {
     border: 1px solid #dad8d8;
     overflow: auto;
 }
+#chat-header-section{
+    position: relative;
+    top: 1.5%;
+    font-size: 14px;
+    color: #363535;
+    margin-bottom: 3%;
+}
+#chat-header{
+    position: relative;
+    left: 43%;
+}
 .chat-send{
     position: relative;
     width: 990px;
@@ -1225,6 +1236,18 @@ header.masthead {
     border-radius: 15px;
     background-color: white;
 }
+.chat-send-writer{
+    position: relative;
+    left: 68%;
+}
+.chat-send-date{
+    position: relative;
+    left: 82%;
+    font-size: 12px;
+}
+.chat-msg{
+    padding: 3px;
+}
 .chat-recv{
     position: relative;
     width: 990px;
@@ -1236,6 +1259,15 @@ header.masthead {
     width: 282px;
     border-radius: 15px;
     background-color: white;
+}
+.chat-recv-writer{
+    position: relative;
+    left: 10%;
+}
+.chat-recv-date{
+    position: relative;
+    left:24%;
+    font-size: 12px;
 }
 
 #info-section{

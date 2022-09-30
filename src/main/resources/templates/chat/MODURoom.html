@@ -405,32 +405,59 @@
     stompClient.connect({}, function (){
         console.log("STOMP Connection")
         stompClient.subscribe("/queue/room/"+roomId, function (message){
+
             var msg = JSON.parse(message.body);
             var chatSender = msg.sender;
             var send = '';
-            if(chatSender == userName){
-                send += '<div class="chat-send">'
-                send += '<div class="chat-send-content">'
-                send += '<span>'+msg.message+'</span>'
-                send += '</div></div>'
-                $("#chat-section").append(send);
-            }else{
-                send += '<div class="chat-recv">'
-                send += '<div class="chat-recv-content">'
-                send += '<span>'+msg.message+'</span>'
-                send += '</div></div>'
-                $("#chat-section").append(send);
+            var header = '';
+            if(msg.type == 'ENTER'){
+                header += '<div id="chat-header-section">'
+                header += '<span id="chat-header">'+msg.message+'</span>'
+                header += '</div>'
+                $('#chat-section').append(header);
+            }
+            if(msg.type == 'TALK'){
+                if(chatSender == userName){
+                    send += '<div class="chat-send">'
+                    send += '<span class="chat-send-writer">'+chatSender+'님'+'</span>'
+                    send += '<div class="chat-send-content">'
+                    send += '<span class="chat-msg">'+msg.message+'</span>'
+                    send += '</div>'
+                    send += '<span class="chat-send-date">'+getDate()+'</span>'+'</div>'
+                    $("#chat-section").append(send);
+                }else{
+                    send += '<div class="chat-recv">'
+                    send += '<span class="chat-recv-writer">'+chatSender+'님'+'</span>'
+                    send += '<div class="chat-recv-content">'
+                    send += '<span class="chat-msg">'+msg.message+'</span>'
+                    send += '</div>'
+                    send += '<span class="chat-recv-date">'+getDate()+'</span>'+'</div>'
+                    $("#chat-section").append(send);
+                }
             }
         })
-
-
+        stompClient.send("/modu/room/message/type/"+cSeq,{}, JSON.stringify({sender: userName, type:'ENTER', roomId:roomId}))
     })
-    $("#chat-send-message").click(function (){
+    $("#chat-send-message").on("click", function (){
         var msg = document.getElementById("room-message-area");
         console.log("보내기 버튼 누르기")
-        stompClient.send("/modu/room/message/"+cSeq,{}, JSON.stringify({sender: userName, type:'JOIN', roomId:roomId, message:msg.value}))
+        stompClient.send("/modu/room/message/"+cSeq,{}, JSON.stringify({sender: userName, type:'TALK', roomId:roomId, message:msg.value}))
         msg.value = '';
     })
+
+    function getDate(){
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = ('0' + (today.getMonth() + 1)).slice(-2);
+        var day = ('0' + today.getDate()).slice(-2);
+        var hours = ('0' + today.getHours()).slice(-2);
+        var minutes = ('0' + today.getMinutes()).slice(-2);
+        var seconds = ('0' + today.getSeconds()).slice(-2);
+
+
+        var dateString = year + '-' + month  + '-' + day + '-' + hours + ':' + minutes  + ':' + seconds;
+        return dateString
+    }
 
 </script>
 <script src="/../static/js/scripts.js"></script>

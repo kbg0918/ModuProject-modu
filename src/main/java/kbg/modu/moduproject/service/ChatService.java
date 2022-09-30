@@ -50,7 +50,6 @@ public class ChatService {
     public ChatRoom createRoom(String name, int pcSeq, String userWriterName) {
         ChatRoom chatRoom = ChatRoom.create(name);
         chatRooms.put(chatRoom.getRoomId(), chatRoom);
-        System.out.println(chatRoom.getUserWriterName()+"넌 뭐가나옴?");
         ProfessorCommission p = professorCommissionRepository.findBySeq(pcSeq);
         chatRoom = ChatRoom.builder()
                 .roomName(chatRoom.getRoomName())

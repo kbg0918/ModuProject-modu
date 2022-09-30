@@ -22,6 +22,8 @@ public class ChatMessage {
     private Integer memberSeq;
     //게시물 번호
     private Integer pcSeq;
+    //채팅 시간
+    private String addDate;
 
     public enum MessageType {
         CHAT,

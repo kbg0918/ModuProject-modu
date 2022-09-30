@@ -23,8 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MODUChatController {
     private final ChatService chatService;
-    private int cnt=1;
-    HashMap<String, Integer> m1 = new HashMap<>();
 
     @Autowired
     ChatRoomRepository chatRoomRepository;
@@ -69,12 +67,10 @@ public class MODUChatController {
     @GetMapping("/room/chatting/{roomId}")
     public String roomDetail(Model model, @PathVariable String roomId, ChatRoom room, ModelMap mm) {
         //방에 따른 인원수 제한
-        System.out.println("여기 들어 오니 혹시?");
-        m1.put(roomId, room.getUserCount());
-        model.addAttribute("roomId", roomId);
         mm.put("roomInfo", chatRoomRepository.findByRoomId(roomId));
         return "/chat/MODURoom";
     }
+
     // 특정 채팅방 조회
     @GetMapping("/room/{roomId}")
     @ResponseBody
