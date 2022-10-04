@@ -83,12 +83,21 @@
                 var roomList = '';
                 var alarmCheck = '';
                 $.each(data, function (key, value){
-                    alarmCheck = '<sapn id="check-pie">'+'.'+'</span>'
-                    roomList += '<div class=notice-div onclick="location.href=`/room/chatting/'+value.roomId+'`">'
-                    roomList += '<span id="list-data">'+value.userWriterName+'님의 요청에 의한 채팅'+'</span>'
-                    roomList += '<br>'
-                    roomList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
-                    roomList += '</div>'
+                    if(value.professorName == USER_NAME){ //교수일때
+                        alarmCheck = '<sapn id="check-pie">'+'.'+'</span>'
+                        roomList += '<div class=notice-div onclick="location.href=`/room/chatting/'+value.rorlaqudrhks1*omId+'`">'
+                        roomList += '<span id="list-data">'+value.userWriterName+'님의 요청에 의한 채팅'+'</span>'
+                        roomList += '<br>'
+                        roomList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
+                        roomList += '</div>'
+                    }else if(value.userWriterName == USER_NAME){ //학생일때
+                        alarmCheck = '<sapn id="check-pie">'+'.'+'</span>'
+                        roomList += '<div class=notice-div onclick="location.href=`/room/chatting/'+value.roomId+'`">'
+                        roomList += '<span id="list-data">'+value.professorName+'교수님의 채팅 수락!'+'</span>'
+                        roomList += '<br>'
+                        roomList += '<span id="list-date">'+addTime(value.addDate)+'</span>'
+                        roomList += '</div>'
+                    }
                 })
                 $('.chatRoom-list-section').html(roomList);
                 $('.notice-check').html(alarmCheck);
@@ -210,7 +219,7 @@
     //특정 영역이 아닐시 영역 닫기
     $('html').click(function (e){
         if(!$(e.target).is('#notice-list') && !$(e.target).is('#notice-list-header') && !$(e.target).hasClass('notice-data-section') && !$(e.target).is('#header-notice')
-            && !$(e.target).is('#header-chat') && !$(e.target).hasClass('notice-update-delete') && !$(e.target).hasClass('inquiry-data-section')
+            && !$(e.target).is('#header-chat') && !$(e.target).hasClass('chatRoom-list-section') && !$(e.target).is('#header-chatRoom') && !$(e.target).hasClass('notice-update-delete') && !$(e.target).hasClass('inquiry-data-section')
             && !$(e.target).is('#notice-all-read') && !$(e.target).is('#notice-read-delete') && !$(e.target).is('#notice-all-delete') ){
             document.getElementById("notice-list-section").style.display='none';
         }

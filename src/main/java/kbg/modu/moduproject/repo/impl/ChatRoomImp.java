@@ -23,8 +23,14 @@ public class ChatRoomImp implements ChatRoomRepository {
     }
 
     @Override
-    public List<ChatRoom> charRoomList(String writer) {
+    public List<ChatRoom> proCharRoomList(String writer) {
         return tp.query("select * from chatting_room where professor_name = ?",
+                new BeanPropertyRowMapper<>(ChatRoom.class), writer);
+    }
+
+    @Override
+    public List<ChatRoom> stuChatRoomList(String writer) {
+        return tp.query("select * from chatting_room where user_writer_name = ?",
                 new BeanPropertyRowMapper<>(ChatRoom.class), writer);
     }
 

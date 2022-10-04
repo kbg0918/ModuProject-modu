@@ -53,7 +53,12 @@ public class MODUChatController {
     @GetMapping("/chatRoomList")
     @ResponseBody
     public ResponseEntity<List<ChatRoom>> chatRoomList(@RequestParam String writer){
-        return new ResponseEntity<>(chatRoomRepository.charRoomList(writer), HttpStatus.OK);
+        if(chatRoomRepository.proCharRoomList(writer).isEmpty()){
+            return new ResponseEntity<>(chatRoomRepository.stuChatRoomList(writer), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(chatRoomRepository.proCharRoomList(writer), HttpStatus.OK);
+        }
+
     }
 
     // 채팅방 생성
