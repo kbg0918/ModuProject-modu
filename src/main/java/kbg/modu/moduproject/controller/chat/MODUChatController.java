@@ -56,6 +56,7 @@ public class MODUChatController {
         if(chatRoomRepository.proCharRoomList(writer).isEmpty()){
             return new ResponseEntity<>(chatRoomRepository.stuChatRoomList(writer), HttpStatus.OK);
         }else{
+            System.out.println("백종원 교수 들어옴?");
             return new ResponseEntity<>(chatRoomRepository.proCharRoomList(writer), HttpStatus.OK);
         }
 

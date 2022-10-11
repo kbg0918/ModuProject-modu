@@ -35,6 +35,12 @@ public class ChatRoomImp implements ChatRoomRepository {
     }
 
     @Override
+    public void delete(ChatRoom chatRoom) {
+        tp.update("update chatting_room set out_check=? where cr_seq = ?",
+                chatRoom.getOutCheck(), chatRoom.getCrSeq());
+    }
+
+    @Override
     public ChatRoom findByRoomId(String roomId) {
         return tp.queryForObject("select * from chatting_room where room_id = ?",
                 new BeanPropertyRowMapper<>(ChatRoom.class), roomId);

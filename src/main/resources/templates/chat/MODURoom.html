@@ -438,11 +438,21 @@
         })
         stompClient.send("/modu/room/message/type/"+cSeq,{}, JSON.stringify({sender: userName, type:'ENTER', roomId:roomId}))
     })
-    $("#chat-send-message").on("click", function (){
-        var msg = document.getElementById("room-message-area");
-        console.log("보내기 버튼 누르기")
-        stompClient.send("/modu/room/message/"+cSeq,{}, JSON.stringify({sender: userName, type:'TALK', roomId:roomId, message:msg.value}))
-        msg.value = '';
+    $(function(){
+        $('#room-message-area').on('keydown', function(event){
+            if(event.keyCode == 13){
+                if(!event.shiftKey){
+                    event.preventDefault();
+                    var button = document.getElementById('chat-send-message');
+                    button.click();
+                    var msg = document.getElementById("room-message-area");
+                    console.log("보내기 버튼 누르기")
+                    stompClient.send("/modu/room/message/"+cSeq,{}, JSON.stringify({sender: userName, type:'TALK', roomId:roomId, message:msg.value}))
+                    msg.value = '';
+                    $('#room-message-area').empty();
+                }
+            }
+        })
     })
 
     function getDate(){
@@ -458,6 +468,16 @@
         var dateString = year + '-' + month  + '-' + day + '-' + hours + ':' + minutes  + ':' + seconds;
         return dateString
     }
+    $('#room-out').on('click', function (){
+        console.log("채팅방 나가기 버튼 클릭");
+        if(confirm("정말 채팅방을 나가시겠습니까?")){
+            $.ajax({
+                type:'get',
+                url:'chatRoomOut',
+                data:{}
+            })
+        }
+    })
 
 </script>
 <script src="/../static/js/scripts.js"></script>

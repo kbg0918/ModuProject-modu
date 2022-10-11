@@ -62,4 +62,9 @@ public class ChatService {
         return chatRoom;
     }
 
+    public void outCheck(ChatRoom chatRoom){
+        chatRoom.setOutCheck("Y");
+        chatRoomRepository.delete(chatRoom);
+    }
+
 }

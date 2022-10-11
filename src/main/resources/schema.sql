@@ -114,6 +114,7 @@ create table if not exists chatting_room(
     professor_name varchar(25) not null comment '방을 만든 교수의 이름',
     user_writer_name varchar(30) not null comment '요청 보낸 학생의 이름',
     pc_seq int not null,
+    out_check char(1) DEFAULT 'N',
     add_date datetime DEFAULT CURRENT_TIMESTAMP comment '방 만들어진 시간'
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 

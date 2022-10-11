@@ -28,6 +28,8 @@ public class ChatRoom {
     private String userWriterName;
     //제안서 번호
     private Integer pcSeq;
+    //방 나감 여부 확인
+    private String outCheck;
     private String addDate;
     private int userCount;
 
